@@ -58,7 +58,7 @@ async function generateSingleTopicReport(
   const result = await generateObject({
     model: TOPIC_ANALYSIS_MODEL,
     schema: topicReportSchema,
-    prompt: `あなたは市民意見の分析レポートを作成します。
+    prompt: `あなたは県民意見の分析レポートを作成します。
 
 ## 法案
 ${billTitle}

@@ -26,7 +26,7 @@ const scoresSchema = z.object({
     "具体性（0-100）- 実務経験に基づく具体的な事例や数値が含まれているか"
   ),
   impact: scoreValueSchema.describe(
-    "影響度（0-100）- 議案が与える市民生活や行政運営への影響について言及があるか"
+    "影響度（0-100）- 議案が与える県民生活や行政運営への影響について言及があるか"
   ),
   constructiveness: scoreValueSchema.describe(
     "建設性（0-100）- 問題点の指摘だけでなく、改善案や代替案の提示があるか"

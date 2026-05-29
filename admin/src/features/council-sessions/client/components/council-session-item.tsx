@@ -183,7 +183,7 @@ export function CouncilSessionItem({ session }: CouncilSessionItemProps) {
               type="url"
               value={editCouncilUrl}
               onChange={(e) => setEditCouncilUrl(e.target.value)}
-              placeholder={`市議会URL（${siteConfig.councilBaseUrl}...）`}
+              placeholder={`県議会URL（${siteConfig.councilBaseUrl}...）`}
               disabled={isSubmitting}
             />
           </div>
@@ -219,7 +219,7 @@ export function CouncilSessionItem({ session }: CouncilSessionItemProps) {
                   rel="noopener noreferrer"
                   className="text-blue-600 hover:underline"
                 >
-                  市議会ページ ↗
+                  県議会ページ ↗
                 </a>
               </div>
             )}

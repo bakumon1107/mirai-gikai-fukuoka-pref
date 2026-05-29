@@ -58,7 +58,7 @@ async function extractTopicsFromBatch(
   const { object } = await generateObject({
     model: TOPIC_ANALYSIS_MODEL,
     schema: topicExtractionSchema,
-    prompt: `あなたは議案に対する市民の意見を分析する専門家です。
+    prompt: `あなたは議案に対する県民の意見を分析する専門家です。
 
 ## 議案情報
 タイトル: ${billTitle}

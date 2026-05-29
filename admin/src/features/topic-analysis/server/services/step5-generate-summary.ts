@@ -31,7 +31,7 @@ export async function generateOverallSummary(
   const result = await generateObject({
     model: TOPIC_ANALYSIS_MODEL,
     schema: overallSummarySchema,
-    prompt: `あなたは市民意見の分析レポートの全体サマリを作成します。
+    prompt: `あなたは県民意見の分析レポートの全体サマリを作成します。
 
 ## 法案
 ${billTitle}
@@ -46,7 +46,7 @@ ${billTitle}
 
 ### ルール
 - markdown形式で記述してください。ただし見出し（#, ##, ### など）は使わず、段落と太字（**）のみで構成してください
-- 市民意見の全体的な傾向を簡潔にまとめてください
+- 県民意見の全体的な傾向を簡潔にまとめてください
 - 特に多くの意見が集まったトピックや、対立する意見が見られるトピックに注目してください
 - 数値（意見数、セッション数）を適切に引用してください
 

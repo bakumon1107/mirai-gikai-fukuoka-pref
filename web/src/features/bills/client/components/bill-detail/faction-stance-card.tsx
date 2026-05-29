@@ -55,7 +55,7 @@ function FactionStanceRow({ stance }: FactionStanceRowProps) {
   );
 }
 
-// 無所属議員の個人名一覧（福岡市議会）
+// 無所属議員の個人名一覧（福岡県議会）
 const MUSHOZOKU_MEMBERS = [
   "あべ ひでき",
   "新開 ゆうじ",

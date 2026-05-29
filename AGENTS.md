@@ -20,19 +20,19 @@ cp .env ../mirai-gikai-<branch-name>/
 cd ../mirai-gikai-<branch-name> && pnpm install --frozen-lockfile
 ```
 
-- **目的**: fukuoka-city/developブランチを常にクリーンに保ち、作業の分離と並列作業を容易にする
+- **目的**: fukuoka-pref/developブランチを常にクリーンに保ち、作業の分離と並列作業を容易にする
 
 ### 実装完了後は即PR作成
 実装完了後は「コミットしますか？」等の確認を挟まず、コミット → push → PR作成まで一気に進めること。ユーザーへの確認は不要。
 
-**ベースブランチは必ず `fukuoka-city/develop`**。`kawasaki/develop` や `main` へのPRは出さないこと。
+**ベースブランチは必ず `fukuoka-pref/develop`**。`kawasaki/develop` や `main` へのPRは出さないこと。
 ```bash
-gh pr create --base fukuoka-city/develop ...
+gh pr create --base fukuoka-pref/develop ...
 ```
 
 ### Codexレビュー必須
 実装完了後（コミット前）に、必ず `/review-codex` スキルを実行してCodex CLIによるコードレビューを受けること。指摘があれば修正してからコミットする。
-Codexレビューを通過したら、ユーザーに確認せずそのままPR作成まで一気に進めること（push → `gh pr create --base fukuoka-city/develop`）。
+Codexレビューを通過したら、ユーザーに確認せずそのままPR作成まで一気に進めること（push → `gh pr create --base fukuoka-pref/develop`）。
 
 ### 並列PR作成
 複数の独立したPRを作成する場合は `/parallel-pr` スキルを使用すること。
@@ -147,7 +147,7 @@ AIが生成したテキスト（サマリー・要約・関連情報など）を
 1. **日本語の自然さ**: 語尾・助詞・文体（「質した」「答弁した」等）が統一されているか
 2. **情報の整合性**: 生成内容がソース（会議録・PDF・元データ等）の内容と一致しているか。特に、複数のトピックにまたがるデータを処理した場合、トピックAの情報がトピックBのレコードに混入していないか
 3. **文字コードの品質**: 中国語簡体字・繁体字が混入していないか（例: 「议」「务」「该」等）。AI生成テキストは稀に日本語の漢字と字形が異なる中国漢字を出力することがある
-4. **答弁者フォーマット**: `answerer_role` と `answerer_name` を別フィールドに格納する場合、UIで単純に連結すると「局長A・局長B・氏名A・氏名B」のような不自然な表示になる。複数の答弁者がいる場合は `answerer_role` に `"○○局長（氏名）・市長（氏名）"` のように役職と氏名をセットで格納し、`answerer_name` は空にすること
+4. **答弁者フォーマット**: `answerer_role` と `answerer_name` を別フィールドに格納する場合、UIで単純に連結すると「局長A・局長B・氏名A・氏名B」のような不自然な表示になる。複数の答弁者がいる場合は `answerer_role` に `"○○局長（氏名）・知事（氏名）"` のように役職と氏名をセットで格納し、`answerer_name` は空にすること
 
 > **背景**: 同一質問者が異なる所管部局の複数議案を連続して質疑した際、パーサーが最初の答弁者をその質問者の全議案レコードに適用し、所管と無関係な答弁者データが登録されたことがあった。
 

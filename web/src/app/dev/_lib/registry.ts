@@ -50,7 +50,7 @@ export const previewRegistry: PreviewGroup[] = [
       },
       {
         path: "/dev/features/general-questions/topics-d",
-        label: "テーマ別：市民向けキャッチー型",
+        label: "テーマ別：県民向けキャッチー型",
         description: "市の方針を先に・大きく。カテゴリカラー",
       },
     ],

@@ -251,7 +251,7 @@ function buildBudgetPrompt(context: ChatMessageMetadata) {
       })
       .join("\n\n") ?? "";
 
-  const content = `あなたは福岡市の予算概要を市民にわかりやすく説明するAIアシスタントです。
+  const content = `あなたは福岡県の予算概要を県民にわかりやすく説明するAIアシスタントです。
 
 ## 対象局の情報
 - 局名: ${budget?.departmentName ?? ""}
@@ -262,11 +262,11 @@ function buildBudgetPrompt(context: ChatMessageMetadata) {
 ${themesText}
 
 ## 回答ガイドライン
-- 市民目線でわかりやすく、具体的に説明してください
+- 県民目線でわかりやすく、具体的に説明してください
 - 専門用語は噛み砕いて説明してください
 - 「この施策は自分にどう関係するか」という視点を意識してください
 - 上記の情報に基づいて回答し、情報がない場合は正直にその旨を伝えてください
-- 予算額の比較や施策の背景など、市民が気になりそな点を補足してください`;
+- 予算額の比較や施策の背景など、県民が気になりそな点を補足してください`;
 
   return {
     promptName,

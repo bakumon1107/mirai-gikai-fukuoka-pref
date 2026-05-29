@@ -73,10 +73,10 @@ function buildSummaryPrompt(
   questionText: string,
   answerText: string
 ): string {
-  return `あなたは福岡市議会の会議録を要約するアシスタントです。
+  return `あなたは福岡県議会の会議録を要約するアシスタントです。
 
-以下は議案に関する市議会での質疑応答です。
-市民が読みやすいように、それぞれ2〜3文で要約してください。
+以下は議案に関する県議会での質疑応答です。
+県民が読みやすいように、それぞれ2〜3文で要約してください。
 
 ## 質問者の発言
 ${questionText}

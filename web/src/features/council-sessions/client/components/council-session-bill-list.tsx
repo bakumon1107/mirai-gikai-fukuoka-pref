@@ -52,7 +52,7 @@ export function CouncilSessionBillList({ session, bills }: Props) {
         <BillListWithStatusFilter bills={bills} />
       )}
 
-      {/* 市議会リンク */}
+      {/* 県議会リンク */}
       {session.council_url && (
         <div className="flex items-center gap-1 text-[13px] font-medium text-mirai-text">
           {startDate.getFullYear()}年{session.name}に上程された全ての議案は
@@ -62,7 +62,7 @@ export function CouncilSessionBillList({ session, bills }: Props) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1"
           >
-            川崎市議会情報へ
+            福岡県議会情報へ
             <ExternalLink className="h-3 w-3" />
           </a>
         </div>

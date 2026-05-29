@@ -70,7 +70,7 @@ export function SessionBillsPage({ session, bills }: SessionBillsPageProps) {
         </section>
       )}
 
-      {/* 市議会リンク */}
+      {/* 県議会リンク */}
       {session.council_url && (
         <div className="flex items-center gap-1 text-[13px] font-medium text-mirai-text">
           {startDate.getFullYear()}年{session.name}に上程された全ての議案は
@@ -80,7 +80,7 @@ export function SessionBillsPage({ session, bills }: SessionBillsPageProps) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1"
           >
-            福岡市議会情報へ
+            福岡県議会情報へ
             <ExternalLink className="h-3 w-3" />
           </a>
         </div>

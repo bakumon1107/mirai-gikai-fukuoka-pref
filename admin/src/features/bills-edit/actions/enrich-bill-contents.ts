@@ -52,7 +52,7 @@ function buildPrompt(
    - content: 専門用語を含む詳細な説明（Markdown形式）。末尾に「## 参照」セクションを設けて参照URLをリスト形式で記載すること
    - summary: content の要約（500文字以内）
 
-   **ふつうバージョン（normal）** - 一般市民向け:
+   **ふつうバージョン（normal）** - 一般県民向け:
    - title: 現在のタイトル「${existingHardTitle || billName}」に専門用語が含まれていれば日常語に言い換えたタイトル。専門用語がなければそのまま
    - content: hard の content の専門用語を可能な限り平易な言葉に置き換えた説明（Markdown形式）
    - summary: normal の content の要約（500文字以内）
