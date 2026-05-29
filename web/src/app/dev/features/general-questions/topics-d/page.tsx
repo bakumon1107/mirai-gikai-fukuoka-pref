@@ -138,7 +138,7 @@ export default function TopicsDPage() {
         県議会で何が決まった？
       </h1>
       <p className="text-sm text-mirai-text-secondary mb-8">
-        議員が問い、市が答えた。あなたの暮らしに関わる取り組みをまとめました。
+        議員が問い、県が答えた。あなたの暮らしに関わる取り組みをまとめました。
       </p>
 
       <div className="flex flex-col gap-10">
