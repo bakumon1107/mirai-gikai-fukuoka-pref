@@ -16,7 +16,8 @@ export function BudgetOverviewBanner({
   sessionName,
 }: BudgetOverviewBannerProps) {
   const fiscalYear = toFiscalYearLabel(sessionName);
-  const isShoki = sessionName.includes("2月");
+  const monthMatch = sessionName.match(/(\d{1,2})月/);
+  const isShoki = monthMatch ? Number(monthMatch[1]) === 2 : false;
 
   return (
     <Link

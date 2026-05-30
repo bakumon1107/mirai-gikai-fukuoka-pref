@@ -5,6 +5,14 @@ import { ChevronDown } from "lucide-react";
 import type { BudgetTheme, BudgetInitiative } from "../../shared/types";
 import { BudgetInitiativeBadge } from "./budget-initiative-badge";
 
+type BadgeType = "new" | "expanded" | "continued" | null;
+
+function toBadge(value: string | null): BadgeType {
+  return value === "new" || value === "expanded" || value === "continued"
+    ? value
+    : null;
+}
+
 type BudgetThemeCardProps = {
   theme: BudgetTheme & { initiatives: BudgetInitiative[] };
 };
@@ -50,15 +58,7 @@ export function BudgetThemeCard({ theme }: BudgetThemeCardProps) {
                   <span className="font-medium text-sm text-mirai-text leading-snug">
                     {initiative.title}
                   </span>
-                  <BudgetInitiativeBadge
-                    badge={
-                      initiative.badge as
-                        | "new"
-                        | "expanded"
-                        | "continued"
-                        | null
-                    }
-                  />
+                  <BudgetInitiativeBadge badge={toBadge(initiative.badge)} />
                 </div>
                 {initiative.description && (
                   <p className="mt-1 text-sm text-mirai-text-secondary leading-relaxed">
