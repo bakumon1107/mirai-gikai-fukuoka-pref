@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import { getCouncilSessionBySlug } from "@/features/council-sessions/server/loaders/get-council-session-by-slug";
 import { findPreviousCouncilSession } from "@/features/council-sessions/server/repositories/council-session-repository";
-import { getBudgetOverviews } from "@/features/budget-overview/server/loaders/get-budget-overviews";
+import { getBudgetOverviewsWithThemes } from "@/features/budget-overview/server/loaders/get-budget-overviews-with-themes";
 import { hasPublishedOverviewsBySession } from "@/features/budget-overview/server/repositories/budget-repository";
 import { BudgetOverviewList } from "@/features/budget-overview/server/components/budget-overview-list";
+import { BudgetGaiyouView } from "@/features/budget-overview/server/components/budget-gaiyou-view";
 import { BudgetChatClient } from "@/features/budget-overview/client/components/budget-chat-client";
 import { siteConfig } from "@/config/site.config";
 
@@ -29,7 +30,7 @@ export async function generateMetadata({
     return { title: "会期が見つかりません" };
   }
 
-  const overviews = await getBudgetOverviews(session.id);
+  const overviews = await getBudgetOverviewsWithThemes(session.id);
   const isGaiyouStyle = isBudgetGaiyouStyle(overviews);
 
   return {
@@ -68,7 +69,7 @@ export default async function BudgetListPage({ params }: BudgetListPageProps) {
   }
 
   const [overviews, prevSession] = await Promise.all([
-    getBudgetOverviews(session.id),
+    getBudgetOverviewsWithThemes(session.id),
     findPreviousCouncilSession(session.start_date),
   ]);
 
@@ -89,14 +90,13 @@ export default async function BudgetListPage({ params }: BudgetListPageProps) {
         {gaiyouStyle ? (
           <>
             <p className="text-xs font-medium text-mirai-text-muted uppercase tracking-wide mb-1">
-              令和8年度当初予算編成の考え方
+              {fiscalYear}当初予算編成の考え方
             </p>
             <h1 className="text-2xl font-bold text-mirai-text">
               {budgetHeadline}
             </h1>
             <p className="mt-2 text-sm text-mirai-text-secondary">
-              {fiscalYear}当初予算の概要 —
-              4つの柱ごとの主要施策をまとめています。
+              {fiscalYear}当初予算の概要 — 各テーマの主要施策をまとめています。
             </p>
           </>
         ) : (
@@ -111,11 +111,15 @@ export default async function BudgetListPage({ params }: BudgetListPageProps) {
         )}
       </div>
 
-      <BudgetOverviewList
-        overviews={overviews}
-        sessionSlug={session_slug}
-        showDirection={!gaiyouStyle}
-      />
+      {gaiyouStyle ? (
+        <BudgetGaiyouView overviews={overviews} />
+      ) : (
+        <BudgetOverviewList
+          overviews={overviews}
+          sessionSlug={session_slug}
+          showDirection
+        />
+      )}
 
       {/* 前年度予算セクション */}
       {prevSessionWithBudget && (
@@ -149,11 +153,13 @@ export default async function BudgetListPage({ params }: BudgetListPageProps) {
         <BudgetChatClient
           currentDifficulty={currentDifficulty}
           budget={{
-            departmentName: `${session.name} 各局`,
-            themes: overviews.map((o) => ({
-              title: o.department_name,
-              aiSummary: o.direction,
-            })),
+            departmentName: `${session.name} 予算概要`,
+            themes: overviews.flatMap((o) =>
+              o.themes.map((t) => ({
+                title: t.title,
+                aiSummary: t.ai_summary,
+              }))
+            ),
           }}
         />
       )}

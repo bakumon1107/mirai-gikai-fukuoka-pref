@@ -66,9 +66,12 @@ export default async function Home() {
       <CurrentCouncilSession session={currentSession} />
 
       {/* 予算概要バナー */}
-      {activeSession?.slug && (
+      {budgetSessions[0]?.slug && (
         <Container className="pt-6">
-          <BudgetOverviewBanner sessionSlug={activeSession.slug} />
+          <BudgetOverviewBanner
+            sessionSlug={budgetSessions[0].slug}
+            sessionName={budgetSessions[0].name}
+          />
         </Container>
       )}
 

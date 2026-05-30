@@ -3,11 +3,21 @@ import { ArrowRight, BarChart2 } from "lucide-react";
 
 type BudgetOverviewBannerProps = {
   sessionSlug: string;
+  sessionName: string;
 };
+
+function toFiscalYearLabel(sessionName: string): string {
+  const match = sessionName.match(/令和(\d+)年/);
+  return match ? `令和${match[1]}年度` : sessionName;
+}
 
 export function BudgetOverviewBanner({
   sessionSlug,
+  sessionName,
 }: BudgetOverviewBannerProps) {
+  const fiscalYear = toFiscalYearLabel(sessionName);
+  const isShoki = sessionName.includes("2月");
+
   return (
     <Link
       href={`/budget/${sessionSlug}`}
@@ -16,9 +26,15 @@ export function BudgetOverviewBanner({
       <div className="flex items-start gap-3">
         <BarChart2 className="w-6 h-6 text-primary shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-mirai-text">令和8年度 各局の重点施策</p>
+          <p className="font-bold text-mirai-text">
+            {isShoki
+              ? `${fiscalYear} 当初予算の概要`
+              : `${fiscalYear} 各局の重点施策`}
+          </p>
           <p className="mt-0.5 text-sm text-mirai-text-secondary">
-            各局の予算の方向性と主要施策をわかりやすく解説します
+            {isShoki
+              ? "予算編成の考え方と各テーマの主要施策をまとめています"
+              : "各局の予算の方向性と主要施策をわかりやすく解説します"}
           </p>
         </div>
       </div>
