@@ -45,7 +45,7 @@ export function BudgetGaiyouView({ overviews }: BudgetGaiyouViewProps) {
               テーマ情報がありません。
             </p>
           ) : (
-            <ul className="grid gap-4 sm:grid-cols-2">
+            <ul className="flex flex-col gap-4">
               {overview.themes.map((theme) => (
                 <li key={theme.id}>
                   <BudgetThemeCard theme={theme} />

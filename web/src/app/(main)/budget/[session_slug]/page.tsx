@@ -48,6 +48,11 @@ function toFiscalYearLabel(sessionName: string): string {
   return match ? `令和${match[1]}年度` : sessionName;
 }
 
+function toBudgetArchiveLabel(sessionName: string): string {
+  const match = sessionName.match(/令和(\d+)年/);
+  return match ? `令和${match[1]}年度予算` : sessionName;
+}
+
 /** 全概要が同じdirectionを持つ場合＝予算概要スタイル */
 function isBudgetGaiyouStyle(
   overviews: { direction: string | null }[]
@@ -132,7 +137,7 @@ export default async function BudgetListPage({ params }: BudgetListPageProps) {
             className="flex items-center justify-between py-4 px-2 hover:bg-mirai-surface-grouped rounded-lg transition-colors group"
           >
             <span className="font-bold text-mirai-text text-base">
-              {prevSessionWithBudget.name}
+              {toBudgetArchiveLabel(prevSessionWithBudget.name)}
             </span>
             <ChevronRight className="h-5 w-5 text-mirai-text-muted group-hover:translate-x-0.5 transition-transform flex-shrink-0" />
           </Link>
