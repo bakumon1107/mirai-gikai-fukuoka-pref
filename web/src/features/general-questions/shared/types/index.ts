@@ -18,6 +18,7 @@ export type GeneralQuestion = {
   summary: string | null;
   topics: GeneralQuestionTopic[];
   raw_text: string | null;
+  answer_raw_text: string | null;
   source_url: string | null;
   publish_status: string;
   created_at: string;

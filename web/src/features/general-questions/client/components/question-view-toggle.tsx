@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { QuestionChatView } from "./question-chat-view";
 import type { GeneralQuestionTopic } from "../../shared/types";
@@ -29,59 +29,56 @@ function isQuestioner(speaker: string): boolean {
 }
 
 function RawTranscriptContent({
-  rawText,
-  topics,
+  questionerHeader,
+  questionText,
+  answerHeader,
+  answerText,
 }: {
-  rawText: string;
-  topics: GeneralQuestionTopic[];
+  questionerHeader: string;
+  questionText: string;
+  answerHeader: string;
+  answerText: string | null;
 }) {
-  const turns = parseSpeakerTurns(rawText);
-  // Insert topic title dividers at proportionally estimated positions
-  const dividerAt = new Map<number, string>();
-  if (topics.length > 0) {
-    dividerAt.set(0, topics[0].title);
-    for (let i = 1; i < topics.length; i++) {
-      dividerAt.set(
-        Math.floor((turns.length * i) / topics.length),
-        topics[i].title
-      );
-    }
-  }
+  // ◯マーカー付きのテキストを組み立ててパーサーに渡す
+  const combined = [
+    `◯${questionerHeader}　${questionText}`,
+    answerText ? `◯${answerHeader}　${answerText}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const turns = parseSpeakerTurns(combined);
+
   return (
     <div className="flex flex-col gap-4">
       {turns.map((turn, i) => {
-        const topicTitle = dividerAt.get(i);
         const isQ = isQuestioner(turn.speaker);
         return (
-          <Fragment key={`${i}-${turn.speaker}`}>
-            {topicTitle && (
-              <p className="text-center text-xs font-medium text-mirai-text-secondary bg-mirai-surface-muted rounded-full px-3 py-1 mx-auto">
-                {topicTitle}
-              </p>
-            )}
-            <div className={isQ ? "flex justify-end" : "flex"}>
-              <div
-                className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+          <div
+            key={`${i}-${turn.speaker}`}
+            className={isQ ? "flex justify-end" : "flex"}
+          >
+            <div
+              className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                isQ
+                  ? "bg-primary text-primary-foreground rounded-br-sm"
+                  : "bg-card border border-border text-mirai-text rounded-bl-sm"
+              }`}
+            >
+              <p
+                className={`mb-1 text-xs font-medium ${
                   isQ
-                    ? "bg-primary text-primary-foreground rounded-br-sm"
-                    : "bg-card border border-border text-mirai-text rounded-bl-sm"
+                    ? "text-primary-foreground/70"
+                    : "text-mirai-text-secondary"
                 }`}
               >
-                <p
-                  className={`mb-1 text-xs font-medium ${
-                    isQ
-                      ? "text-primary-foreground/70"
-                      : "text-mirai-text-secondary"
-                  }`}
-                >
-                  {turn.speaker}
-                </p>
-                <p className="text-sm leading-relaxed whitespace-pre-wrap">
-                  {turn.text}
-                </p>
-              </div>
+                {turn.speaker}
+              </p>
+              <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                {turn.text}
+              </p>
             </div>
-          </Fragment>
+          </div>
         );
       })}
     </div>
@@ -91,13 +88,37 @@ function RawTranscriptContent({
 interface QuestionViewToggleProps {
   topics: GeneralQuestionTopic[];
   rawText: string;
+  answerRawText?: string | null;
+  questionerName: string;
+  questionerNumber?: number | null;
 }
 
 export function QuestionViewToggle({
   topics,
   rawText,
+  answerRawText,
+  questionerName,
+  questionerNumber,
 }: QuestionViewToggleProps) {
   const [mode, setMode] = useState<"summary" | "raw">("summary");
+
+  // 発言者ヘッダー（◯の後に続く部分）
+  const questionerHeader = questionerNumber
+    ? `${questionerNumber}番（${questionerName}）登壇`
+    : `${questionerName}議員登壇`;
+
+  const first = topics[0];
+  const answererHeader = first
+    ? `${first.answerer_role}（${first.answerer_name}）登壇`
+    : "知事登壇";
+
+  // 【知事 氏名】のような追加発言マーカーを ◯知事（氏名）登壇　に変換してパーサーへ渡す
+  const normalizedAnswer = answerRawText
+    ? answerRawText.replace(
+        /\n\n?【([^\s】]+)\s([^】]+)】\n/g,
+        "\n◯$1（$2）登壇　"
+      )
+    : null;
 
   return (
     <div>
@@ -120,7 +141,12 @@ export function QuestionViewToggle({
       {mode === "summary" ? (
         <QuestionChatView topics={topics} />
       ) : (
-        <RawTranscriptContent rawText={rawText} topics={topics} />
+        <RawTranscriptContent
+          questionerHeader={questionerHeader}
+          questionText={rawText}
+          answerHeader={answererHeader}
+          answerText={normalizedAnswer}
+        />
       )}
     </div>
   );

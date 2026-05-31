@@ -9,6 +9,9 @@ import {
   Building2,
   Trophy,
   Globe,
+  Sprout,
+  Scale,
+  Landmark,
 } from "lucide-react";
 import Link from "next/link";
 import type { GeneralQuestion } from "../../shared/types";
@@ -27,6 +30,9 @@ const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
   Leaf,
   Trophy,
   Globe,
+  Sprout,
+  Scale,
+  Landmark,
   Circle,
 };
 
@@ -81,6 +87,30 @@ const CATEGORY_STYLE: Record<
     header: "bg-white/60 border-amber-200",
     text: "text-amber-700",
     iconBg: "bg-amber-100",
+  },
+  "観光・地域振興": {
+    card: "bg-amber-50 border-amber-200",
+    header: "bg-white/60 border-amber-200",
+    text: "text-amber-700",
+    iconBg: "bg-amber-100",
+  },
+  "産業・農林水産": {
+    card: "bg-lime-50 border-lime-200",
+    header: "bg-white/60 border-lime-200",
+    text: "text-lime-700",
+    iconBg: "bg-lime-100",
+  },
+  "警察・人権": {
+    card: "bg-slate-50 border-slate-200",
+    header: "bg-white/60 border-slate-200",
+    text: "text-slate-700",
+    iconBg: "bg-slate-100",
+  },
+  "行政・県政": {
+    card: "bg-cyan-50 border-cyan-200",
+    header: "bg-white/60 border-cyan-200",
+    text: "text-cyan-700",
+    iconBg: "bg-cyan-100",
   },
 };
 
