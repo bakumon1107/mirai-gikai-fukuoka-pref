@@ -115,8 +115,8 @@ export function QuestionViewToggle({
   // 【知事 氏名】のような追加発言マーカーを ◯知事（氏名）登壇　に変換してパーサーへ渡す
   const normalizedAnswer = answerRawText
     ? answerRawText.replace(
-        /\n\n?【([^\s】]+)\s([^】]+)】\n/g,
-        "\n◯$1（$2）登壇　"
+        /(^|\n)【([^\s】]+)\s+([^】]+)】\s*/g,
+        "$1◯$2（$3）登壇　"
       )
     : null;
 

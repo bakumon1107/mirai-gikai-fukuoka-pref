@@ -134,7 +134,7 @@ def collect_speech(lines: list[str], start: int) -> tuple[str, int]:
         if m:
             rest = m.group(1).strip()
             body_lines[0] = rest
-    text = "\n".join(l.strip() for l in body_lines if l.strip())
+    text = "\n".join(line_text.strip() for line_text in body_lines if line_text.strip())
     return text, i
 
 
@@ -198,8 +198,8 @@ def parse_file(path: str, session_id: str, day: int, limit: int | None = None) -
             i = next_i
             continue
 
-        # 答弁者の発言行
-        answerer_match = re.match(r"◯(知事|警察本部長|教育長)（([^）]+)）登壇", line)
+        # 答弁者の発言行（全役職対応）
+        answerer_match = re.match(r"◯[^（\s]+（[^）]+）登壇", line)
         if answerer_match and pending:
             role, aname = extract_answerer(line)
             speech_text, next_i = collect_speech(lines, i)
