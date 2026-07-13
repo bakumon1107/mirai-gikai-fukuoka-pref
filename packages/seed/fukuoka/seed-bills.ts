@@ -77,6 +77,7 @@ async function main() {
 
   let billUpsert = 0;
   let contentUpsert = 0;
+  let failures = 0;
 
   for (const bill of bills) {
     const label = `${bill.billNumber}「${bill.name}」`;
@@ -92,6 +93,7 @@ async function main() {
 
     if (findError) {
       console.error(`❌ ${label} 既存確認エラー:`, findError.message);
+      failures++;
       continue;
     }
 
@@ -125,6 +127,7 @@ async function main() {
         .eq("id", existing.id);
       if (error) {
         console.error(`❌ ${label} 更新エラー:`, error.message);
+        failures++;
         continue;
       }
       billId = existing.id;
@@ -136,6 +139,7 @@ async function main() {
         .single();
       if (error || !inserted) {
         console.error(`❌ ${label} 挿入エラー:`, error?.message);
+        failures++;
         continue;
       }
       billId = inserted.id;
@@ -160,6 +164,7 @@ async function main() {
           `    ❌ ${bill.billNumber} 本文(${c.difficulty_level})エラー:`,
           error.message
         );
+        failures++;
         continue;
       }
       console.log(`    ✅ 本文(${c.difficulty_level})`);
@@ -170,7 +175,13 @@ async function main() {
   console.log("\n🎉 完了");
   console.log(`  議案: ${billUpsert} 件`);
   console.log(`  本文: ${contentUpsert} 件`);
+  console.log(`  失敗: ${failures} 件`);
   if (isDryRun) console.log("  （DRY RUN のため実際には書き込んでいません）");
+
+  // 部分失敗があれば非0で終了（CI等で検知できるようにする）
+  if (failures > 0) {
+    process.exit(1);
+  }
 }
 
 // biome-ignore lint/suspicious/noConsole: seed script
