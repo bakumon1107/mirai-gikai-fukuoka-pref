@@ -1,10 +1,12 @@
 import { Container } from "@/components/layouts/container";
 import { About } from "@/components/top/about";
+import { BannerAccordion } from "@/components/top/banner-accordion";
 import { BudgetOverviewBanner } from "@/components/top/budget-overview-banner";
 import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { Hero } from "@/components/top/hero";
 import { JimuJigyoArchiveSection } from "@/components/top/jimu-jigyo-archive-section";
 import { JimuJigyoBanner } from "@/components/top/jimu-jigyo-banner";
+import { PrefFinanceBanner } from "@/components/top/pref-finance-banner";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
 import { TeamMirai } from "@/components/top/team-mirai";
 import { siteConfig } from "@/config/site.config";
@@ -67,36 +69,38 @@ export default async function Home() {
       {/* 本日の定例会セクション */}
       <CurrentCouncilSession session={currentSession} />
 
-      {/* 予算概要バナー */}
-      {budgetSessions[0]?.slug && (
-        <Container className="pt-6">
-          <BudgetOverviewBanner
-            sessionSlug={budgetSessions[0].slug}
-            sessionName={budgetSessions[0].name}
+      {/* 知事記者会見バナー */}
+      {latestPressConference && (
+        <Container className="pt-4">
+          <PressConferenceNoticeBanner
+            pressConference={latestPressConference}
           />
         </Container>
       )}
 
       {/* 一般質問バナー */}
       {latestQuestionsSlug && (
-        <Container className="pt-3">
+        <Container className="pt-6">
           <GeneralQuestionsBanner sessionSlug={latestQuestionsSlug} />
         </Container>
       )}
 
-      {/* 事務事業評価バナー */}
+      {/* 予算・事務事業評価・お金の使い道（まとめてアコーディオン） */}
       <Container className="pt-3">
-        <JimuJigyoBanner />
+        <BannerAccordion
+          title="福岡県の予算・評価・お金の使い道"
+          description="予算の概要、事務事業評価、財政の状況をまとめて見る"
+        >
+          {budgetSessions[0]?.slug && (
+            <BudgetOverviewBanner
+              sessionSlug={budgetSessions[0].slug}
+              sessionName={budgetSessions[0].name}
+            />
+          )}
+          <JimuJigyoBanner />
+          <PrefFinanceBanner />
+        </BannerAccordion>
       </Container>
-
-      {/* 知事記者会見バナー */}
-      {latestPressConference && (
-        <Container className="pt-3">
-          <PressConferenceNoticeBanner
-            pressConference={latestPressConference}
-          />
-        </Container>
-      )}
 
       {/* 議案一覧セクション */}
       <Container className="">
