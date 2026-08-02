@@ -9,9 +9,9 @@ description: 福岡県議会 会議録検索システム（dbsr.jp）から委�
 
 ## 全体像（パイプライン）
 
-```
+```text
 ① スクレイプ   scrape-committee-minutes.ts   → docs/data/committee-minutes/<年>/<開催日>_<slug>_<source_document_id>.json（原文）
-② seed        seed-committee-minutes.ts     → committee_meetings / committee_meeting_topics（原文＋機械抽出議題）
+② seed        seed-committee-meetings.ts    → committee_meetings / committee_meeting_topics（原文＋機械抽出議題）
 ③ AI生成      committee-minutes-ai スキル    → docs/data/committee-minutes/<年>/ai/<source_document_id>.json（要約・議題要約・simpleText）
 ④ ユーザー確認（必須）→ ⑤ apply-committee-ai-content.ts でDB反映
 ⑥ 公開        publish_status を published に更新（本番＋ローカル）

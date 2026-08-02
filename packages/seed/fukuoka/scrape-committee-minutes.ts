@@ -31,6 +31,7 @@ import {
   buildRawText,
   CURRENT_COMMITTEES,
   extractCsrfToken,
+  extractDocName,
   extractSessionPath,
   NEW_SITE_COMMITTEES,
   NEW_SITE_ID_OFFSET,
@@ -214,6 +215,11 @@ async function main(): Promise<void> {
 
   // --committee sc,nr のように対象委員会コードを絞れる（省略時は全現行委員会）
   const commArgIndex = process.argv.indexOf("--committee");
+  if (commArgIndex >= 0 && !process.argv[commArgIndex + 1]) {
+    throw new Error(
+      "--committee には委員会コードを指定してください（例: --committee sc,nr）"
+    );
+  }
   const targetCodes =
     commArgIndex >= 0
       ? new Set(
@@ -223,6 +229,14 @@ async function main(): Promise<void> {
             .filter(Boolean)
         )
       : null;
+  if (targetCodes) {
+    const known = new Set(NEW_SITE_COMMITTEES.map((c) => c.code));
+    for (const code of targetCodes) {
+      if (!known.has(code)) {
+        console.warn(`未知の委員会コードを無視します: ${code}`);
+      }
+    }
+  }
   const committees = targetCodes
     ? NEW_SITE_COMMITTEES.filter((c) => targetCodes.has(c.code))
     : NEW_SITE_COMMITTEES;
@@ -262,6 +276,9 @@ async function main(): Promise<void> {
     for (const doc of docs) {
       const key = `${committee.slug}_${doc.date}`;
       if (scrapedKeys.has(key)) {
+        console.log(
+          `スキップ（取得済み）: ${committee.slug} ${doc.date} (Id=${doc.documentId})`
+        );
         skipped++;
         continue;
       }
@@ -278,10 +295,14 @@ async function main(): Promise<void> {
       // 実Id（source_url用）と、旧id空間との衝突を避けたsource_document_id
       const rawId = doc.documentId;
       const documentId = rawId + NEW_SITE_ID_OFFSET;
+      // 文書ページの実際の会議名を優先。取れなければ年＋委員会名で合成する
+      const title =
+        extractDocName(pageHtml) ??
+        `令和${year - 2018}年　${committee.dbsrName}　本文`;
 
       const json: MeetingJson = {
         documentId,
-        title: `令和${year - 2018}年　${committee.dbsrName}　本文`,
+        title,
         committee: {
           dbsrName: committee.dbsrName,
           currentName: committee.currentName,

@@ -504,18 +504,28 @@ export function extractSessionPath(html: string): string | null {
   return m ? m[1] : null;
 }
 
-/** 新サイトの検索結果一覧から {DocumentId, 開催日} を抽出する（開催日順は新しい順） */
+/**
+ * 新サイトの検索結果一覧から {DocumentId, 開催日} を抽出する（開催日順は新しい順）。
+ * 文書リンクの位置で区切り、「そのリンクから次のリンクまで」の範囲にある開催日だけを
+ * 対応づける。開催日を欠く行が次の結果の日付を拾ってしまうのを防ぐ。
+ */
 export function parseSearchListPage(
   html: string
 ): { documentId: number; date: string }[] {
   const docs: { documentId: number; date: string }[] = [];
   const seen = new Set<number>();
-  const re = /Template=document&Id=(\d+)[\s\S]*?開催日:\s*(\d{4}-\d{2}-\d{2})/g;
-  for (const m of html.matchAll(re)) {
-    const id = Number(m[1]);
+  const matches = [...html.matchAll(/Template=document&Id=(\d+)/g)];
+  for (let i = 0; i < matches.length; i++) {
+    const id = Number(matches[i][1]);
     if (seen.has(id)) continue;
+    const start = matches[i].index ?? 0;
+    const end = matches[i + 1]?.index ?? html.length;
+    const dateMatch = html
+      .slice(start, end)
+      .match(/開催日:\s*(\d{4}-\d{2}-\d{2})/);
+    if (!dateMatch) continue; // このブロックに開催日が無ければ採用しない
     seen.add(id);
-    docs.push({ documentId: id, date: m[2] });
+    docs.push({ documentId: id, date: dateMatch[1] });
   }
   return docs;
 }

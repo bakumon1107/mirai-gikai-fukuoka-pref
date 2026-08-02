@@ -380,6 +380,12 @@ const NEW_DOC_HTML = `
     <p class="voice__text">◯岩尾企画総務課長　御説明申し上げます。</p>
   </div>
 </li>
+<li>
+  <div class="voice voice-text voice_text" data-voice_code="3">
+    <div class="voice__detail voice-detail">3:</div>
+    <p class="voice__text">令和八年五月十四日（木曜日）</p>
+  </div>
+</li>
 `;
 
 describe("extractCsrfToken", () => {
@@ -417,7 +423,7 @@ describe("parseSearchListPage", () => {
 describe("parseDocumentPage", () => {
   const speeches = parseDocumentPage(NEW_DOC_HTML);
   it("data-voice_code を発言番号として抽出する", () => {
-    expect(speeches.map((s) => s.voiceNo)).toEqual([1, 2]);
+    expect(speeches.map((s) => s.voiceNo)).toEqual([1, 2, 3]);
   });
   it("◯話者ラベルと本文を分離する", () => {
     expect(speeches[0].speakerLabel).toBe("吉田健一朗委員長");
@@ -430,6 +436,12 @@ describe("parseDocumentPage", () => {
   it("執行部の発言を分類する", () => {
     expect(speeches[1].speakerLabel).toBe("岩尾企画総務課長");
     expect(speeches[1].speakerType).toBe("executive");
+  });
+  it("◯が無い地の文はspeakerLabel=null・unknownで全文を保持する", () => {
+    expect(speeches[2].voiceNo).toBe(3);
+    expect(speeches[2].speakerLabel).toBeNull();
+    expect(speeches[2].speakerType).toBe("unknown");
+    expect(speeches[2].text).toBe("令和八年五月十四日（木曜日）");
   });
 });
 
