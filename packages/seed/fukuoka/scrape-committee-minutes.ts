@@ -262,12 +262,21 @@ async function main(): Promise<void> {
       );
       continue;
     }
-    const docs = parseSearchListPage(html).filter((d) =>
-      d.date.startsWith(`${year}-`)
-    );
+    const allDocs = parseSearchListPage(html);
+    const docs = allDocs.filter((d) => d.date.startsWith(`${year}-`));
     console.log(
       `${committee.dbsrName}: ${year}年の文書 ${docs.length}件（セッション=${sessionPath}）`
     );
+    // 検索結果は新しい順。1ページ目に対象年より古い文書が1件でもあれば、対象年は
+    // すべて1ページ目に含まれる。逆に1ページ目が全て対象年だと、対象年の文書が
+    // 次ページに残っている可能性がある（新サイトのページ送りは未対応）。常任委は
+    // 年間の会議数が1ページ（10件以上）に収まるため通常は起きないが、念のため警告する。
+    if (allDocs.length > 0 && !allDocs.some((d) => d.date < `${year}-01-01`)) {
+      console.warn(
+        `${committee.dbsrName}: 1ページ目が全て${year}年の文書です。ページ送り未対応のため、` +
+          `${year}年の会議を取りこぼしている可能性があります（要確認）。`
+      );
+    }
 
     // cabinetIdはMeetingJson互換のため既存メタ（slug一致）から補完する
     const cabinetId =
