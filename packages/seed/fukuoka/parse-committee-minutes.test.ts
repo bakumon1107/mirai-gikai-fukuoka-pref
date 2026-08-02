@@ -1,15 +1,23 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildNewSourceUrl,
   buildRawText,
   buildSourceUrl,
   classifySpeaker,
   committeeFromTitle,
   decodeEntities,
+  extractCsrfToken,
+  extractDocName,
   extractHitCount,
   extractSessionId,
+  extractSessionPath,
   extractTopics,
+  NEW_SITE_COMMITTEES,
+  NEW_SITE_ID_OFFSET,
   parseDocPage,
+  parseDocumentPage,
   parseListPage,
+  parseSearchListPage,
   type Speech,
   splitSpeakerLabel,
 } from "./parse-committee-minutes";
@@ -339,5 +347,117 @@ describe("decodeEntities", () => {
     expect(decodeEntities("a &amp;b &lt;c&gt; &quot;d&quot;")).toBe(
       'a &b <c> "d"'
     );
+  });
+});
+
+// ============================================================================
+// 新dbsr.jp（Laravel版）向けフィクスチャとテスト
+// ============================================================================
+
+// 検索結果一覧（/100000 のレスポンス抜粋）。リンクにセッションパスとId、
+// 開催日が入る。同一Idのアンカーが複数出ても一意化される想定。
+const NEW_LIST_HTML = `
+<a href="/106343?Template=document&Id=4580#one">令和８年　総務企画地域振興委員会　本文</a>
+<span class="result-title__date">開催日:2026-05-14</span>
+<a href="/106343?Template=document&Id=4579#one">令和８年　総務企画地域振興委員会　本文</a>
+<span class="result-title__date">開催日:2026-04-14</span>
+`;
+
+// 文書ページ（?Template=document&Id=…）の本文抜粋。発言番号は
+// data-voice_code、本文は <p class="voice__text"> に ◯話者　本文<br/>。
+const NEW_DOC_HTML = `
+<div class="command__docname">令和８年　総務企画地域振興委員会　本文</div>
+<li title="◯吉田健一朗委員長">
+  <div class="voice voice-text voice_text" data-voice_code="1">
+    <div class="voice__detail voice-detail">1:</div>
+    <p class="voice__text">◯吉田健一朗委員長　それでは、開会いたします。<br />
+　本日の議題を確認願います。<br /></p>
+  </div>
+</li>
+<li title="◯岩尾企画総務課長">
+  <div class="voice voice-text voice_text" data-voice_code="2">
+    <div class="voice__detail voice-detail">2:</div>
+    <p class="voice__text">◯岩尾企画総務課長　御説明申し上げます。</p>
+  </div>
+</li>
+`;
+
+describe("extractCsrfToken", () => {
+  it("検索フォームの _token を取り出す", () => {
+    const html = '<input type="hidden" name="_token" value="abc123XYZ">';
+    expect(extractCsrfToken(html)).toBe("abc123XYZ");
+  });
+  it("トークンが無ければnull", () => {
+    expect(extractCsrfToken("<form></form>")).toBeNull();
+  });
+});
+
+describe("extractSessionPath", () => {
+  it("文書リンクからセッションパスを取り出す", () => {
+    expect(extractSessionPath(NEW_LIST_HTML)).toBe("106343");
+  });
+  it("該当リンクが無ければnull", () => {
+    expect(extractSessionPath("<a href='/foo'>x</a>")).toBeNull();
+  });
+});
+
+describe("parseSearchListPage", () => {
+  it("Idと開催日を新しい順に一意抽出する", () => {
+    expect(parseSearchListPage(NEW_LIST_HTML)).toEqual([
+      { documentId: 4580, date: "2026-05-14" },
+      { documentId: 4579, date: "2026-04-14" },
+    ]);
+  });
+  it("同一Idの重複は除去する", () => {
+    const dup = `${NEW_LIST_HTML}<a href="/106343?Template=document&Id=4580#one">再掲</a><span class="result-title__date">開催日:2026-05-14</span>`;
+    expect(parseSearchListPage(dup)).toHaveLength(2);
+  });
+});
+
+describe("parseDocumentPage", () => {
+  const speeches = parseDocumentPage(NEW_DOC_HTML);
+  it("data-voice_code を発言番号として抽出する", () => {
+    expect(speeches.map((s) => s.voiceNo)).toEqual([1, 2]);
+  });
+  it("◯話者ラベルと本文を分離する", () => {
+    expect(speeches[0].speakerLabel).toBe("吉田健一朗委員長");
+    expect(speeches[0].speakerType).toBe("chairperson");
+    expect(speeches[0].text).toContain("それでは、開会いたします。");
+  });
+  it("<br />を改行に変換する", () => {
+    expect(speeches[0].text).toContain("\n");
+  });
+  it("執行部の発言を分類する", () => {
+    expect(speeches[1].speakerLabel).toBe("岩尾企画総務課長");
+    expect(speeches[1].speakerType).toBe("executive");
+  });
+});
+
+describe("extractDocName", () => {
+  it("会議名を取り出す", () => {
+    expect(extractDocName(NEW_DOC_HTML)).toBe(
+      "令和８年　総務企画地域振興委員会　本文"
+    );
+  });
+});
+
+describe("buildNewSourceUrl", () => {
+  it("実Idで文書URLを組み立てる（セッションパスは任意）", () => {
+    expect(buildNewSourceUrl(4580)).toBe(
+      "https://www.pref.fukuoka.dbsr.jp/1?Template=document&Id=4580"
+    );
+  });
+});
+
+describe("NEW_SITE_COMMITTEES / NEW_SITE_ID_OFFSET", () => {
+  it("委員会コードとslugが対応している", () => {
+    const sc = NEW_SITE_COMMITTEES.find((c) => c.code === "sc");
+    const nr = NEW_SITE_COMMITTEES.find((c) => c.code === "nr");
+    expect(sc?.slug).toBe("somu-kikaku-chiiki");
+    expect(nr?.slug).toBe("norin-suisan");
+  });
+  it("オフセットで実Idとsource_document_idが分離される", () => {
+    expect(4580 + NEW_SITE_ID_OFFSET).toBe(1004580);
+    expect(NEW_SITE_ID_OFFSET).toBeGreaterThanOrEqual(1_000_000);
   });
 });

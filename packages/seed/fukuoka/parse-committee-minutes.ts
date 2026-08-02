@@ -414,3 +414,156 @@ export function buildRawText(speeches: Speech[]): string {
     .map((s) => (s.speakerLabel ? `◯${s.speakerLabel}　${s.text}` : s.text))
     .join("\n\n");
 }
+
+// ============================================================================
+// 新dbsr.jp（Laravel版・2026年リニューアル）向けのパース
+//
+// 旧システム（URLパスにセッションID＋DocumentID）から、検索フォームを
+// /100000 にPOSTしてセッションパスを発行し、
+// /<session>?Template=document&Id=<Id> で本文を得る方式に変わった。
+// - 委員会は CabinetName[] のコード（sc/nr/bu…）で絞り込む
+// - 本文は <p class="voice__text"> に ◯話者　本文（<br />区切り）で入る
+// - 発言番号は data-voice_code 属性
+// ============================================================================
+
+/** 新サイトの現行委員会（CabinetName[] コード → slug） */
+export const NEW_SITE_COMMITTEES: {
+  code: string;
+  dbsrName: string;
+  currentName: string;
+  slug: string;
+  type: CommitteeType;
+}[] = [
+  {
+    code: "sc",
+    dbsrName: "総務企画地域振興委員会",
+    currentName: "総務企画地域振興委員会",
+    slug: "somu-kikaku-chiiki",
+    type: "standing",
+  },
+  {
+    code: "ko_2",
+    dbsrName: "厚生環境委員会",
+    currentName: "厚生環境委員会",
+    slug: "kosei-kankyo",
+    type: "standing",
+  },
+  {
+    code: "cl",
+    dbsrName: "商工労働委員会",
+    currentName: "商工労働委員会",
+    slug: "shoko-rodo",
+    type: "standing",
+  },
+  {
+    code: "nr",
+    dbsrName: "農林水産委員会",
+    currentName: "農林水産委員会",
+    slug: "norin-suisan",
+    type: "standing",
+  },
+  {
+    code: "ke",
+    dbsrName: "県土整備委員会",
+    currentName: "県土整備委員会",
+    slug: "kendo-seibi",
+    type: "standing",
+  },
+  {
+    code: "kt",
+    dbsrName: "建築都市委員会",
+    currentName: "建築都市委員会",
+    slug: "kenchiku-toshi",
+    type: "standing",
+  },
+  {
+    code: "bu",
+    dbsrName: "文教委員会",
+    currentName: "文教委員会",
+    slug: "bunkyo",
+    type: "standing",
+  },
+  {
+    code: "pl",
+    dbsrName: "警察委員会",
+    currentName: "警察委員会",
+    slug: "keisatsu",
+    type: "standing",
+  },
+];
+
+/** 検索フォーム(search-top)からCSRFトークン(_token)を取り出す */
+export function extractCsrfToken(html: string): string | null {
+  const m = html.match(/name="_token"[^>]*value="([^"]+)"/);
+  return m ? m[1] : null;
+}
+
+/** 検索結果一覧HTMLから発行済みセッションパス（例: 106343）を取り出す */
+export function extractSessionPath(html: string): string | null {
+  const m = html.match(/\/(\d{4,})\?Template=document/);
+  return m ? m[1] : null;
+}
+
+/** 新サイトの検索結果一覧から {DocumentId, 開催日} を抽出する（開催日順は新しい順） */
+export function parseSearchListPage(
+  html: string
+): { documentId: number; date: string }[] {
+  const docs: { documentId: number; date: string }[] = [];
+  const seen = new Set<number>();
+  const re = /Template=document&Id=(\d+)[\s\S]*?開催日:\s*(\d{4}-\d{2}-\d{2})/g;
+  for (const m of html.matchAll(re)) {
+    const id = Number(m[1]);
+    if (seen.has(id)) continue;
+    seen.add(id);
+    docs.push({ documentId: id, date: m[2] });
+  }
+  return docs;
+}
+
+/** 新サイトの文書ページ(<p class="voice__text">)から全発言を抽出する */
+export function parseDocumentPage(html: string): Speech[] {
+  const speeches: Speech[] = [];
+  const voiceRe =
+    /data-voice_code="(\d+)"[\s\S]*?<p class="voice__text">([\s\S]*?)<\/p>/g;
+  for (const m of html.matchAll(voiceRe)) {
+    const voiceNo = Number(m[1]);
+    const inner = m[2]
+      .replace(/\r?\n/g, "")
+      .replace(/<br\s*\/?>/g, "\n")
+      .replace(/<[^>]+>/g, "");
+    const text = decodeEntities(inner)
+      .split("\n")
+      .map((line) => line.replace(/\s+$/, ""))
+      .join("\n")
+      .trim();
+    if (text.length === 0) continue;
+    const { speakerLabel, body } = splitSpeakerLabel(text);
+    speeches.push({
+      voiceNo,
+      speakerLabel,
+      speakerType: speakerLabel ? classifySpeaker(speakerLabel) : "unknown",
+      text: speakerLabel ? body : text,
+    });
+  }
+  return speeches;
+}
+
+/** 文書ページの会議名（例:「令和８年　総務企画地域振興委員会　本文」） */
+export function extractDocName(html: string): string | null {
+  const m = html.match(/command__docname"[^>]*>([^<]+)</);
+  return m ? decodeEntities(m[1]).trim() : null;
+}
+
+/** 新サイトの文書閲覧URL（セッションパスは任意の数値でよい・引数は実Id） */
+export function buildNewSourceUrl(rawDocumentId: number): string {
+  return `https://www.pref.fukuoka.dbsr.jp/1?Template=document&Id=${rawDocumentId}`;
+}
+
+/**
+ * 新サイトのDocumentId（実Id）を source_document_id に採番するためのオフセット。
+ * 2026年のサイトリニューアルで実Idが再採番され、旧サイト由来の既存
+ * source_document_id と衝突する（例: 新sc 4580 = 旧 厚生環境 4580）。
+ * 新サイト由来の会議は「実Id + このオフセット」で採番し、id空間を分離する。
+ * source_url は buildNewSourceUrl(実Id) で本物のリンクを保つ。
+ */
+export const NEW_SITE_ID_OFFSET = 1_000_000;

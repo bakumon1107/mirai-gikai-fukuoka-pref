@@ -6,28 +6,36 @@
  *
  * 実行例:
  *   cd packages/seed
- *   npx tsx fukuoka/scrape-committee-minutes.ts            # 2026年分を取得
+ *   npx tsx fukuoka/scrape-committee-minutes.ts                 # 2026年・全現行委員会
  *   npx tsx fukuoka/scrape-committee-minutes.ts --year 2026
+ *   npx tsx fukuoka/scrape-committee-minutes.ts --committee sc,nr  # 委員会コード指定
  *
- * 特徴:
- * - セッションはトップページ取得時に発行されるcookie＋URLパスのIDで維持する
- * - リクエスト間に1秒のウェイトを入れる（サーバー負荷への配慮）
- * - 取得済みのDocumentIDはスキップするため再実行しても差分のみ取得する
+ * 新サイト（Laravel版・2026年リニューアル）の取得フロー:
+ * 1. GET /                    … cookie（XSRF-TOKEN, laravel_session）を受け取る
+ * 2. GET /?Template=search-top … 検索フォームのCSRFトークン(_token)を得る
+ * 3. POST /100000            … CabinetName[]=<コード> で委員会を絞り込み一覧を得る。
+ *                              レスポンス内のリンクにセッションパス(/106343…)が入る
+ * 4. GET /<session>?Template=document&Id=<Id> … 本文HTMLを得る
+ *
+ * 注意:
+ * - リクエスト間に2秒のウェイトを入れる（サーバー負荷への配慮）
+ * - 旧サイトからのリニューアルでDocumentIdの採番が変わったため、取得済み判定は
+ *   DocumentIdではなく「開催日＋委員会slug」で行う（同一会議の重複保存を防ぐ）
  */
 
 import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import {
+  buildNewSourceUrl,
   buildRawText,
-  buildSourceUrl,
   CURRENT_COMMITTEES,
-  committeeFromTitle,
-  extractHitCount,
-  extractSessionId,
-  type ListedDoc,
-  parseDocPage,
-  parseListPage,
+  extractCsrfToken,
+  extractSessionPath,
+  NEW_SITE_COMMITTEES,
+  NEW_SITE_ID_OFFSET,
+  parseDocumentPage,
+  parseSearchListPage,
   type Speech,
 } from "./parse-committee-minutes";
 
@@ -63,10 +71,26 @@ function sleep(ms: number): Promise<void> {
   return new Promise((r) => setTimeout(r, ms));
 }
 
-/** cookieを維持しつつ1秒間隔でHTMLを取得する簡易クライアント */
+/** cookieを維持しつつ2秒間隔でHTMLを取得する簡易クライアント */
 class DbsrClient {
-  private cookie = "";
-  private sessionId = "";
+  /** name → value のcookieジャー（XSRF-TOKEN, laravel_session 等を保持） */
+  private cookies = new Map<string, string>();
+
+  private cookieHeader(): string {
+    return [...this.cookies.entries()]
+      .map(([k, v]) => `${k}=${v}`)
+      .join("; ");
+  }
+
+  private storeCookies(res: Response): void {
+    // Node 18+ の getSetCookie() で複数の Set-Cookie を個別に受け取る
+    for (const line of res.headers.getSetCookie()) {
+      const pair = line.split(";")[0];
+      const eq = pair.indexOf("=");
+      if (eq <= 0) continue;
+      this.cookies.set(pair.slice(0, eq), pair.slice(eq + 1));
+    }
+  }
 
   private async request(url: string, body?: URLSearchParams): Promise<string> {
     for (let attempt = 0; ; attempt++) {
@@ -76,7 +100,7 @@ class DbsrClient {
         res = await fetch(url, {
           method: body ? "POST" : "GET",
           headers: {
-            ...(this.cookie ? { Cookie: this.cookie } : {}),
+            ...(this.cookies.size ? { Cookie: this.cookieHeader() } : {}),
             ...(body
               ? { "Content-Type": "application/x-www-form-urlencoded" }
               : {}),
@@ -118,76 +142,66 @@ class DbsrClient {
       if (!res.ok) {
         throw new Error(`HTTP ${res.status} for ${url}`);
       }
-      const setCookie = res.headers.get("set-cookie");
-      if (setCookie) {
-        this.cookie = setCookie.split(";")[0];
-      }
+      this.storeCookies(res);
       return res.text();
     }
   }
 
-  /** トップページにアクセスしてセッションを開始する */
-  async init(): Promise<void> {
-    const html = await this.request(`${BASE_URL}/index.php/`);
-    const sid = extractSessionId(html);
-    if (!sid) {
-      throw new Error("セッションIDを取得できませんでした");
-    }
-    this.sessionId = sid;
-  }
+  private csrfToken = "";
 
-  private sessionUrl(query = ""): string {
-    return `${BASE_URL}/index.php/${this.sessionId}${query}`;
+  /** トップページと検索フォームにアクセスし、cookieとCSRFトークンを得る */
+  async init(): Promise<void> {
+    await this.request(`${BASE_URL}/`);
+    const searchTop = await this.request(`${BASE_URL}/?Template=search-top`);
+    const token = extractCsrfToken(searchTop);
+    if (!token) {
+      throw new Error("CSRFトークン(_token)を取得できませんでした");
+    }
+    this.csrfToken = token;
   }
 
   /**
-   * 現行委員会×本文×指定年以降で検索条件を設定する。
-   * 会議名・分類・期間は1回のPOSTでまとめて指定できる（実機で確認済み）。
+   * 委員会コード(CabinetName)で本文を絞り込み検索する。
+   * レスポンスHTMLとセッションパスを返す。
    */
-  async applySearchFilter(year: number): Promise<string> {
+  async searchCommittee(
+    code: string
+  ): Promise<{ html: string; sessionPath: string | null }> {
     const params = new URLSearchParams();
-    for (const c of CURRENT_COMMITTEES) {
-      params.append("Cabinet[]", String(c.cabinetId));
-    }
-    params.append("Class[]", "3"); // 本文のみ（名簿・資料・目次を除く）
-    params.set("TermStartYear", String(year));
-    params.set("TermStartMonth", "1");
-    params.set("TermStartDay", "1");
-    params.set("Template", "List");
-    params.set("ListType", "Doc");
-    params.set("QueryType", "Refine");
-    return this.request(this.sessionUrl(), params);
+    params.set("_token", this.csrfToken);
+    params.set("QueryType", "new");
+    params.set("Template", "list");
+    params.set("ListType", "text");
+    params.set("Phrase", "");
+    params.append("CabinetName[]", code);
+    const html = await this.request(`${BASE_URL}/100000`, params);
+    return { html, sessionPath: extractSessionPath(html) };
   }
 
-  async fetchListPage(page: number): Promise<string> {
-    return this.request(this.sessionUrl(`?Template=list&Page=${page}`));
-  }
-
-  /** 文書をセッションにセットし、全発言のHTMLを取得する */
-  async fetchDocument(documentId: number): Promise<string> {
-    const frameHtml = await this.request(
-      this.sessionUrl(
-        `?Template=doc-all-frame&VoiceType=all&DocumentID=${documentId}`
-      )
+  /** セッションパス配下の文書ページ（本文）HTMLを取得する */
+  async fetchDocument(
+    sessionPath: string,
+    documentId: number
+  ): Promise<string> {
+    return this.request(
+      `${BASE_URL}/${sessionPath}?Template=document&Id=${documentId}`
     );
-    // フレームセットが指すセッションIDに追従する（通常は同一）
-    const sid = extractSessionId(frameHtml);
-    if (sid) {
-      this.sessionId = sid;
-    }
-    return this.request(this.sessionUrl("?Template=doc-page"));
   }
 }
 
-/** 取得済みDocumentIDの一覧（ファイル名末尾の _<id>.json から復元） */
-function loadScrapedIds(outDir: string): Set<number> {
+/**
+ * 取得済み会議の一覧を「<slug>_<date>」の集合として復元する。
+ * ファイル名は `<date>_<slug>_<documentId>.json`。
+ * リニューアルでDocumentIdが変わったため、日付＋slugで重複判定する。
+ */
+function loadScrapedKeys(outDir: string): Set<string> {
   if (!existsSync(outDir)) return new Set();
-  const ids = new Set<number>();
+  const keys = new Set<string>();
   for (const name of readdirSync(outDir)) {
-    const m = name.match(/_(\d+)\.json$/);
-    if (m) ids.add(Number(m[1]));
+    const m = name.match(/^(\d{4}-\d{2}-\d{2})_(.+)_\d+\.json$/);
+    if (m) keys.add(`${m[2]}_${m[1]}`);
   }
-  return ids;
+  return keys;
 }
 
 async function main(): Promise<void> {
@@ -198,91 +212,103 @@ async function main(): Promise<void> {
     throw new Error(`不正な年指定です: ${process.argv[yearArgIndex + 1]}`);
   }
 
+  // --committee sc,nr のように対象委員会コードを絞れる（省略時は全現行委員会）
+  const commArgIndex = process.argv.indexOf("--committee");
+  const targetCodes =
+    commArgIndex >= 0
+      ? new Set(
+          process.argv[commArgIndex + 1]
+            .split(",")
+            .map((s) => s.trim())
+            .filter(Boolean)
+        )
+      : null;
+  const committees = targetCodes
+    ? NEW_SITE_COMMITTEES.filter((c) => targetCodes.has(c.code))
+    : NEW_SITE_COMMITTEES;
+  if (committees.length === 0) {
+    throw new Error("対象の委員会コードがありません");
+  }
+
   const outDir = join(REPO_ROOT, "docs/data/committee-minutes", String(year));
   mkdirSync(outDir, { recursive: true });
-  const scrapedIds = loadScrapedIds(outDir);
+  const scrapedKeys = loadScrapedKeys(outDir);
 
   const client = new DbsrClient();
   await client.init();
-  console.log("セッション開始");
-
-  // 検索条件を設定し、一覧を全ページ収集する
-  const firstPage = await client.applySearchFilter(year);
-  console.log(`検索ヒット: ${extractHitCount(firstPage) ?? "不明"}文書`);
-
-  // 一覧は新しい順のため、対象年より古い開催日が現れたらページ送りを打ち切る
-  // （検索条件が適用されなかった場合でも全ページを舐めないための安全装置）
-  const cutoff = `${year}-01-01`;
-  const allDocs: ListedDoc[] = [];
-  let { docs, hasNext } = parseListPage(firstPage);
-  allDocs.push(...docs);
-  for (
-    let page = 2;
-    hasNext && !docs.some((d) => d.date < cutoff);
-    page++
-  ) {
-    const html = await client.fetchListPage(page);
-    ({ docs, hasNext } = parseListPage(html));
-    allDocs.push(...docs);
-    console.log(`一覧ページ${page}を取得（累計${allDocs.length}文書）`);
-  }
-  // ページ送りで同じ文書が重複して返ることがあるためDocumentIDで一意化する
-  const uniqueDocs = [
-    ...new Map(allDocs.map((d) => [d.documentId, d])).values(),
-  ];
-  console.log(`検索結果: ${uniqueDocs.length}文書（重複除去前${allDocs.length}）`);
+  console.log("セッション開始（cookie・CSRFトークン取得）");
 
   let saved = 0;
   let skipped = 0;
-  for (const doc of uniqueDocs) {
-    const committee = committeeFromTitle(doc.title);
-    if (!committee) {
-      console.warn(`対象外のタイトルをスキップ: ${doc.title}`);
+  for (const committee of committees) {
+    const { html, sessionPath } = await client.searchCommittee(committee.code);
+    if (!sessionPath) {
+      console.warn(
+        `セッションパスを取得できませんでした: ${committee.dbsrName}（コード=${committee.code}）`
+      );
       continue;
     }
-    if (!doc.date.startsWith(`${year}-`)) {
-      console.warn(`${year}年以外の開催日をスキップ: ${doc.title} (${doc.date})`);
-      continue;
-    }
-    if (scrapedIds.has(doc.documentId)) {
-      skipped++;
-      continue;
-    }
+    const docs = parseSearchListPage(html).filter((d) =>
+      d.date.startsWith(`${year}-`)
+    );
+    console.log(
+      `${committee.dbsrName}: ${year}年の文書 ${docs.length}件（セッション=${sessionPath}）`
+    );
 
-    const pageHtml = await client.fetchDocument(doc.documentId);
-    const speeches = parseDocPage(pageHtml);
-    if (speeches.length === 0) {
-      console.warn(`発言が取得できませんでした: ${doc.title} (DocumentID=${doc.documentId})`);
-      continue;
+    // cabinetIdはMeetingJson互換のため既存メタ（slug一致）から補完する
+    const cabinetId =
+      CURRENT_COMMITTEES.find((c) => c.slug === committee.slug)?.cabinetId ?? 0;
+
+    for (const doc of docs) {
+      const key = `${committee.slug}_${doc.date}`;
+      if (scrapedKeys.has(key)) {
+        skipped++;
+        continue;
+      }
+
+      const pageHtml = await client.fetchDocument(sessionPath, doc.documentId);
+      const speeches = parseDocumentPage(pageHtml);
+      if (speeches.length === 0) {
+        console.warn(
+          `発言が取得できませんでした: ${committee.dbsrName} ${doc.date} (Id=${doc.documentId})`
+        );
+        continue;
+      }
+
+      // 実Id（source_url用）と、旧id空間との衝突を避けたsource_document_id
+      const rawId = doc.documentId;
+      const documentId = rawId + NEW_SITE_ID_OFFSET;
+
+      const json: MeetingJson = {
+        documentId,
+        title: `令和${year - 2018}年　${committee.dbsrName}　本文`,
+        committee: {
+          dbsrName: committee.dbsrName,
+          currentName: committee.currentName,
+          slug: committee.slug,
+          type: committee.type,
+          cabinetId,
+        },
+        meetingDate: doc.date,
+        sourceUrl: buildNewSourceUrl(rawId),
+        scrapedAt: new Date().toISOString(),
+        speechCount: speeches.length,
+        speeches,
+        rawText: buildRawText(speeches),
+      };
+
+      const fileName = `${doc.date}_${committee.slug}_${documentId}.json`;
+      writeFileSync(
+        join(outDir, fileName),
+        `${JSON.stringify(json, null, 2)}\n`
+      );
+      scrapedKeys.add(key);
+      saved++;
+      console.log(`保存: ${fileName}（${speeches.length}発言）`);
     }
-
-    const json: MeetingJson = {
-      documentId: doc.documentId,
-      title: doc.title,
-      committee: {
-        dbsrName: committee.dbsrName,
-        currentName: committee.currentName,
-        slug: committee.slug,
-        type: committee.type,
-        cabinetId: committee.cabinetId,
-      },
-      meetingDate: doc.date,
-      sourceUrl: buildSourceUrl(doc.documentId),
-      scrapedAt: new Date().toISOString(),
-      speechCount: speeches.length,
-      speeches,
-      rawText: buildRawText(speeches),
-    };
-
-    const fileName = `${doc.date}_${committee.slug}_${doc.documentId}.json`;
-    writeFileSync(join(outDir, fileName), `${JSON.stringify(json, null, 2)}\n`);
-    saved++;
-    console.log(`保存: ${fileName}（${speeches.length}発言）`);
   }
 
-  console.log(
-    `完了: 新規${saved}件 / スキップ（取得済み）${skipped}件 / 合計${allDocs.length}文書`
-  );
+  console.log(`完了: 新規${saved}件 / スキップ（取得済み）${skipped}件`);
 }
 
 main().catch((e) => {
