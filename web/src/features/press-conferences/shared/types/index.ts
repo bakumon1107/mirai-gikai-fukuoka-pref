@@ -5,7 +5,7 @@ export type PressConferenceStatus =
   | "published"
   | "error";
 
-export type Speaker = "governor" | "reporter";
+export type Speaker = "governor" | "reporter" | "secretariat";
 
 export type PressConferenceTurn = {
   id: string;
@@ -21,6 +21,7 @@ export type PressConferenceItem = {
   orderIndex: number;
   title: string;
   summary: string | null;
+  materialUrl: string | null;
   turns: PressConferenceTurn[];
 };
 

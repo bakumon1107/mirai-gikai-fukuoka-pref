@@ -10,7 +10,7 @@
 import { createAdminClient } from "../shared/helper";
 
 type TurnInput = {
-  speaker: "governor" | "reporter";
+  speaker: "governor" | "reporter" | "secretariat";
   speaker_name: string | null;
   content: string;
 };
@@ -20,6 +20,7 @@ type ItemInput = {
   order_index: number;
   title: string;
   summary: string | null;
+  material_url?: string | null;
   turns: TurnInput[];
 };
 
@@ -1864,6 +1865,7 @@ async function seedPressConferences() {
             order_index: item.order_index,
             title: item.title,
             summary: item.summary,
+            material_url: item.material_url ?? null,
           })
           .select("id")
           .single();

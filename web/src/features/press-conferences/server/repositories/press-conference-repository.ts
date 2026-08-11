@@ -16,6 +16,7 @@ type ItemRow = {
   order_index: number;
   title: string;
   summary: string | null;
+  material_url: string | null;
   press_conference_turns: TurnRow[];
 };
 
@@ -45,11 +46,12 @@ function mapToPressConference(row: PressConferenceRow): PressConference {
         orderIndex: item.order_index,
         title: item.title,
         summary: item.summary,
+        materialUrl: item.material_url ?? null,
         turns: [...(item.press_conference_turns ?? [])]
           .sort((a, b) => a.order_index - b.order_index)
           .map((turn) => ({
             id: turn.id,
-            speaker: turn.speaker as "governor" | "reporter",
+            speaker: turn.speaker as "governor" | "reporter" | "secretariat",
             speakerName: turn.speaker_name,
             content: turn.content,
             orderIndex: turn.order_index,
