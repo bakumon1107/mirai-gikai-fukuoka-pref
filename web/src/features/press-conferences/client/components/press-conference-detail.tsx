@@ -1,7 +1,8 @@
 "use client";
 
-import { ExternalLink, FileText, Mic, PlayCircle } from "lucide-react";
+import { ExternalLink, Mic, PlayCircle } from "lucide-react";
 import type { PressConference } from "../../shared/types";
+import { AnnouncementItem } from "./announcement-item";
 import { QaItem } from "./qa-item";
 
 type Props = {
@@ -60,36 +61,7 @@ export function PressConferenceDetail({ pressConference }: Props) {
           </div>
           <div className="flex flex-col gap-3">
             {announcements.map((item, i) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-2xl border-l-4 border-primary shadow-sm px-5 py-4 flex flex-col gap-2"
-              >
-                <div className="flex items-start gap-3">
-                  <span className="flex-shrink-0 mt-0.5 w-6 h-6 rounded-full bg-mirai-gradient-start text-primary-accent text-xs font-bold flex items-center justify-center">
-                    {i + 1}
-                  </span>
-                  <h3 className="text-sm font-bold text-mirai-text">
-                    {item.title}
-                  </h3>
-                </div>
-                {item.summary && (
-                  <p className="text-sm text-mirai-text-secondary leading-relaxed pl-9">
-                    {item.summary}
-                  </p>
-                )}
-                {item.materialUrl && (
-                  <a
-                    href={item.materialUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-medium text-primary-accent hover:underline pl-9 w-fit"
-                  >
-                    <FileText className="w-3.5 h-3.5" />
-                    配付資料（PDF）
-                    <ExternalLink className="w-3 h-3 opacity-70" />
-                  </a>
-                )}
-              </div>
+              <AnnouncementItem key={item.id} item={item} index={i} />
             ))}
           </div>
         </section>

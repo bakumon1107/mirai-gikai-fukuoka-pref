@@ -22,6 +22,7 @@ export type PressConferenceItem = {
   title: string;
   summary: string | null;
   materialUrl: string | null;
+  detail: string | null;
   turns: PressConferenceTurn[];
 };
 
