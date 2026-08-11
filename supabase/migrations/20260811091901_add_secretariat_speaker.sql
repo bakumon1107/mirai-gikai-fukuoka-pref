@@ -8,3 +8,6 @@ alter table press_conference_turns
 alter table press_conference_turns
   add constraint press_conference_turns_speaker_check
     check (speaker in ('governor', 'reporter', 'secretariat'));
+
+-- RLS を有効化（ポリシーは定義しない。アクセスは createAdminClient 経由）
+alter table press_conference_turns enable row level security;
