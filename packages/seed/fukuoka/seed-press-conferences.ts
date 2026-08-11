@@ -21,6 +21,7 @@ type ItemInput = {
   title: string;
   summary: string | null;
   material_url?: string | null;
+  detail?: string | null;
   turns: TurnInput[];
 };
 
@@ -1866,6 +1867,7 @@ async function seedPressConferences() {
             title: item.title,
             summary: item.summary,
             material_url: item.material_url ?? null,
+            detail: item.detail ?? null,
           })
           .select("id")
           .single();

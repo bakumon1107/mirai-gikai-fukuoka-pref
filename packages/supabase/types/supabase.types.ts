@@ -1209,6 +1209,7 @@ export type Database = {
       press_conference_items: {
         Row: {
           created_at: string | null
+          detail: string | null
           id: string
           item_type: string
           material_url: string | null
@@ -1219,6 +1220,7 @@ export type Database = {
         }
         Insert: {
           created_at?: string | null
+          detail?: string | null
           id?: string
           item_type: string
           material_url?: string | null
@@ -1229,6 +1231,7 @@ export type Database = {
         }
         Update: {
           created_at?: string | null
+          detail?: string | null
           id?: string
           item_type?: string
           material_url?: string | null
