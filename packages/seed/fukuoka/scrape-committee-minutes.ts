@@ -32,6 +32,7 @@ import {
   CURRENT_COMMITTEES,
   extractCsrfToken,
   extractDocName,
+  extractPaginationInfo,
   extractSessionPath,
   NEW_SITE_COMMITTEES,
   NEW_SITE_ID_OFFSET,
@@ -45,6 +46,8 @@ const WAIT_MS = 2000;
 /** 429/503・タイムアウト時のリトライ回数と待ち時間（秒） */
 const RETRY_DELAYS_SEC = [30, 60, 120];
 const REQUEST_TIMEOUT_MS = 30_000;
+/** ページ送りの暴走防止のための上限（対象年より古い文書が現れれば通常はもっと手前で打ち切る） */
+const MAX_LIST_PAGES = 8;
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const REPO_ROOT = resolve(__dirname, "../../..");
@@ -179,6 +182,22 @@ class DbsrClient {
     return { html, sessionPath: extractSessionPath(html) };
   }
 
+  /**
+   * ページ送り: ページ送りフォームの action（/<session>）へ
+   * `_token` ＋ `Template=list` ＋ `Page=<page>` を POST し、次ページのHTMLを得る。
+   */
+  async fetchListPage(
+    action: string,
+    token: string,
+    page: number
+  ): Promise<string> {
+    const params = new URLSearchParams();
+    params.set("_token", token);
+    params.set("Template", "list");
+    params.set("Page", String(page));
+    return this.request(action, params);
+  }
+
   /** セッションパス配下の文書ページ（本文）HTMLを取得する */
   async fetchDocument(
     sessionPath: string,
@@ -255,34 +274,43 @@ async function main(): Promise<void> {
   let saved = 0;
   let skipped = 0;
   for (const committee of committees) {
-    const { html, sessionPath } = await client.searchCommittee(committee.code);
+    let { html, sessionPath } = await client.searchCommittee(committee.code);
     if (!sessionPath) {
       console.warn(
         `セッションパスを取得できませんでした: ${committee.dbsrName}（コード=${committee.code}）`
       );
       continue;
     }
-    const allDocs = parseSearchListPage(html);
-    const docs = allDocs.filter((d) => d.date.startsWith(`${year}-`));
-    console.log(
-      `${committee.dbsrName}: ${year}年の文書 ${docs.length}件（セッション=${sessionPath}）`
-    );
-    // 検索結果は新しい順。1ページ目に対象年より古い文書が1件でもあれば、対象年は
-    // すべて1ページ目に含まれる。逆に1ページ目が全て対象年だと、対象年の文書が
-    // 次ページに残っている可能性がある（新サイトのページ送りは未対応）。常任委は
-    // 年間の会議数が1ページ（10件以上）に収まるため通常は起きないが、念のため警告する。
-    if (allDocs.length > 0 && !allDocs.some((d) => d.date < `${year}-01-01`)) {
-      console.warn(
-        `${committee.dbsrName}: 1ページ目が全て${year}年の文書です。ページ送り未対応のため、` +
-          `${year}年の会議を取りこぼしている可能性があります（要確認）。`
-      );
+    // 検索結果は新しい順。対象年の文書を、対象年より古い文書が現れるページまで
+    // ページ送りで集める（1ページ目に古い文書があればそこで完結）。文書取得には
+    // そのページのセッションパスが要るため、文書ごとに保持する。
+    const collected: {
+      documentId: number;
+      date: string;
+      sessionPath: string;
+    }[] = [];
+    for (let page = 1; page <= MAX_LIST_PAGES; page++) {
+      const pageDocs = parseSearchListPage(html);
+      for (const d of pageDocs) {
+        if (d.date.startsWith(`${year}-`)) collected.push({ ...d, sessionPath });
+      }
+      const hasOlder = pageDocs.some((d) => d.date < `${year}-01-01`);
+      const pg = extractPaginationInfo(html);
+      if (hasOlder || !pg.hasNext || !pg.action || !pg.token || !pg.nextPage) {
+        break;
+      }
+      html = await client.fetchListPage(pg.action, pg.token, pg.nextPage);
+      sessionPath = extractSessionPath(html) ?? sessionPath;
     }
+    console.log(
+      `${committee.dbsrName}: ${year}年の文書 ${collected.length}件`
+    );
 
     // cabinetIdはMeetingJson互換のため既存メタ（slug一致）から補完する
     const cabinetId =
       CURRENT_COMMITTEES.find((c) => c.slug === committee.slug)?.cabinetId ?? 0;
 
-    for (const doc of docs) {
+    for (const doc of collected) {
       const key = `${committee.slug}_${doc.date}`;
       if (scrapedKeys.has(key)) {
         console.log(
@@ -292,7 +320,10 @@ async function main(): Promise<void> {
         continue;
       }
 
-      const pageHtml = await client.fetchDocument(sessionPath, doc.documentId);
+      const pageHtml = await client.fetchDocument(
+        doc.sessionPath,
+        doc.documentId
+      );
       const speeches = parseDocumentPage(pageHtml);
       if (speeches.length === 0) {
         console.warn(
