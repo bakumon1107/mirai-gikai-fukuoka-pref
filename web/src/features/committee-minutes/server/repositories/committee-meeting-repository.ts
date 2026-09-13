@@ -89,6 +89,7 @@ export async function findAllMeetings(): Promise<CommitteeMeetingSummary[]> {
   const { data, error } = await supabase
     .from("committee_meetings")
     .select(LIST_SELECT)
+    .eq("publish_status", "published")
     .order("meeting_date", { ascending: false });
 
   if (error) {
@@ -106,6 +107,7 @@ export async function findMeetingsBySlug(
     .from("committee_meetings")
     .select(LIST_SELECT)
     .eq("committee_slug", slug)
+    .eq("publish_status", "published")
     .order("meeting_date", { ascending: false });
 
   if (error) {
@@ -123,6 +125,7 @@ export async function findMeetingByDocumentId(
     .from("committee_meetings")
     .select(`*, committee_meeting_topics (*)`)
     .eq("source_document_id", documentId)
+    .eq("publish_status", "published")
     .maybeSingle();
 
   if (error) {

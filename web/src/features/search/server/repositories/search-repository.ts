@@ -180,11 +180,11 @@ export async function searchCommittees(
   const like = `%${query}%`;
 
   // 1) 会議のタイトル・要約・委員会名で検索
-  // 委員会の一覧・詳細ページは publish_status で絞り込んでいないため、
-  // 検索も表示に合わせて全会議を対象とする（公開ゲートを設ける場合は両方を同時に変更する）
+  // 委員会の一覧・詳細ページと同様、公開（published）の会議のみを対象とする
   const meetingsRes = await supabase
     .from("committee_meetings")
     .select(COMMITTEE_MEETING_SELECT)
+    .eq("publish_status", "published")
     .or(
       `title.ilike.${like},summary.ilike.${like},committee_name.ilike.${like}`
     )
@@ -204,10 +204,13 @@ export async function searchCommittees(
     byId.set(row.id, toCommitteeResult(row));
   }
 
-  // 2) 議題のタイトル・要約で検索し、親会議に紐づける
+  // 2) 議題のタイトル・要約で検索し、親会議（公開のもの）に紐づける
   const topicsRes = await supabase
     .from("committee_meeting_topics")
-    .select(`title, committee_meetings!inner (${COMMITTEE_MEETING_SELECT})`)
+    .select(
+      `title, committee_meetings!inner (${COMMITTEE_MEETING_SELECT}, publish_status)`
+    )
+    .eq("committee_meetings.publish_status", "published")
     .or(`title.ilike.${like},summary.ilike.${like}`)
     .limit(100);
 
