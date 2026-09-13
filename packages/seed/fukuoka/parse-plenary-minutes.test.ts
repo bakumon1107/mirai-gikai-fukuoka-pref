@@ -57,6 +57,19 @@ describe("extractSessionDay", () => {
   it("日数が無ければ null", () => {
     expect(extractSessionDay("令和８年　文教委員会　本文")).toBeNull();
   });
+
+  it("漢数字と算用数字が混ざった表記は null（誤った日数を返さない）", () => {
+    expect(extractSessionDay("令和８年６月定例会（第十1日）　本文")).toBeNull();
+    expect(extractSessionDay("令和８年６月定例会（第1十日）　本文")).toBeNull();
+  });
+
+  it("全角と半角が混ざった算用数字は正規化して読む", () => {
+    expect(extractSessionDay("令和８年６月定例会（第１0日）　本文")).toBe(10);
+  });
+
+  it("〇日のような0は null", () => {
+    expect(extractSessionDay("令和８年６月定例会（第〇日）　本文")).toBeNull();
+  });
 });
 
 describe("stripDocNameSuffix / buildPlenaryFileName", () => {

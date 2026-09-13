@@ -42,13 +42,25 @@ export function extractVoiceTexts(html: string): string[] {
 const FULLWIDTH_DIGITS = "０１２３４５６７８９";
 const KANJI_DIGITS = "〇一二三四五六七八九";
 
-/** 全角数字・漢数字混じりの「第５日」「第10日」から日数を取り出す */
+/**
+ * 「第５日」「第10日」「第十一日」から日数を取り出す。
+ *
+ * 会議名の表記は全角数字・半角数字・漢数字が混在する。全角を半角に正規化した上で
+ * 漢数字表記かどうかを判定し、「第十1日」のように漢数字と算用数字が混ざった表記は
+ * 誤った日数を返さないよう null にする（誤った session_day でDBに入るのを避ける）。
+ */
 export function extractSessionDay(docName: string): number | null {
   const m = docName.match(/第([0-9０-９〇一二三四五六七八九十]+)日/);
   if (!m) return null;
-  const raw = m[1];
+  const raw = m[1].replace(/[０-９]/g, (c) =>
+    String(FULLWIDTH_DIGITS.indexOf(c))
+  );
+  const hasKanji = /[〇一二三四五六七八九十]/.test(raw);
+  const hasArabic = /[0-9]/.test(raw);
+  if (hasKanji && hasArabic) return null;
+
   // 十進の漢数字（十一・二十 など）
-  if (/[十〇一二三四五六七八九]/.test(raw)) {
+  if (hasKanji) {
     let result = 0;
     let current = 0;
     for (const ch of raw) {
@@ -65,10 +77,7 @@ export function extractSessionDay(docName: string): number | null {
     const value = result + current;
     return value > 0 ? value : null;
   }
-  const normalized = raw.replace(/[０-９]/g, (c) =>
-    String(FULLWIDTH_DIGITS.indexOf(c))
-  );
-  const value = Number(normalized);
+  const value = Number(raw);
   return Number.isInteger(value) && value > 0 ? value : null;
 }
 
