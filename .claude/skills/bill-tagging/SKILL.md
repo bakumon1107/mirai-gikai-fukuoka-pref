@@ -13,26 +13,34 @@ description: 議案（bills）にタグを付けてトップページに表示�
 
 ## トップページが議案を出す2経路（最重要）
 
-`web/src/app/(main)/page.tsx` が議案を表示する経路は **2つだけ**。どちらも **アクティブ会期**（`council_sessions.is_active = true`）の公開済み議案に限定される。
+`web/src/app/(main)/page.tsx` が議案を表示する経路は **2つだけ**。どちらの経路も、loaderの実装上、次の**表示条件をすべて満たす議案**に限られる。
+
+**共通の表示条件（全経路）**
+
+- `bills.publish_status = 'published'`
+- **表示中の難易度**（`difficulty_level`）に一致する `bill_contents` 行が存在する。無い議案は整形時に除外され、トップに出ない（loaderは該当難易度の `bill_contents[0]` を採用）。
+- **会期**: アクティブ会期（`council_sessions.is_active = true`）があればその会期に絞る。**アクティブ会期が無い場合は全会期が対象**（`council_session_id` で絞らない）。
+
+その上で、各セクションの追加条件は次のとおり。
 
 1. **注目の議案**（`FeaturedBillSection`）
-   - ソース: `getFeaturedBills()` → `bills.is_featured = true` かつアクティブ会期
+   - ソース: `getFeaturedBills()` → 上記に加え `bills.is_featured = true`
 2. **タグ別議案一覧**（`BillsByTagSection`）
-   - ソース: `getBillsByFeaturedTags()` → `bills_tags` で **`featured_priority` が設定されたタグ**に紐づき、かつアクティブ会期
+   - ソース: `getBillsByFeaturedTags()` → 上記に加え `bills_tags` で **`featured_priority` が設定されたタグ**に紐づく
 
-→ **`is_featured = false` かつ `bills_tags` 未登録の議案は、トップに1件も出ない**（会期詳細ページ `/sessions/[session_slug]/bills` には全件出る）。
+→ **`is_featured = false` かつ `bills_tags` 未登録の議案は、トップに1件も出ない**（会期詳細ページ `/sessions/[session_slug]/bills` には全件出る）。加えて、`publish_status` が published でない、または**表示中の難易度の `bill_contents` が無い**議案も出ないので、タグを付けても出ない場合はこの2点も確認する。
 
 ### キャッシュ（反映が遅い理由）
 
 - `get-featured-bills.ts` / `get-bills-by-featured-tags.ts` は `unstable_cache` で **`revalidate: 600`（10分）**。
 - **再デプロイ・ブラウザのハードリフレッシュでは即時反映されない**（Vercelのデータキャッシュはデプロイをまたいで残る／ハードリフレッシュはサーバーキャッシュに無関係）。
-- タグ付け後、最大10分ほどで自動反映される。急ぐ理由がなければ待つ。
+- タグ付け後、`revalidate: 600` によりキャッシュは**10分で古く（stale）**なり、**その後の最初のアクセスで再取得**される（きっかり10分後に必ず反映される保証ではなく、次アクセスのタイミング次第）。即時反映したい場合は `revalidateTag`/`revalidatePath` かVercelダッシュボードでのパージが必要。急ぐ理由がなければ待つ。
 
 ---
 
 ## スキーマ
 
-```
+```text
 bills            … 議案本体（is_featured, publish_status, council_session_id など）
 bill_contents    … 議案の平易化タイトル/要約（1議案に複数入りうる。loaderは [0] を採用）
 tags             … タグマスタ（label UNIQUE, featured_priority, description）
@@ -87,23 +95,35 @@ bills_tags       … 議案×タグの中間テーブル（PK: bill_id + tag_id�
 
 DB接続の規約は `db-access` スキルに従う。**本番URL・キーは `.env.production` から読む**（`db-access` スキルにハードコードされたURLは古い場合がある。福岡県本番は `ugvzabneccydyakupfyl`）。
 
-### Step 1: アクティブ会期とタグIDを取得
+### Step 0: 認証ヘッダを設定ファイルに（キーをargvに出さない）
+
+service-role key を `curl -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"` のように渡すと、展開後の**キーがプロセスの引数（argv）に載り**、`ps` や `/proc` から見え得る。キーを引数に出さないよう、**ヒアドキュメントで設定ファイルに書き**（`cat`・リダイレクトの引数に鍵を置かない）、`curl --config` で読ませる。
 
 ```bash
 set -a; . ./.env.production; set +a
+umask 077
+CURL_AUTH="$(mktemp)"
+# 鍵は heredoc の本文（＝ファイル内容）に展開され、argv には載らない
+cat > "$CURL_AUTH" <<EOF
+header = "apikey: $SUPABASE_SERVICE_ROLE_KEY"
+header = "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+EOF
+# 以降の curl は -H の代わりに --config "$CURL_AUTH" を使う。作業後に rm -f "$CURL_AUTH"
+```
+
+### Step 1: アクティブ会期とタグIDを取得
+
+```bash
 # アクティブ会期
-curl -s "$SUPABASE_URL/rest/v1/council_sessions?select=id,name,is_active&is_active=eq.true" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+curl -s --config "$CURL_AUTH" "$SUPABASE_URL/rest/v1/council_sessions?select=id,name,is_active&is_active=eq.true"
 # featured_priority 付きタグ（ID取得）
-curl -s "$SUPABASE_URL/rest/v1/tags?select=id,label,featured_priority&featured_priority=not.is.null&order=featured_priority.asc" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+curl -s --config "$CURL_AUTH" "$SUPABASE_URL/rest/v1/tags?select=id,label,featured_priority&featured_priority=not.is.null&order=featured_priority.asc"
 ```
 
 ### Step 2: 対象議案を内容ごと取得
 
 ```bash
-curl -s "$SUPABASE_URL/rest/v1/bills?select=id,name,is_featured,bill_contents(title,summary)&council_session_id=eq.<SESSION_ID>&publish_status=eq.published&order=created_at.asc" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY"
+curl -s --config "$CURL_AUTH" "$SUPABASE_URL/rest/v1/bills?select=id,name,is_featured,bill_contents(title,summary)&council_session_id=eq.<SESSION_ID>&publish_status=eq.published&order=created_at.asc"
 ```
 
 ### Step 3: 分類してユーザーにレビュー提示（必須）
@@ -119,8 +139,7 @@ curl -s "$SUPABASE_URL/rest/v1/bills?select=id,name,is_featured,bill_contents(ti
 ```bash
 # payload.json 例:
 # [ {"bill_id":"<uuid>","tag_id":"<tag_uuid>"}, ... ]
-curl -s -X POST "$SUPABASE_URL/rest/v1/bills_tags" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+curl -s -X POST --config "$CURL_AUTH" "$SUPABASE_URL/rest/v1/bills_tags" \
   -H "Content-Type: application/json" -H "Prefer: return=minimal" \
   --data @payload.json -w "HTTP %{http_code}\n"
 ```
@@ -130,13 +149,15 @@ curl -s -X POST "$SUPABASE_URL/rest/v1/bills_tags" \
 ### Step 5: 検証
 
 ```bash
-# タグ×アクティブ会期で件数確認
-curl -s "$SUPABASE_URL/rest/v1/bills_tags?select=bill_id,bills!inner(council_session_id)&tag_id=eq.<TAG_ID>&bills.council_session_id=eq.<SESSION_ID>" \
-  -H "apikey: $SUPABASE_SERVICE_ROLE_KEY" -H "Authorization: Bearer $SUPABASE_SERVICE_ROLE_KEY" \
+# タグ×会期×published で件数確認（表示条件に合わせる）
+# アクティブ会期が無い運用のときは bills.council_session_id の条件を外す
+curl -s --config "$CURL_AUTH" "$SUPABASE_URL/rest/v1/bills_tags?select=bill_id,bills!inner(council_session_id,publish_status)&tag_id=eq.<TAG_ID>&bills.council_session_id=eq.<SESSION_ID>&bills.publish_status=eq.published" \
   -H "Prefer: count=exact" -I | grep -i content-range
 ```
 
-- 反映は最大10分（`revalidate: 600`）。デプロイやハードリフレッシュでは早まらない。
+- この件数は「タグ×会期×published」まで。**実際にトップへ出るには、さらに表示中の難易度（`difficulty_level`）の `bill_contents` 行があることが条件**なので、件数が合うのに出ない場合はその難易度の `bill_contents` の有無も確認する（「トップページが議案を出す2経路」の共通表示条件を参照）。
+- 反映は `revalidate: 600` により**10分でstale化 → 次アクセスで再取得**（きっかり10分で必ず反映される訳ではない）。デプロイやハードリフレッシュでは早まらない。即時なら `revalidateTag`/`revalidatePath` かVercelでのパージ。
+- 作業後は認証設定ファイルを削除する: `rm -f "$CURL_AUTH"`
 
 ---
 
@@ -147,7 +168,8 @@ curl -s "$SUPABASE_URL/rest/v1/bills_tags?select=bill_id,bills!inner(council_ses
 - [ ] 中間テーブルは `bills_tags`。`featured_priority` 非NULLのタグだけがトップに出る。
 - [ ] 分類はDBに入れる前に**必ずユーザー承認**（`docs/CLAUDE.md` のAI生成コンテンツDB更新ルール）。
 - [ ] 満遍なく埋めない。合致するものだけ適切に付ける。
-- [ ] 反映は最大10分待つ。再デプロイ・ハードリフレッシュは効かない。
+- [ ] 反映は `revalidate: 600` で10分stale化→次アクセスで再取得（きっかり10分保証ではない）。再デプロイ・ハードリフレッシュは効かない。即時は `revalidateTag`/`revalidatePath`。
+- [ ] service-role key は curl の `-H` で渡さず、Step 0 の設定ファイル（`--config`）経由にする（argv露出防止）。作業後に `rm -f "$CURL_AUTH"`。
 
 ## 関連
 
