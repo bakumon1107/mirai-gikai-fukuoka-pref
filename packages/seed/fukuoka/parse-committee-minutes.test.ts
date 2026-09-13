@@ -10,6 +10,7 @@ import {
   extractDocName,
   extractHitCount,
   extractSessionId,
+  extractPaginationInfo,
   extractSessionPath,
   extractTopics,
   NEW_SITE_COMMITTEES,
@@ -471,5 +472,46 @@ describe("NEW_SITE_COMMITTEES / NEW_SITE_ID_OFFSET", () => {
   it("オフセットで実Idとsource_document_idが分離される", () => {
     expect(4580 + NEW_SITE_ID_OFFSET).toBe(1004580);
     expect(NEW_SITE_ID_OFFSET).toBeGreaterThanOrEqual(1_000_000);
+  });
+});
+
+const PAGINATION_HTML = `
+<nav aria-label="ページ切り替え（上部）" class="pagination">
+<form method="post" action="https://www.pref.fukuoka.dbsr.jp/562702">
+<input type="hidden" name="_token" value="PAGETOKEN123" autocomplete="off">
+<input type="hidden" name="Template" value="list">
+<ul class="paging">
+<li><button type="submit" aria-pressed="false" aria-disabled="false" name="Page" value="2" aria-label="次のページ">次 &gt;</button></li>
+<li><button type="submit" aria-pressed="false" aria-disabled="false" name="Page" value="27" aria-label="最後のページ">&gt;&gt; 最後</button></li>
+</ul>
+</form>
+</nav>
+`;
+
+// 最終ページ: 「次のページ」が aria-disabled="true"
+const PAGE_LAST_HTML = PAGINATION_HTML.replace(
+  'aria-disabled="false" name="Page" value="2" aria-label="次のページ"',
+  'aria-disabled="true" name="Page" value="5" aria-label="次のページ"'
+);
+
+describe("extractPaginationInfo", () => {
+  it("フォームの action・_token・次ページ番号を取り出す", () => {
+    const p = extractPaginationInfo(PAGINATION_HTML);
+    expect(p.action).toBe("https://www.pref.fukuoka.dbsr.jp/562702");
+    expect(p.token).toBe("PAGETOKEN123");
+    expect(p.hasNext).toBe(true);
+    expect(p.nextPage).toBe(2);
+  });
+  it("次ページが無効（最終ページ）なら hasNext=false・nextPage=null", () => {
+    const p = extractPaginationInfo(PAGE_LAST_HTML);
+    expect(p.hasNext).toBe(false);
+    expect(p.nextPage).toBeNull();
+  });
+  it("ページ送りが無いHTMLでは全てnull/false", () => {
+    const p = extractPaginationInfo("<div>no pagination</div>");
+    expect(p.action).toBeNull();
+    expect(p.token).toBeNull();
+    expect(p.hasNext).toBe(false);
+    expect(p.nextPage).toBeNull();
   });
 });

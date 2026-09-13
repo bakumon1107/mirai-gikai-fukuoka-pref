@@ -530,6 +530,34 @@ export function parseSearchListPage(
   return docs;
 }
 
+/**
+ * 検索結果一覧のページ送りフォーム（<nav class="pagination"> 内の POST フォーム）から、
+ * 次ページ取得に必要な情報を取り出す。ページ送りは
+ * `POST <action>` に `_token` ＋ `Template=list` ＋ `Page=<番号>` を送る方式。
+ * - action: フォームの送信先URL（/<session>）／token: そのページ固有の _token
+ * - hasNext / nextPage: 「次のページ」ボタン（name="Page"）。aria-disabled="true" なら次ページ無し。
+ */
+export function extractPaginationInfo(html: string): {
+  action: string | null;
+  token: string | null;
+  hasNext: boolean;
+  nextPage: number | null;
+} {
+  const form = html.match(
+    /class="pagination"[\s\S]*?<form[^>]*action="([^"]+)"[\s\S]*?name="_token"[^>]*value="([^"]+)"/
+  );
+  const next = html.match(
+    /aria-disabled="(true|false)"\s+name="Page"\s+value="(\d+)"\s+aria-label="次のページ"/
+  );
+  const hasNext = next != null && next[1] === "false";
+  return {
+    action: form ? form[1] : null,
+    token: form ? form[2] : null,
+    hasNext,
+    nextPage: hasNext && next != null ? Number(next[2]) : null,
+  };
+}
+
 /** 新サイトの文書ページ(<p class="voice__text">)から全発言を抽出する */
 export function parseDocumentPage(html: string): Speech[] {
   const speeches: Speech[] = [];
