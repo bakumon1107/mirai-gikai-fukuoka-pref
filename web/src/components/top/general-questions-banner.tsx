@@ -16,7 +16,7 @@ export function GeneralQuestionsBanner({
       <div className="flex items-start gap-3">
         <MessageSquare className="w-6 h-6 text-primary shrink-0 mt-0.5" />
         <div>
-          <p className="font-bold text-mirai-text">一般質問</p>
+          <p className="font-bold text-mirai-text">代表質問・一般質問</p>
           <p className="mt-0.5 text-sm text-mirai-text-secondary">
             議員が知事・局長に直接質問した内容をわかりやすく解説します
           </p>

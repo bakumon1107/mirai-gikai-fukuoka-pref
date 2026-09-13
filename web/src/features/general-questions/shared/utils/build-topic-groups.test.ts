@@ -19,6 +19,7 @@ describe("assignCategory", () => {
 const mockQuestion: GeneralQuestion = {
   id: "q-001",
   council_session_id: "session-1",
+  question_type: "general",
   questioner_name: "山田花子",
   questioner_party: "テスト会派",
   questioner_number: 1,
@@ -76,6 +77,7 @@ describe("buildTopicGroups", () => {
     const q: GeneralQuestion = {
       id: "q-002",
       council_session_id: "session-1",
+      question_type: "general",
       questioner_name: "和田あきひこ",
       questioner_party: null,
       questioner_number: 2,
@@ -128,6 +130,7 @@ describe("buildTopicGroups", () => {
     const q: GeneralQuestion = {
       id: "q-003",
       council_session_id: "session-1",
+      question_type: "general",
       questioner_name: "テスト議員",
       questioner_party: null,
       questioner_number: 3,
