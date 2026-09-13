@@ -1,23 +1,18 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { GeneralQuestion } from "../../shared/types";
+import { questionMetaLabel } from "../../shared/utils/question-type-label";
 
 interface GeneralQuestionCardProps {
   question: GeneralQuestion;
 }
 
-const DAY_LABELS: Record<number, string> = {
-  1: "第1日",
-  2: "第2日",
-  3: "第3日",
-  4: "第4日",
-  5: "第5日",
-  6: "第6日",
-};
-
 export function GeneralQuestionCard({ question }: GeneralQuestionCardProps) {
-  const dayLabel =
-    DAY_LABELS[question.session_day] ?? `第${question.session_day}日`;
+  const metaLabel = questionMetaLabel(
+    question.question_type,
+    question.session_day,
+    question.question_order
+  );
   const topicTitles = question.topics.map((t) => t.title).join(" / ");
 
   return (
@@ -40,9 +35,7 @@ export function GeneralQuestionCard({ question }: GeneralQuestionCardProps) {
               {question.questioner_party}
             </p>
           )}
-          <p className="text-xs text-mirai-text-muted mt-1">
-            {dayLabel}・{question.question_order}番目
-          </p>
+          <p className="text-xs text-mirai-text-muted mt-1">{metaLabel}</p>
           {question.summary && (
             <p className="mt-2 text-sm text-mirai-text line-clamp-2">
               {question.summary}
