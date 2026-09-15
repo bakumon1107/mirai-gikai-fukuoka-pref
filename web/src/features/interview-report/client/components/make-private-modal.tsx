@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site.config";
+import { formatPolicyReviewPhrase } from "@/lib/utils/party-text";
 import {
   Dialog,
   DialogContent,
@@ -56,9 +57,8 @@ export function MakePrivateModal({
             非公開にした場合、あなたのご意見が世の中に公開されることはありません
           </CheckListItem>
           <CheckListItem>
-            {siteConfig.managingParty
-              ? `${siteConfig.managingParty}の政策検討に最大限活用させていただきます。`
-              : "政策検討に最大限活用させていただきます。"}
+            {formatPolicyReviewPhrase(siteConfig.managingParty)}
+            に最大限活用させていただきます。
           </CheckListItem>
         </div>
 

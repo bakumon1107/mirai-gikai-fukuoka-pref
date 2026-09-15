@@ -14,12 +14,13 @@ import {
 } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { getInterviewChatLink } from "@/features/interview-config/shared/utils/interview-links";
+import { formatPolicyReviewPhrase } from "@/lib/utils/party-text";
 
 const TERMS_MARKDOWN = `本サービスは、AIを活用したインタビュー機能を提供しています。ご利用にあたり、以下の事項にご同意いただく必要があります。
 
 ## 1. データの利用目的
 
-お客様の回答内容は、サービスの品質向上、統計分析、および政策立案の参考資料として利用されます。収集したデータは、政策提言の作成、県民の声の分析、およびサービス改善のために活用されます。
+お客様の回答内容は、サービスの品質向上、統計分析、および政策検討の参考資料として利用されます。収集したデータは、議案に関する論点整理、県民の声の分析、およびサービス改善のために活用されます。
 
 ## 2. 個人情報の取り扱い
 
@@ -119,7 +120,9 @@ export function InterviewConsentModal({
 
         <div className="space-y-4 mt-4">
           <p className="text-sm font-bold">
-            回答データは党内での政策検討に利用します。
+            回答データは
+            {formatPolicyReviewPhrase(siteConfig.managingParty, "での")}
+            に利用します。
           </p>
           <p className="text-sm font-bold leading-[22px]">
             インタビュー内容はのちに{siteConfig.siteName}
