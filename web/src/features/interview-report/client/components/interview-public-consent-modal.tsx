@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site.config";
+import { formatPolicyReviewPhrase } from "@/lib/utils/party-text";
 import {
   Dialog,
   DialogContent,
@@ -71,9 +72,9 @@ export function InterviewPublicConsentModal({
           </div>
 
           <p className="text-sm text-black">
-            {siteConfig.managingParty
-              ? `非公開で提出した場合でも、ご意見は${siteConfig.managingParty}の政策検討に活用させていただきます。`
-              : "非公開で提出した場合でも、ご意見は政策検討に活用させていただきます。"}
+            非公開で提出した場合でも、ご意見は
+            {formatPolicyReviewPhrase(siteConfig.managingParty)}
+            に活用させていただきます。
           </p>
         </div>
 

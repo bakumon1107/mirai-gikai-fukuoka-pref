@@ -27,9 +27,10 @@ export const siteConfig = {
     aboutNote: "",
     donation: "https://team-mir.ai/support/donation",
     teamAbout: "https://team-mir.ai/about",
-    terms: "https://team-mir.ai/terms",
-    privacy: "https://team-mir.ai/privacy",
-    faq: "https://team-mirai.notion.site/FAQ-28cf6f56bae180bd84e7f7ae80f806a1",
+    /** 利用規約・プライバシーポリシー・FAQは本サイト内に用意している */
+    terms: "/terms",
+    privacy: "/privacy",
+    faq: "/faq",
   },
   /**
    * ページを管理する政党名（空文字列の場合は政党名を省略した汎用表現を使用）

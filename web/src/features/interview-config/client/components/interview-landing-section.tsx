@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { siteConfig } from "@/config/site.config";
 import { formatEstimatedDuration } from "@/features/interview-config/shared/utils/format-estimated-duration";
+import { formatPolicyReviewPhrase } from "@/lib/utils/party-text";
 
 interface InterviewLandingSectionProps {
   billId: string;
@@ -15,9 +16,7 @@ function getCheckPoints(estimatedDuration: number | null): string[] {
   return [
     durationText ? `所要時間は${durationText}` : null,
     "AIがあなたのご意見を深掘り",
-    siteConfig.managingParty
-      ? `${siteConfig.managingParty}の政策検討に活用`
-      : "政策検討に活用",
+    `${formatPolicyReviewPhrase(siteConfig.managingParty)}に活用`,
   ].filter((text): text is string => text !== null);
 }
 
