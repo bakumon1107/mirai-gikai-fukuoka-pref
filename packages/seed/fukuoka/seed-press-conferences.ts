@@ -361,6 +361,445 @@ const pressConferences: PressConferenceInput[] = [
     ],
   },
   {
+    slug: "2026-06-01",
+    title: "令和8年6月 知事定例記者会見",
+    held_at: "2026-06-01",
+    youtube_url: null,
+    status: "published",
+    items: [
+      {
+        item_type: "announcement",
+        order_index: 0,
+        title: "スポーツフェスタの統合・リニューアル",
+        summary:
+          "4つの競技大会を「スポーツフェスタ」として統合し、年齢や障がいの有無に関わらず参加できるインクルーシブな大会へ刷新。6月28日に県営天神中央公園でオープニングフェスを開催予定。",
+        turns: [],
+      },
+      {
+        item_type: "announcement",
+        order_index: 1,
+        title: "ハワイ州訪問報告（姉妹提携45周年）",
+        summary:
+          "5月20〜22日、米国ハワイ州を訪問。4月に逝去したアリヨシ元知事への弔意を表明。グリーン知事とワンヘルス推進について議論するとともに、県産農林水産物PR試食会を開催した。",
+        turns: [],
+      },
+      {
+        item_type: "announcement",
+        order_index: 2,
+        title: "物価高対応福岡県子育て応援金の支給開始",
+        summary:
+          "物価高対応として子ども1人につき1万円を支給する「物価高対応福岡県子育て応援金」の配布を本日開始。原則申請不要。県職員が電話で案内することはないため、そのような電話は詐欺と注意喚起した。",
+        turns: [],
+      },
+      {
+        item_type: "announcement",
+        order_index: 3,
+        title: "海外活動に関する契約手続きの改善通知",
+        summary:
+          "海外活動に関わる契約は原則競争入札とし、透明性・公平性・競争性を確保する通知を発出。プロポーザル方式採用時はホームページで公表。これまでの慣例を改善し、6月1日以降の契約から適用。",
+        turns: [],
+      },
+      {
+        item_type: "announcement",
+        order_index: 4,
+        title: "部課長会パーティー券問題への服務規律対応",
+        summary:
+          "部課長会による政治資金パーティー券購入補助の報道を受け、服務規律確保について通達を発出。内部統制室に相談窓口を設置し、職員への不当な働きかけからの保護を強化。再発時は懲戒処分対象とする。",
+        turns: [],
+      },
+      {
+        item_type: "qa",
+        order_index: 5,
+        title: "ハワイ視察の県議参加見合わせと影響",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "RKB",
+            content:
+              "ハワイ視察について、県議会議員の随行予定が体調不良で見合わせになったが、日程変更はあったか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "今回は視察ではなく事業目的がある。ワンヘルスがパネルディスカッションのテーマで私がパネラーになるため、県議会にご同行していただけるか尋ねたが見合わせるとのこと。訪問の事業内容や行程に変更はない。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: "RKB",
+            content: "議員が参加しないことの影響はあったか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "ハワイ大学とのワンヘルス交流などで意見交換ができたかもしれないが、主たる目的において支障は生じなかった。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 6,
+        title: "海外視察への県議参加の意義と今後の方針",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content:
+              "海外視察における県議会参加の意義とは何か。議員不参加でも事業完遂できるなら、今後も要請するのか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "共同実施主体として議会がいない場合は問題がある。ただ県が主体の施策について議会に理解してもらい協力を得るため同行いただく場合、議会が来なくても事業遂行には支障がない。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 7,
+        title: "ワンヘルス推進海外活動の県民メリット",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "県民の税金を使うワンヘルス推進で、海外活動の県民メリットは何か。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "ワンヘルスはワンワールド・ワンヘルス。感染症や気候変動などは福岡県のみでは解決できない。発信し成果を県に持ち帰り県民と共に取り組みを進めるのが効果。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 8,
+        title: "海外活動の契約手続きの問題点と改善内容",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content: "これまでの契約手続きの問題点と改善内容を説明してほしい。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "すべてが随意契約で競争性が担保されていなかった。今回は法令原則に立ち返り、競争入札で公平性・透明性・競争性を確保する。ルール明確化で職員の判断が容易になる。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 9,
+        title: "随意契約での固定業者問題と金額の妥当性",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "RKB",
+            content:
+              "随意契約での固定業者との繰り返し契約や宿泊施設の高額性について、適切だったか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "これまでも複数業者による見積もり合わせや個別契約で経費抑制の工夫があった。必要以上に高額な支出にはなっていないと考えるが、今後は原則競争入札で契約業者を決定する。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 10,
+        title: "海外活動契約改善の対象範囲と過去の問題認識",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "契約手続き改善は県議会だけでなく県の海外視察にも適用されるのか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "もちろんです。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "県の海外活動契約について、これまで問題はあったと思うか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "皆様も疑問に思われている点があったと思う。違法ではないが疑念を招く。ルール明確化で隙間をなくす。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 11,
+        title: "契約後の過剰増額変更の常態化",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "NHK",
+            content: "契約後に最大10倍の増額が常態化していたが、今後改められるのか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "全くそのとおり。過度な増額は問題。当初契約の段階で正確に予算を計上すべき。変更契約が必要な場合はあるが、予見可能な増額を当初少額契約するのは不誠実。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 12,
+        title: "競争入札による費用抑制効果",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "共同通信",
+            content: "競争入札により実質的な金額抑制効果が期待できるのか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "公共事業で業者を過度に叩いてはならない。業者の工夫や力量の中で利益確保しつつ効率的提案をする。競争入札で実現可能。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 13,
+        title: "部課長会パーティー券問題の受け止めと職員意識",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content:
+              "中間報告で法令上問題なく、職員が慣例として参加し業務活用意識を持っていたとのことだが、議会との関係悪化懸念や忖度があった点の受け止めは。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "長年の議会関係の中で、議案・予算の認可を得たいという思いから、議会との関係を誤ると困るという漠然とした不安が職員意識に澱のようにあった。今回の指摘で気づきを得た。ルールと取り組みで意識は変えられる。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 14,
+        title: "相談窓口の対象範囲と政治活動の自由",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content: "相談窓口は県議からの圧力も対象か。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "そう。あらゆる方からの圧力・働きかけに対し、職員個人が悩まないよう窓口を設置する。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content: "パーティー参加自体を規制していない理由は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "憲法で認められた政治信条の自由がある。ただ組織的に行われてはならない。個人の政治信条の自由と組織的行為は分けて考えるべき。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 15,
+        title: "議長交代時の再発防止措置",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content:
+              "業務活用意識を持った職員が半数以上いたとのこと。議長が招待をやめるとしたが、議長交代時の再発懸念をどう担保するか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "議会側は招待を慎むと表明。我々執行部は毅然とした態度を取るべき。相談窓口で職員を守る。パーティー参加有無で処遇に影響は無いことを周知する。再発時は懲戒処分対象。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 16,
+        title: "政治家会合費支出全面禁止の思い",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "すべての親睦会で政治家会合費支出を禁じるのは踏み込んだ対応だが、その思いは。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "長きにわたる澱を一掃するため明快な対策を講じた。必要な対応。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 17,
+        title: "相談窓口の形骸化防止と議会との申し合わせ",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "相談窓口の形骸化懸念について、また議会側との書類による申し合わせは。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "形骸化はあってはならず、非違行為認定時は厳格対応・懲戒処分をする。議会側は各会派で申し合わせ予定。我々は毅然とした態度で対応。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 18,
+        title: "議会側のパーティー券販売問題の検証",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "中間報告で議会側の問題点への言及がない。議会側のパーティー券大量販売の問題検証予定は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "議会は親睦目的で案内したのだろう。ただ受けるかは県側の問題。議長も「買うか買わないかは県側」と述べた。議会は招待をやめると適切判断。我々は毅然対応する。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 19,
+        title: "パーティー券代充当開始時期の原因究明",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "西日本新聞",
+            content: "パーティー券代充当が始まった時期など原因究明にはOBへの聞き取りが必要では。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content:
+              "現役職員に聞き取り中。総務部が終わり、今後他部の調査を実施。現時点ではOB聞き取りより現役職員への聴取を優先して考えている。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 20,
+        title: "議会・執行部の適切な緊張関係構築",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "読売新聞",
+            content:
+              "議会・執行部の関係悪化懸念から生じた長年の問題だが、適切な緊張関係構築をどう実現するか。議会側への要求は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "二元代表制は両者が独立。時にはぶつかるべき。ただ県民福祉向上には目指す方向が同じで力を合わせた建設的議論が重要。信頼と適切な緊張関係が必要。慣例・慣行の見直しで構築する。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 21,
+        title: "県議会取材規制素案の白紙撤回と取材制止問題",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content: "県議会の取材規制素案が白紙撤回されたことの受け止めは。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "県民の知る権利が最優先。報道の自由は県民の知る権利を守るためにある。素案撤回は適切判断。議会運営委でメディアと意見交換する対応を支持。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: "RKB",
+            content: "世界獣医師大会での議長取材時に議会事務局職員が制止した件について。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "詳細未承知。他者に迷惑や危険がない限り取材妨害は好ましくない。誰が何をしたか不明だが驚いている。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 22,
+        title: "中東情勢による県内経済影響と対応方針",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: "朝日新聞",
+            content: "中東情勢による県内への影響と対応方針は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content:
+              "中東緊迫化・長期化懸念で資材在庫確保が目詰まり原因となっている。資材価格上昇・入荷遅延で中小企業経営が苦しい。国補正予算を見極めつつ、県補正予算を編成し本議会中に追加提案したい。",
+          },
+        ],
+      },
+    ],
+  },
+  {
     slug: "2026-07-14",
     title: "令和8年7月 知事定例記者会見",
     held_at: "2026-07-14",
