@@ -48,6 +48,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "「よかパパ料理・育児セミナー」を開催します",
         summary:
           "育休取得予定または子育て中の男性を対象に「よかパパ料理・育児セミナー」を開催。ママが「パパにやってほしい家事」第1位は料理だが、パパの料理実施率（46.2%）とママの認識（31.1%）にズレがある。セミナーではワンパン料理・取り分け離乳食・育児ワークを実施。県内15地域で順次開催、参加費無料（6月27日〜7月5日の日程決定）。知事も7月4日のももち文化センターでの料理教室に参加予定。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/286569.pdf",
         turns: [],
       },
       {
@@ -63,7 +65,7 @@ const pressConferences: PressConferenceInput[] = [
               "育児研修について、具体的にどういう知識が習得できるのか教えてください。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "子育て支援課",
             content:
               "参加者が自分の性格で気になる点を含めてブレインストーミングし、「ママがイラッとするシチュエーション」を具体的に理解した上で、対応方法を学ぶ形式を採用しています。",
@@ -311,7 +313,7 @@ const pressConferences: PressConferenceInput[] = [
               "新潟県は実態調査を実施していますが、福岡県の状況は。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "体育スポーツ健康課",
             content:
               "緊急調査を実施しました。昨年度実績は、貸切バス使用：2,454件、自校バスや保護者会等バス使用：1,143件でした。件数の多寡については比較対象がないため「多い」とは評価しておらず、県立全体で毎年同規模の遠征・大会参加が行われていると認識しています。",
@@ -331,7 +333,7 @@ const pressConferences: PressConferenceInput[] = [
               "ドライバーの問題点や改善策の検討状況を教えてください。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "体育スポーツ健康課",
             content:
               "現段階で注意喚起を実施中です。国も通知発出予定との報道があり、それを踏まえた県教委の新通知発出を検討する予定です。",
@@ -373,6 +375,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "スポーツフェスタの統合・リニューアル",
         summary:
           "4つの競技大会を「スポーツフェスタ」として統合し、年齢や障がいの有無に関わらず参加できるインクルーシブな大会へ刷新。6月28日に県営天神中央公園でオープニングフェスを開催予定。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/288908.pdf",
         turns: [],
       },
       {
@@ -381,6 +385,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "ハワイ州訪問報告（姉妹提携45周年）",
         summary:
           "5月20〜22日、米国ハワイ州を訪問。4月に逝去したアリヨシ元知事への弔意を表明。グリーン知事とワンヘルス推進について議論するとともに、県産農林水産物PR試食会を開催した。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/288909.pdf",
         turns: [],
       },
       {
@@ -397,6 +403,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "海外活動に関する契約手続きの改善通知",
         summary:
           "海外活動に関わる契約は原則競争入札とし、透明性・公平性・競争性を確保する通知を発出。プロポーザル方式採用時はホームページで公表。これまでの慣例を改善し、6月1日以降の契約から適用。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/288950.pdf",
         turns: [],
       },
       {
@@ -405,6 +413,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "部課長会パーティー券問題への服務規律対応",
         summary:
           "部課長会による政治資金パーティー券購入補助の報道を受け、服務規律確保について通達を発出。内部統制室に相談窓口を設置し、職員への不当な働きかけからの保護を強化。再発時は懲戒処分対象とする。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/288913.pdf",
         turns: [],
       },
       {
@@ -813,6 +823,8 @@ const pressConferences: PressConferenceInput[] = [
           "奨学金の代理返還等を行う中小企業への補助金の申請受付を本日から開始します",
         summary:
           "従業員に代わって奨学金を返還（代理返還）する、または返還支援の手当を支給する県内本店の中小企業に対し、経費の2分の1・年間上限50万円を補助する制度を創設し、7月14日から12月28日まで申請を受け付ける。人手不足が深刻化するなか、代理返還は「優秀な人材の確保・定着につながった」「社員を大切にする企業というイメージが向上した」といった効果が報告される一方、物価高騰下でコスト負担から導入に踏み切れない企業もあることを踏まえた支援。あわせて特設サイト「FUKUOKA中小企業若手人材確保・定着応援ナビ」を同日開設し、制度解説・申請方法や導入企業の一覧を掲載する。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/293114.pdf",
         turns: [],
       },
       {
@@ -821,6 +833,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "講師謝金に関する調査結果及び執行基準について",
         summary:
           "講師謝金の事務処理に問題があったとの報道を受け、令和3〜7年度の5年間・全庁5,777件を調査し、89件に問題があったと判断した。内訳は、合意済みの謝金額に合わせるため時間数を調整して積算していたものが44件、講師に確認せず推測で時間数を設定していたものが45件。担当者の事務処理の稚拙さだけでなく、決裁した所属長・組織が問題意識を持たなかったこと、県として謝金額決定のルールが明文化されていなかったことを反省点として挙げた。本日付で全所属に総務部長通知を発出し、(1)予算単価表に基づく時間単価×所要時間（事前打ち合わせ・資料作成時間も、必ず講師本人に実態を聞き取った上で算入可）を原則とし、(2)これによりがたい場合は講師の所属事務所・企業等が定める額、または同程度の知識経験を有する方が他団体で受け取っている謝金額のいずれかをもとに協議して決定する、という基準を明示。決定の経緯を会計書類に明記し、情報公開の対象として公表する。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/293115.pdf",
         turns: [],
       },
       {
@@ -857,7 +871,7 @@ const pressConferences: PressConferenceInput[] = [
             content: "含まれます。私の記憶では42件です。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "89件中、42件がワンヘルス総合推進課の講師謝金でした。",
@@ -949,7 +963,7 @@ const pressConferences: PressConferenceInput[] = [
               "海外活動について、現時点でまだ発表されていない件数の総額など、出せるものはありますか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "広報課",
             content: "書類は後ほどお配りしますので、それまでお待ちください。",
           },
@@ -1193,7 +1207,7 @@ const pressConferences: PressConferenceInput[] = [
               "県にもかなり県民からの苦情の電話やメールが届いていると聞いていますが、どのように認識されていますか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "広報課",
             content:
               "今、集計をしておりますので、後ほど広報課から御連絡いたします。",
@@ -1513,6 +1527,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "県営筑豊緑地「野球場・庭球場・球技場」の愛称決定",
         summary:
           "県営筑豊緑地の野球場・庭球場・球技場の愛称を「hyouboみらいパーク筑豊」に決定した。「みらい」にはスポーツを通じて夢や目標に挑戦する子ども・若者への願いと、この球場から未来のスターが生まれてほしいという思いを込めた。優先交渉権者は株式会社票簿会計センター、ネーミングライツ料は年301万円、契約期間は令和8年9月1日〜令和11年3月31日。9月1日以降は大会・報道でこの愛称の使用を依頼し、看板表示は10月以降を予定。ネーミングライツ収入は、野球場のホームベース・各塁のベース、テニスコートのポールやネット、球技場のサッカーゴールネットの更新に活用する。同3施設は国際車いすテニス大会や高校野球、サッカーのインターハイ予選、ラグビー社会人リーグなども開催される筑豊地域のスポーツ振興の中核施設。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/294364.pdf",
         turns: [],
       },
       {
@@ -1521,6 +1537,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "「令和8年福岡県地域限定保育士試験」の実施結果について",
         summary:
           "今年度初めて実施した地域限定保育士試験で48名が合格した。保育人材の確保は喫緊の課題で、定員があっても保育士を確保できず子どもを受け入れられない保育園もあることを踏まえ、今年度から同制度をスタートさせた。4月に筆記試験、6〜7月に平日・土日など複数コースで各5日間の実技講習会（音楽・工作・絵本の読み聞かせの演習や保育現場実習を含む計27時間）を実施。地域限定と通常を合わせた受験申請者数は4年ぶりに増加し、地域限定には365名が申請、筆記通過者のうち辞退1名を除く48名が講習会を受講し全員合格した。合格者アンケートでは、通常の保育士試験を受験する予定はなかったが本試験を知って受験を決意した人が8名（合格者の2割）おり、制度実施の成果と捉えている。合格者は県への登録申請後、早ければ10月から勤務し、保育士・保育所支援センターがマッチング等で就職を支援する。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/294365.pdf",
         turns: [],
       },
       {
@@ -1530,6 +1548,8 @@ const pressConferences: PressConferenceInput[] = [
           "職員による議会質問情報の提供（横流し）・質問作成に関する調査結果、対応方針について",
         summary:
           "県職員による議会質問情報の他会派への提供（横流し）や議会質問作成への関与が報道されたことを受け、知事部局を対象に調査を実施した。【横流し】令和7年度に本庁の課長・室長以上だった現役職員136名に匿名調査（130名回答）を行い、質問情報を他会派に提供したことがあるとの回答が28名。当時の知事部局10部すべてで提供の事実が確認され、提供先は自民党県議団。契機は「前任者の引き継ぎ」「円滑な議会運営のため自発的に」「上司からの指示」「会派からの要求」など、意図は多数会派に配慮した議会運営の円滑化。顧問弁護士は「法に抵触する行為はなかったが、外形的に特定会派に利するように見え、全体の奉仕者として望ましくない」との意見。今後は執行部職員が会派・議員から提供された質問情報を他会派・議員に提供することを禁止する。【質問作成】令和5年度以降に本庁の課長・室長以上だった現役職員186名に匿名調査（全員回答）を行い、代表質問・一般質問や委員会質問の作成に関与したことがあるとの回答が約半数の96名。作成先は自民党県議団95名、民主県政県議団35名、公明党13名、新政会24名、少数会派5名。経緯は議員・会派からの依頼・要求や上司の指示で、自ら作成・部下へ指示した例も確認。顧問弁護士は地方公務員法に抵触しないとしたが、執行部が質問の骨子・原稿を作成することで議会の監視機能が形骸化する恐れがあったとし、幹部職員が議会質問の原稿作成を行うことを禁止する。本日、全所属に議会質問の取り扱いに関する通知を発出した。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/294366.pdf",
         turns: [],
       },
       {
@@ -1538,6 +1558,8 @@ const pressConferences: PressConferenceInput[] = [
         title: "ワンヘルス施策に関する行政改革審議会への諮問について",
         summary:
           "県が推進するワンヘルス施策について、行政改革審議会に諮問することを決定した。ワンヘルスは人と動物の健康、環境の健全性を一体的にとらえる理念で、新型コロナのパンデミックを契機に重要性が再認識され、WHOやG7でも推進が共有され、国も厚生労働省にワンヘルス対策推進室を設置している。福岡県は議員提案条例の制定を契機に全国に先駆けて取り組み、県内60市町村すべてがワンヘルス推進宣言を行っている。一方で、これまでの施策事業をワンヘルスの理念のもとでどう位置づけて進めてきたのか県民に十分説明できておらず、様々な疑念や指摘を招いたことを重く受け止め反省している。このため行政改革審議会で専門的・客観的に、ワンヘルス施策事業の必要性・妥当性の検証と評価、施策の体系化・整理、今後のあるべき姿についての提言を求める。開催時期やスケジュールは決まり次第知らせる。",
+        material_url:
+          "https://www.pref.fukuoka.lg.jp/uploaded/attachment/294367.pdf",
         turns: [],
       },
       {
@@ -1679,7 +1701,7 @@ const pressConferences: PressConferenceInput[] = [
               "特定の会派への利益供与を意図していたかというと、そうではないということです。守秘義務のところですかね。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "福岡県と福岡県議会は同じ地方公共団体ですので、同一の地方公共団体の中では漏えいに当たらないという見解を顧問弁護士からいただいております。",
@@ -1717,7 +1739,7 @@ const pressConferences: PressConferenceInput[] = [
               "作成のほうはですね。横流しのほうは、先ほど説明したように、横流しと言われても仕方のないようなことにはやはり関与していたということです。それはフロントで活動していた財政課の課長補佐や係長のころで、自民党の議員との接触・やり取りが多い立場です。今もそうでしょう。横流しは知事になる前のことです。同僚というより他の課においても、そういうことがあるのは聞いていました。当時それをどう思ったかというと、私も反省しなければいけないのですが、意識の中で、そうせざるを得ないものだと自分自身を納得させていたのが実態だと思います。今も行われていることは薄々感じていたのではという点については、そのとおりで、だからこそ現在の状況を正確に把握しなければ次の手は打てないと考え、昔話ではなく今どうなっているかを把握するために調査をやったということです。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "財政課の職員は、補佐や係長が直接質問の確認などに行くことが多くございます。",
@@ -1797,7 +1819,7 @@ const pressConferences: PressConferenceInput[] = [
               "横流しと質問作成で対象年度が違うのは、何か理由があるのでしょうか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "横流しは、その事実の有無や前任からの引き継ぎなど慣行として行ったことを把握したいと思い、昨年度1年間を対象としました。作成は、質問が当たる・当たらないといったことで作成自体に至らない場合もあり、もう少し広範囲にすべきと考え、現在の県議会の改選後である令和5年度以降を対象としています。",
@@ -1817,7 +1839,7 @@ const pressConferences: PressConferenceInput[] = [
               "地震の件で、熊本で被災された方に福岡県関連の方がいらっしゃるといった情報は入っていますか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "防災危機管理局",
             content: "今のところ、そういう情報は来ていません。",
           },
@@ -1876,7 +1898,7 @@ const pressConferences: PressConferenceInput[] = [
               "自民党の質問のやり取りは政審会長など責任者と行うケースが多いと想定されますが、具体的な議員名など詳細まで調査で明らかになったのでしょうか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "具体的な議員名は今回の調査では回答がありません。自民党の政審会の方という回答はありました。",
@@ -1942,7 +1964,7 @@ const pressConferences: PressConferenceInput[] = [
               "今回の調査では28人全てについて無断で横流ししたという結果でしょうか。事前でも事後でも他会派にお断りをしていないという調査だったのでしょうか。また、結果的に二番煎じになったのがどのくらいあったかの調査はされないのでしょうか。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "財政課",
             content:
               "無断か、事後で報告したかといった調査報告はありませんでしたので分かりませんが、無断でやったのかなと思っています。二番煎じの件数については今回調査をしていないので分かりかねます。",
@@ -2148,7 +2170,7 @@ const pressConferences: PressConferenceInput[] = [
               "副首都に関連して、両市との連絡会議をいつ頃までに立ち上げたいのか、見通しがあれば教えてください。",
           },
           {
-            speaker: "governor",
+            speaker: "secretariat",
             speaker_name: "企画総務課",
             content:
               "ただいま協議をしているところです。県だけで決められるものではありませんので、両政令市とよく相談して、できるだけ早く連絡会議の設置を進めてまいります。",
@@ -2252,6 +2274,374 @@ const pressConferences: PressConferenceInput[] = [
             speaker_name: null,
             content:
               "県という組織は、二元代表制ではありますが、監視・審議・議事機関である県議会と我々執行部で構成されており、この中での情報のやり取りは公務員の守秘義務違反には当たらないという解釈をしています。県議会は外部ではない、という整理です。",
+          },
+        ],
+      },
+    ],
+  },
+  {
+    slug: "2026-08-07",
+    title: "令和8年8月 知事定例記者会見",
+    held_at: "2026-08-07",
+    youtube_url: null,
+    status: "published",
+    items: [
+      {
+        item_type: "announcement",
+        order_index: 0,
+        title: "企業見本市「福岡ジョブ・コレクション」を初開催します",
+        summary: "女性が活躍する県内企業50社を集めた企業見本市「福岡ジョブ・コレクション」を開催します。福岡会場は9月5日、北九州会場は10月4日。大学・短大・専門学校の女子学生が対象で、県内企業で働く女性社員や人事担当者と直接意見交換できます。20代の若い女性が東京圏などへ転出する傾向がある中、県内でのキャリア形成も選択肢に入れてもらうのが狙いです。",
+        material_url: "https://www.pref.fukuoka.lg.jp/uploaded/attachment/295082.pdf",
+        turns: [],
+      },
+      {
+        item_type: "announcement",
+        order_index: 1,
+        title: "生理痛疑似体験セミナー（前期分）を開催します",
+        summary: "生理に伴う不調は仕事にも影響しますが、県の生理休暇の取得率は令和7年度で1.1%（100人に1人）と低く、「上司が男性で言い出しにくい」などの声があります。そこで県は、生理痛を疑似体験できるセミナーを開催します。中小企業の経営者・人事労務担当者が対象で、座学や先進企業の事例紹介に加え、専用機器で生理痛を体験し、グループワークで働きやすい職場づくりを考えます。前期は9月8日〜17日（申込8月末まで・無料）。生理休暇の取得は当然の権利という理解を広げ、誰もが働きやすい環境づくりにつなげる狙いです。",
+        material_url: "https://www.pref.fukuoka.lg.jp/uploaded/attachment/295083.pdf",
+        detail: "■背景・課題\n働く女性の多くが生理症状で仕事に影響を受けますが、県内の生理休暇取得率は令和7年度で1.1%。上司が男性だと言い出しにくい、周囲に取得者がいないと申請しづらい雰囲気が背景です。\n■セミナーの内容\n①座学研修（女性特有の健康課題の基礎知識）②先進企業の事例紹介 ③疑似体験（電極パッドで下腹部の締め付け感を体験）④グループワーク（支援策を協議）\n■日程\n前期は9月8日〜17日に県内各地で実施（申込8月末まで・無料）。後期は11月予定。\n■知事の体験・ねらい\n知事も昨年10月、沖縄の九州地方知事会で疑似体験。「生理休暇の取得は女性の当然の権利」という理解を広げ、生産年齢人口が減る中での女性活躍を企業の成長にもつなげるとして、積極参加を呼びかけ。",
+        turns: [],
+      },
+      {
+        item_type: "qa",
+        order_index: 2,
+        title: "職員倫理規則の改正の内容（現行ルール・通知の反映・親睦会）",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "職員倫理規則の改正と新しい条例について、検討の背景と、いまの作成の進み具合を教えてください。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "職員が不当な働きかけに萎縮せず、公正に職務を行える環境をつくるためのものです。倫理規則の改正はできるだけ速やかに、新条例は内容をよく精査して制定を目指します。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "具体的なルールは。利害関係者との付き合いで禁じられていることは何ですか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "現在の倫理規程では、事業者との間で金品の受け取り禁止、接待の禁止、割り勘でない飲食の禁止などを定めています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "6月1日の総務部長通知の内容は、規則に明記されるのですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "はい。通知で示した内容を規則に落とし込むことを検討しています。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "通知の趣旨を踏まえ、規則本体に具体的に規定する方向で作業しています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "部課長会など親睦会からの支出禁止も規則に盛り込みますか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "職員倫理規則と任意団体の申し合わせの役割を整理しながら検討しています。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 3,
+        title: "新条例の全体像と対象",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "条例は禁止行為を列挙する形ですか。相談体制なども含みますか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "目的・定義・禁止行為に加え、職員が相談できる体制や、違反時の対応措置なども盛り込む方向で検討中です。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "新条例はハラスメント防止条例のようなものですか。全体像を教えてください。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "「福岡県職員に対する優位な地位または権限を利用した不当な要求等の防止に関する条例」をイメージしています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "条例が対象とする行為者は議員ですか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "議員だけでなく、事業主や団体、特別職なども対象に含めて検討しています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "いまの倫理規則の対象に、議員は含まれていますか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "現在は含んでいません。改正で「及び議員」と加えるか、項を立てるかを検討しています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "事業者向けの禁止事項を、議員にも適用するのですか。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "その方向を含めて検討しています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "「全国初」という根拠は。都道府県の単位ですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "都道府県の単位で、議員を含めた倫理規程を設けるのは全国初と認識しています。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 4,
+        title: "「不当な要求」の定義・政治活動・口利きの扱い",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "条例で想定する「不当な要求」とは、具体的にどのようなものですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "優位な地位や権限を背景に、職員へ不適切な便宜や特別な取り計らいを求める行為を想定しています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "パーティー券の配付のような「無言の圧力」も対象になり得ますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "直接の要求だけでなく、職員が圧力と受け止める行為も含めて幅広く検討します。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "「口利き」行為はどう定義しますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "議員などが権限に基づく影響力を用いて、職員に特定の取り計らいを求める行為を念頭に置いています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "政治資金パーティーへの参加自粛をルール化しますか。職員の政治活動の自由との関係は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "憲法が保障する政治信条の自由を侵害しないよう、慎重に対応します。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "「不当な要求」の定義が曖昧なまま、実態調査もせずに進めるのですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "各部局の意見も聞きながら進めます。個別列挙が難しい部分は包括的な表現で対応します。",
+          },
+          {
+            speaker: "secretariat",
+            speaker_name: "内部統制室",
+            content: "定義は包括的な表現を用いつつ、運用の中で具体化していく考えです。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 5,
+        title: "金銭授受疑惑と第三者委員会について",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "県議会が設置する第三者委員会について、日弁連ガイドラインに基づく調査方式を知事はどう評価しますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "公平・公正・透明性の観点から適切な方式だと考えます。しっかり事実解明が進むことを期待します。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 6,
+        title: "県議会の海外視察経費の公表について",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "議会による経費公表が遅れた理由と、知事の受け止めを教えてください。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "事務作業に時間を要したと聞いています。残る1年分についても公表を求めていきます。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "知事が第三者委員会を設けたことは、議会への「手本」の意味がありますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "手本という意識ではありません。透明性を重んじ、県民の信頼を得ることが何より大事だと考えています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "最近の議会への厳しい発言は、対立も辞さない覚悟の表れですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "対立を望んではいません。正しい県政の実現が目標で、そのためには職員のモラルが重要です。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 7,
+        title: "自民党県議団の立て直しについて",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "最大会派の自民党県議団に、会長辞任を受けてどのような指導力を期待しますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "リーダーシップと責任感を発揮していただくことを期待します。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "藏内議長の説明責任についてはどうお考えですか。ネパール出張の発言への批判も出ています。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "議長は県議会のトップとして説明責任を果たし、陣頭に立って問題の解明にあたることを期待します。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 8,
+        title: "執行部と議会の関係改革（根回し廃止など）について",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "プロジェクトチームで示した慣行見直し案（16項目）の内容と、議会側の反応を教えてください。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "根回しや事前調整を廃止し、確定した事実は同時に公表することなどを提案しました。基本的に理解は得られています。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "根回し廃止で、9月議会への影響や懸念にはどう対応しますか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "公の場での議論やきちんとした説明で対応します。記録を残し、情報公開の対象にしていきます。",
+          },
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "倫理規則の改正は、新しい条例ですか、既存条例の改正ですか。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "倫理条例の改正というより、規則の改正が具体的な形になります。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 9,
+        title: "知事自身の責任認識について",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "なれ合いや忖度が進んだことに、副知事時代からの関係づくりをしてきた知事自身の責任は。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "反省しています。ワンヘルスや海外活動の政策的な意義は認めつつ、外形的な改善を図り、行政改革審議会で検証していきます。",
+          },
+        ],
+      },
+      {
+        item_type: "qa",
+        order_index: 10,
+        title: "副首都連絡会議について",
+        summary: null,
+        turns: [
+          {
+            speaker: "reporter",
+            speaker_name: null,
+            content: "副首都連絡会議の狙いと機能を教えてください。部長・局長レベルの新しい組織構想とのことですが。",
+          },
+          {
+            speaker: "governor",
+            speaker_name: null,
+            content: "これまでの事務方レベルから部局長レベルに引き上げます。福岡市・北九州市の両市長と意思を示し合う場も設けます。",
           },
         ],
       },
