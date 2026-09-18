@@ -4,6 +4,7 @@ import { ArrowRight, LockOpen } from "lucide-react";
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { siteConfig } from "@/config/site.config";
+import { formatPolicyReviewPhrase } from "@/lib/utils/party-text";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -60,7 +61,9 @@ export function MakePublicModal({
             さまざまな当事者の意見が公開されることで、より深い議案議論が実現できます。
           </CheckListItem>
           <p className="text-sm text-black">
-            非公開で提出した場合でも、ご意見は党内での政策検討に活用させていただきます。
+            非公開で提出した場合でも、ご意見は
+            {formatPolicyReviewPhrase(siteConfig.managingParty, "での")}
+            に活用させていただきます。
           </p>
         </div>
 
