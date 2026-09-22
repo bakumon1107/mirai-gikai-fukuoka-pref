@@ -1,53 +1,48 @@
-version: 1
+# yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
 
-auto_review:
-  enabled: true
-  drafts: true 
-  request_changes_workflow: auto
-  request_review_on_new_commits: true
-  max_total_comments: 30
-  max_review_duration_minutes: 15
+# レビューコメント・サマリーを日本語で生成する
+language: ja-JP
+
+reviews:
+  profile: chill
+  # CodeRabbitのコメントがresolve済みになったら自動approveする挙動。
+  # 旧設定の request_changes_workflow: auto とは意味が違うため既定のfalseにしている。
+  request_changes_workflow: false
+  high_level_summary: true
+
+  # ノイズになるものだけ除外する（"!" が除外）。
+  # 旧設定は admin/web/packages/supabase/docs を include する形だったが、それでは
+  # tests/** やルートの設定ファイル（biome.json, package.json 等）がレビュー対象から
+  # 外れてしまうため、除外のみの指定に変更した。
+  # Markdown も除外しない（docs/ の設計文書に対するレビューが有用なため）。
   path_filters:
-    include:
-      - "admin/**"
-      - "web/**"
-      - "packages/**"
-      - "supabase/**"
-      - "docs/**"
-    exclude:
-      - "**/*.md"
-      - "**/*.mdx"
-      - "**/*.svg"
-      - "**/*.png"
-      - "**/*.jpg"
-      - "**/*.jpeg"
-      - "**/*.gif"
-      - "**/*.lock"
-      - "**/pnpm-lock.yaml"
-      - "**/yarn.lock"
-      - "**/package-lock.json"
-      - "**/dist/**"
-      - "**/.next/**"
-      - "**/coverage/**"
-      - "**/*.snap"
-  ignore_labels:
-    - "skip-ai-review"
-    - "no-bots"
-    - "dependencies"
-  ignore_authors:
-    - "dependabot"
-    - "renovate"
-  languages:
-    - typescript
-    - javascript
-    - sql
-  summary:
+    - "!**/*.svg"
+    - "!**/*.png"
+    - "!**/*.jpg"
+    - "!**/*.jpeg"
+    - "!**/*.gif"
+    - "!**/*.pdf"
+    - "!**/*.lock"
+    - "!**/pnpm-lock.yaml"
+    - "!**/yarn.lock"
+    - "!**/package-lock.json"
+    - "!**/dist/**"
+    - "!**/.next/**"
+    - "!**/coverage/**"
+    - "!**/*.snap"
+    - "!packages/supabase/types/supabase.types.ts"
+
+  auto_review:
     enabled: true
-    mode: always
+    drafts: true
+    # "!" は除外条件。これらのラベルが付いたPRはレビューしない
+    labels:
+      - "!skip-ai-review"
+      - "!no-bots"
+      - "!dependencies"
+    ignore_usernames:
+      - "dependabot[bot]"
+      - "renovate[bot]"
 
-qa_assistant:
-  enabled: false
-
-labeler:
-  enabled: false
-
+chat:
+  auto_reply: true
