@@ -1,0 +1,367 @@
+{
+  "sessionName": "令和7年12月定例会",
+  "dbSessionName": "令和7年 12月定例会",
+  "sessionKey": "0712",
+  "startDate": "2025-12-01",
+  "endDate": "2025-12-19",
+  "councilUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/menu-0712.html",
+  "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html",
+  "voteResultUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/saiketsu-0712.html",
+  "scrapedAt": "2026-09-23T15:12:06.365Z",
+  "billCount": 39,
+  "declaredInitialCount": 38,
+  "bills": [
+    {
+      "billNumber": "第188号",
+      "billType": "bill",
+      "name": "令和7年度福岡県一般会計補正予算（第4号）",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第189号",
+      "billType": "bill",
+      "name": "令和7年度福岡県県営埠頭施設整備運営事業特別会計補正予算（第1号）",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第190号",
+      "billType": "bill",
+      "name": "令和7年度福岡県工業用地造成事業会計補正予算（第1号）",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第191号",
+      "billType": "bill",
+      "name": "福岡県部制条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第192号",
+      "billType": "bill",
+      "name": "福岡県職員の給与に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第193号",
+      "billType": "bill",
+      "name": "福岡県特別職の職員の給与等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第194号",
+      "billType": "bill",
+      "name": "福岡県個人番号の利用及び特定個人情報の提供に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第195号",
+      "billType": "bill",
+      "name": "福岡県食品衛生法施行条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第196号",
+      "billType": "bill",
+      "name": "福岡県保健福祉関係手数料条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第197号",
+      "billType": "bill",
+      "name": "福岡県幼保連携型認定こども園の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第198号",
+      "billType": "bill",
+      "name": "福岡県一時保護施設の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第199号",
+      "billType": "bill",
+      "name": "福岡県児童福祉施設の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第200号",
+      "billType": "bill",
+      "name": "福岡県環境影響評価条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第201号",
+      "billType": "bill",
+      "name": "福岡県地方港湾審議会条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第202号",
+      "billType": "bill",
+      "name": "福岡県公立学校職員の給与に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第203号",
+      "billType": "bill",
+      "name": "福岡県警察職員の給与に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第204号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第205号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第206号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第207号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第208号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第209号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第210号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第211号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第212号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第213号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第214号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第215号",
+      "billType": "bill",
+      "name": "工事請負変更契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第216号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第217号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第218号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第219号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第220号",
+      "billType": "bill",
+      "name": "当せん金付証票の発売について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第221号",
+      "billType": "bill",
+      "name": "福岡県国際文化情報センターの指定管理者の指定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第222号",
+      "billType": "bill",
+      "name": "福岡県障がい者リハビリテーションセンターの指定管理者の指定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第223号",
+      "billType": "bill",
+      "name": "福岡県立飯塚研究開発センターの指定管理者の指定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第224号",
+      "billType": "bill",
+      "name": "福岡県建設技術情報センターの指定管理者の指定について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第225号",
+      "billType": "bill",
+      "name": "人事委員会委員の選任について",
+      "submittedDate": "2025-12-01",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    },
+    {
+      "billNumber": "第226号",
+      "billType": "bill",
+      "name": "令和7年度福岡県一般会計補正予算（第5号）",
+      "submittedDate": "2025-12-19",
+      "status": "approved",
+      "statusNote": "令和7年12月19日、第188号議案から第226号議案の39件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0712.html"
+    }
+  ],
+  "warnings": []
+}

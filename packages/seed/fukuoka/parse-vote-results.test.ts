@@ -67,6 +67,45 @@ describe("parseVoteResults", () => {
     });
   });
 
+  describe("語尾の揺れ", () => {
+    it("「同意されました」のみの人事議案を拾う（令和7年4月臨時会）", () => {
+      // 第80号議案（副知事の選任）は「可決」の語を含まない。
+      // 「可決」だけを条件にすると取りこぼす実例。
+      const result = parseVoteResults(
+        '<div id="main"><p>令和7年4月11日、第80号議案については、原案のとおり同意されました。</p></div>'
+      );
+
+      expect(result.approvedBillNumbers.has(80)).toBe(true);
+      expect(result.warnings).toEqual([]);
+    });
+
+    it("「可決・承認または同意されました」を拾う", () => {
+      const result = parseVoteResults(
+        '<div id="main"><p>第67号議案から第109号議案については、いずれも原案のとおり可決・承認または同意されました。</p></div>'
+      );
+
+      expect(result.approvedBillNumbers.size).toBe(43);
+    });
+
+    it("「不採択」を含む文は可決扱いにせず警告に残す", () => {
+      // 「採択」に一致してしまうため否定表現の除外が必要
+      const result = parseVoteResults(
+        '<div id="main"><p>第10号議案については、不採択とされました。</p></div>'
+      );
+
+      expect(result.approvedBillNumbers.has(10)).toBe(false);
+      expect(result.warnings.some((w) => w.includes("否決・不採択"))).toBe(true);
+    });
+
+    it("「否決されました」を可決扱いにしない", () => {
+      const result = parseVoteResults(
+        '<div id="main"><p>第11号議案については、否決されました。</p></div>'
+      );
+
+      expect(result.approvedBillNumbers.has(11)).toBe(false);
+    });
+  });
+
   it("可決宣言が無いHTMLでは警告を返す", () => {
     const result = parseVoteResults(
       '<div id="main"><p>本会議は開会されました。</p></div>'

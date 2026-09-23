@@ -1,0 +1,745 @@
+{
+  "sessionName": "令和7年2月定例会",
+  "dbSessionName": "令和7年 2月定例会",
+  "sessionKey": "0702",
+  "startDate": "2025-02-04",
+  "endDate": "2025-02-20",
+  "councilUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/menu-0702.html",
+  "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html",
+  "voteResultUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/saiketsu-0702.html",
+  "scrapedAt": "2026-09-23T15:12:47.735Z",
+  "billCount": 81,
+  "declaredInitialCount": null,
+  "bills": [
+    {
+      "billNumber": "第1号",
+      "billType": "bill",
+      "name": "令和7年度福岡県一般会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第2号",
+      "billType": "bill",
+      "name": "令和7年度福岡県財政調整基金特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第3号",
+      "billType": "bill",
+      "name": "令和7年度福岡県公債管理特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第4号",
+      "billType": "bill",
+      "name": "令和7年度福岡県国民健康保険特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第5号",
+      "billType": "bill",
+      "name": "令和7年度福岡県母子父子寡婦福祉資金貸付事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第6号",
+      "billType": "bill",
+      "name": "令和7年度福岡県災害救助基金特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第7号",
+      "billType": "bill",
+      "name": "令和7年度福岡県就農支援資金貸付事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第8号",
+      "billType": "bill",
+      "name": "令和7年度福岡県県営林造成事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第9号",
+      "billType": "bill",
+      "name": "令和7年度福岡県林業改善資金助成事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第10号",
+      "billType": "bill",
+      "name": "令和7年度福岡県沿岸漁業改善資金助成事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第11号",
+      "billType": "bill",
+      "name": "令和7年度福岡県小規模企業者等設備導入資金貸付事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第12号",
+      "billType": "bill",
+      "name": "令和7年度福岡県公共用地先行取得事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第13号",
+      "billType": "bill",
+      "name": "令和7年度福岡県県営埠頭施設整備運営事業特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第14号",
+      "billType": "bill",
+      "name": "令和7年度福岡県住宅管理特別会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第15号",
+      "billType": "bill",
+      "name": "令和7年度福岡県病院事業会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第16号",
+      "billType": "bill",
+      "name": "令和7年度福岡県流域下水道事業会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第17号",
+      "billType": "bill",
+      "name": "令和7年度福岡県電気事業会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第18号",
+      "billType": "bill",
+      "name": "令和7年度福岡県工業用水道事業会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第19号",
+      "billType": "bill",
+      "name": "令和7年度福岡県工業用地造成事業会計暫定予算",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第20号",
+      "billType": "bill",
+      "name": "令和6年度福岡県一般会計補正予算（第6号）",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月7日、第20号議案、第21号議案については、いずれも原案のとおり可決されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第21号",
+      "billType": "bill",
+      "name": "令和6年度福岡県流域下水道事業会計補正予算（第1号）",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月7日、第20号議案、第21号議案については、いずれも原案のとおり可決されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第22号",
+      "billType": "bill",
+      "name": "令和6年度福岡県一般会計補正予算（第7号）",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第23号",
+      "billType": "bill",
+      "name": "刑法等の一部を改正する法律の施行に伴う関係条例の整理に関する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第24号",
+      "billType": "bill",
+      "name": "福岡県職員の給与に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第25号",
+      "billType": "bill",
+      "name": "福岡県職員等の旅費に関する条例及び福岡県特別職の職員の給与等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第26号",
+      "billType": "bill",
+      "name": "福岡県職員の勤務時間、休暇等に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第27号",
+      "billType": "bill",
+      "name": "福岡県女性自立支援施設の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第28号",
+      "billType": "bill",
+      "name": "福岡県青少年健全育成条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第29号",
+      "billType": "bill",
+      "name": "福岡県児童福祉施設の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第30号",
+      "billType": "bill",
+      "name": "福岡県一時保護施設の設備及び運営の基準に関する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第31号",
+      "billType": "bill",
+      "name": "福岡県保護施設等の設備及び運営の基準に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第32号",
+      "billType": "bill",
+      "name": "福岡県環境影響評価条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第33号",
+      "billType": "bill",
+      "name": "福岡県建築都市関係手数料条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第34号",
+      "billType": "bill",
+      "name": "福岡県都市公園条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第35号",
+      "billType": "bill",
+      "name": "福岡県公立学校職員の給与に関する条例及び福岡県公立学校職員のへき地手当等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第36号",
+      "billType": "bill",
+      "name": "福岡県県立学校職員定数条例及び福岡県市町村立学校職員定数条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第37号",
+      "billType": "bill",
+      "name": "福岡県警察の組織及び定員に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第38号",
+      "billType": "bill",
+      "name": "福岡県警察職員の給与に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第39号",
+      "billType": "bill",
+      "name": "福岡武道館条例の一部を改正する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第40号",
+      "billType": "bill",
+      "name": "福岡県警察関係手数料条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第41号",
+      "billType": "bill",
+      "name": "包括外部監査契約の締結について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第42号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第43号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第44号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第45号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第46号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第47号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第48号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第49号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第50号",
+      "billType": "bill",
+      "name": "流域下水道管理事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第51号",
+      "billType": "bill",
+      "name": "流域下水道管理事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第52号",
+      "billType": "bill",
+      "name": "福岡県こども計画の策定について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第53号",
+      "billType": "bill",
+      "name": "福岡北九州高速道路公社定款の一部変更に対する同意について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第54号",
+      "billType": "bill",
+      "name": "1級河川の指定の変更に関する意見について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第55号",
+      "billType": "bill",
+      "name": "監査委員の選任について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第56号",
+      "billType": "bill",
+      "name": "公安委員会委員の任命について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第57号",
+      "billType": "bill",
+      "name": "筑前海区漁業調整委員会委員の任命について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第58号",
+      "billType": "bill",
+      "name": "福岡県有明海区漁業調整委員会委員の任命について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第59号",
+      "billType": "bill",
+      "name": "福岡県豊前海区漁業調整委員会委員の任命について",
+      "submittedDate": "2025-02-04",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第60号",
+      "billType": "bill",
+      "name": "令和6年度福岡県一般会計補正予算（第8号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第61号",
+      "billType": "bill",
+      "name": "令和6年度福岡県財政調整基金特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第62号",
+      "billType": "bill",
+      "name": "令和6年度福岡県公債管理特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第63号",
+      "billType": "bill",
+      "name": "令和6年度福岡県市町村振興基金特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第64号",
+      "billType": "bill",
+      "name": "令和6年度福岡県国民健康保険特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第65号",
+      "billType": "bill",
+      "name": "令和6年度福岡県災害救助基金特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第66号",
+      "billType": "bill",
+      "name": "令和6年度福岡県小規模企業者等設備導入資金貸付事業特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第67号",
+      "billType": "bill",
+      "name": "令和6年度福岡県公共用地先行取得事業特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第68号",
+      "billType": "bill",
+      "name": "令和6年度福岡県県営埠頭施設整備運営事業特別会計補正予算（第3号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第69号",
+      "billType": "bill",
+      "name": "令和6年度福岡県住宅管理特別会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第70号",
+      "billType": "bill",
+      "name": "令和6年度福岡県流域下水道事業会計補正予算（第2号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第71号",
+      "billType": "bill",
+      "name": "令和6年度福岡県工業用地造成事業会計補正予算（第1号）",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第72号",
+      "billType": "bill",
+      "name": "空港整備事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第73号",
+      "billType": "bill",
+      "name": "独立行政法人水資源機構筑後川下流用水施設の管理業務に要する経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第74号",
+      "billType": "bill",
+      "name": "農業農村環境整備事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第75号",
+      "billType": "bill",
+      "name": "県営土地改良事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第76号",
+      "billType": "bill",
+      "name": "漁港関係事業の経費の負担について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第77号",
+      "billType": "bill",
+      "name": "街路関係事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第78号",
+      "billType": "bill",
+      "name": "海の中道海浜公園事業の経費の負担について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第79号",
+      "billType": "bill",
+      "name": "流域下水道事業の経費の負担についての議決内容の一部変更について",
+      "submittedDate": "2025-02-10",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第2号",
+      "billType": "member_bill",
+      "name": "福岡県議会議員の議員報酬及び費用弁償等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-20",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    },
+    {
+      "billNumber": "第3号",
+      "billType": "member_bill",
+      "name": "福岡県議会の保有する個人情報の保護に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-02-20",
+      "status": "approved",
+      "statusNote": "令和7年2月20日、第1号議案から第19号議案、第22号議案から第79号議案の77件及び委員会提出議案第2号議案、第3号議案の2件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0702.html"
+    }
+  ],
+  "warnings": []
+}

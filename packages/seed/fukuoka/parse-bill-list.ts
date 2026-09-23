@@ -73,9 +73,15 @@ export function htmlToLines(html: string): string[] {
 
   return decodeEntities(text)
     .split("\n")
-    .map((line) => line.replace(/[\s　]+$/, "").replace(/^[\s　]+/, ""))
+    // 実ページには全角スペースやゼロ幅スペース（U+200B）・BOM（U+FEFF）が
+    // 行頭に入っている箇所がある（例: 採決結果の「​令和8年9月18日、…」）。
+    // status_note などへそのまま入るため、ここで落とす。
+    .map((line) => line.replace(TRIM_CHARS_RE, "").replace(LEAD_TRIM_RE, ""))
     .filter((line) => line.length > 0);
 }
+
+const TRIM_CHARS_RE = /[\s　​﻿]+$/;
+const LEAD_TRIM_RE = /^[\s　​﻿]+/;
 
 /** 和暦の元号年を西暦へ。福岡県議会サイトは令和／平成が混在する。 */
 export function warekiToYear(era: string, eraYear: number): number {

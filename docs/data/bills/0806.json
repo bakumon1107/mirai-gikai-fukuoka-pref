@@ -1,0 +1,322 @@
+{
+  "sessionName": "令和8年6月定例会",
+  "dbSessionName": "令和8年 6月定例会",
+  "sessionKey": "0806",
+  "startDate": "2026-06-08",
+  "endDate": "2026-06-25",
+  "councilUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/menu-0806.html",
+  "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html",
+  "voteResultUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/saiketsu-0806.html",
+  "scrapedAt": "2026-09-23T15:11:49.746Z",
+  "billCount": 34,
+  "declaredInitialCount": 32,
+  "bills": [
+    {
+      "billNumber": "第88号",
+      "billType": "bill",
+      "name": "福岡県職員の特殊勤務手当に関する条例及び特定大規模災害等に対処するための特殊勤務手当の特例に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第89号",
+      "billType": "bill",
+      "name": "福岡県職員等の旅費に関する条例及び福岡県特別職の職員の給与等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第90号",
+      "billType": "bill",
+      "name": "福岡県税条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第91号",
+      "billType": "bill",
+      "name": "地方活力向上地域における福岡県税の不均一課税に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第92号",
+      "billType": "bill",
+      "name": "福岡県児童福祉施設の設備及び運営の基準に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第93号",
+      "billType": "bill",
+      "name": "福岡県幼保連携型認定こども園の設備及び運営の基準に関する条例等の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第94号",
+      "billType": "bill",
+      "name": "福岡県一時保護委託者の登録等の基準に関する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第95号",
+      "billType": "bill",
+      "name": "福岡県国営土地改良事業負担金徴収条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第96号",
+      "billType": "bill",
+      "name": "福岡県建築都市関係手数料条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第97号",
+      "billType": "bill",
+      "name": "福岡県建築基準法施行条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第98号",
+      "billType": "bill",
+      "name": "福岡県立学校授業料等徴収条例及び福岡県立高等学校通信教育入学料及び受講料条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第99号",
+      "billType": "bill",
+      "name": "福岡県警察職員の特殊勤務手当に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第100号",
+      "billType": "bill",
+      "name": "専決処分について（福岡県税条例等の一部を改正する条例の制定について）",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第101号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第102号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第103号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第104号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第105号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第106号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第107号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第108号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第109号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第110号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第111号",
+      "billType": "bill",
+      "name": "国営筑後川下流佐賀土地改良事業の経費の負担について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第112号",
+      "billType": "bill",
+      "name": "国営筑後川中流土地改良事業の経費の負担について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第113号",
+      "billType": "bill",
+      "name": "財産の取得について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第114号",
+      "billType": "bill",
+      "name": "福岡県国土利用計画（第5次）・土地利用基本計画の策定について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第115号",
+      "billType": "bill",
+      "name": "財産の取得について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第116号",
+      "billType": "bill",
+      "name": "財産の取得について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第117号",
+      "billType": "bill",
+      "name": "財産の取得について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第118号",
+      "billType": "bill",
+      "name": "訴えの提起について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第119号",
+      "billType": "bill",
+      "name": "収用委員会の委員及び予備委員の任命について",
+      "submittedDate": "2026-06-08",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第120号",
+      "billType": "bill",
+      "name": "令和8年度福岡県一般会計補正予算（第1号）",
+      "submittedDate": "2026-06-15",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    },
+    {
+      "billNumber": "第121号",
+      "billType": "bill",
+      "name": "監査委員の選任について",
+      "submittedDate": "2026-06-25",
+      "status": "approved",
+      "statusNote": "令和8年6月25日、第88号議案から第121号議案の34件については、いずれも原案のとおり可決、承認または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0806.html"
+    }
+  ],
+  "warnings": []
+}
