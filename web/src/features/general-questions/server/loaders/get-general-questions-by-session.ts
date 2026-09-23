@@ -13,7 +13,8 @@ const _getCached = unstable_cache(
   async (sessionId: string): Promise<GeneralQuestion[]> => {
     return findPublishedGeneralQuestionsBySession(sessionId);
   },
-  ["general-questions-by-session"],
+  // question_type の追加で戻り値のシェイプが変わったため v2 にバンプ
+  ["general-questions-by-session-v2"],
   {
     revalidate: 600,
     tags: [CACHE_TAGS.GENERAL_QUESTIONS],
