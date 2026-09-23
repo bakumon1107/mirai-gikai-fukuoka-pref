@@ -104,6 +104,35 @@ describe("parseVoteResults", () => {
 
       expect(result.approvedBillNumbers.has(11)).toBe(false);
     });
+
+    // 肯定語はいずれも「不」付きの否定形に部分一致してしまう。
+    // 決算議案は「認定／不認定」で議決されるため「不認定」は実在する。
+    it.each([
+      ["不認定とされました", "第140号議案については、不認定とされました。", 140],
+      ["不認定されました", "第141号議案については、不認定されました。", 141],
+      ["不承認とされました", "第142号議案については、不承認とされました。", 142],
+      ["不同意とされました", "第143号議案については、不同意とされました。", 143],
+    ])("「%s」を可決扱いにしない", (_label, sentence, number) => {
+      const result = parseVoteResults(
+        `<div id="main"><p>${sentence}</p></div>`
+      );
+
+      expect(result.approvedBillNumbers.has(number)).toBe(false);
+      expect(result.warnings.some((w) => w.includes("否決・不採択"))).toBe(true);
+    });
+
+    it("肯定語を含む否定形を可決扱いにしないことをまとめて確認する", () => {
+      // 「認定されました」（肯定）は拾い、「不認定されました」は拾わない
+      const positive = parseVoteResults(
+        '<div id="main"><p>第150号議案については、認定されました。</p></div>'
+      );
+      const negative = parseVoteResults(
+        '<div id="main"><p>第151号議案については、不認定されました。</p></div>'
+      );
+
+      expect(positive.approvedBillNumbers.has(150)).toBe(true);
+      expect(negative.approvedBillNumbers.has(151)).toBe(false);
+    });
   });
 
   it("可決宣言が無いHTMLでは警告を返す", () => {

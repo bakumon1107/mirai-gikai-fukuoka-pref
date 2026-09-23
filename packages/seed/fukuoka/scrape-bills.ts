@@ -73,11 +73,18 @@ async function fetchHtml(url: string): Promise<FetchResult> {
   for (let attempt = 0; ; attempt++) {
     await sleep(WAIT_MS);
     let res: Response;
+    // 本文の読み取りまで同じ try に入れる。fetch() はヘッダー受信で解決し、
+    // res.text() はその後のタイムアウトで reject されうるため、
+    // 読み取りを外に出すとリトライを迂回してCLI全体が落ちる。
+    let bodyText: string | null = null;
     try {
       res = await fetch(url, {
         headers: { "User-Agent": USER_AGENT },
         signal: AbortSignal.timeout(REQUEST_TIMEOUT_MS),
       });
+      // リトライ判定に必要なステータスを見る前に本文を読むと、
+      // 429/503 応答の本文取得で無駄に待つ。ステータスが成功のときだけ読む。
+      if (res.ok) bodyText = await res.text();
     } catch (e) {
       if (attempt < RETRY_DELAYS_SEC.length) {
         const waitSec = RETRY_DELAYS_SEC[attempt];
@@ -108,8 +115,11 @@ async function fetchHtml(url: string): Promise<FetchResult> {
 
     if (res.status === 404) return { kind: "notFound" };
     if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+    if (bodyText === null) {
+      throw new Error(`本文を読み取れませんでした: ${url}`);
+    }
 
-    return { kind: "ok", html: await res.text() };
+    return { kind: "ok", html: bodyText };
   }
 }
 
@@ -184,13 +194,16 @@ async function collectSessions(
 /** 1会期分を取得して中間JSONの内容を組み立てる */
 async function scrapeSession(
   entry: SessionIndexEntry
-): Promise<SessionOutput | null> {
+): Promise<SessionOutput> {
   console.log(`\n=== ${entry.sessionName}（${entry.sessionKey}） ===`);
 
   const billRes = await fetchHtml(entry.billListUrl);
   if (billRes.kind === "notFound") {
-    console.warn(`  提出議案ページが404でした: ${entry.billListUrl}`);
-    return null;
+    // 索引に載っているページが404なのは異常。採決結果ページの404（未掲載）と
+    // 違って想定内ではないため、読み飛ばして「完了」にせず失敗として扱う。
+    throw new Error(
+      `提出議案ページが404でした（索引には掲載されています）: ${entry.billListUrl}`
+    );
   }
 
   const parsed = parseBillList(billRes.html);
@@ -343,6 +356,23 @@ async function main(): Promise<void> {
     targets = pick(all);
   }
 
+  // 指定したキーの一部しか索引に無い場合、filter は残りを黙って捨てる。
+  // 「完了」と表示して取り逃がしに気づけないため、欠落を明示して失敗させる。
+  if (options.sessionKeys) {
+    const found = new Set(targets.map((t) => t.sessionKey));
+    const missing = options.sessionKeys.filter((k) => !found.has(k));
+    if (missing.length > 0) {
+      console.error(
+        `指定した会期キーが索引に見つかりません: ${missing.join(", ")}`
+      );
+      console.error(
+        `索引にある会期キー: ${all.map((s) => s.sessionKey).join(", ")}`
+      );
+      process.exitCode = 1;
+      return;
+    }
+  }
+
   if (targets.length === 0) {
     console.error("対象会期がありません。--list で索引の内容を確認してください");
     process.exitCode = 1;
@@ -364,6 +394,7 @@ async function main(): Promise<void> {
   let written = 0;
   let skipped = 0;
   const allWarnings: string[] = [];
+  const failures: string[] = [];
 
   for (const entry of targets) {
     const outPath = join(OUT_DIR, `${entry.sessionKey}.json`);
@@ -375,8 +406,17 @@ async function main(): Promise<void> {
       continue;
     }
 
-    const output = await scrapeSession(entry);
-    if (output === null) continue;
+    // 1会期の失敗で他の会期を落とさない。ただし最後に失敗として報告し、
+    // 終了コードを立てる（読み飛ばして「完了」と表示しないため）。
+    let output: SessionOutput;
+    try {
+      output = await scrapeSession(entry);
+    } catch (e) {
+      const message = e instanceof Error ? e.message : String(e);
+      console.error(`  ✗ 取得失敗: ${message}`);
+      failures.push(`[${entry.sessionKey}] ${entry.sessionName}: ${message}`);
+      continue;
+    }
 
     mkdirSync(dirname(outPath), { recursive: true });
     writeFileSync(outPath, `${JSON.stringify(output, null, 2)}\n`, "utf-8");
@@ -389,12 +429,18 @@ async function main(): Promise<void> {
   }
 
   console.log(
-    `\n完了: 書き出し${written}件 / スキップ${skipped}件 / 警告${allWarnings.length}件`
+    `\n完了: 書き出し${written}件 / スキップ${skipped}件 / 失敗${failures.length}件 / 警告${allWarnings.length}件`
   );
 
   if (allWarnings.length > 0) {
     console.log("\n--- 警告（目視レビューで確認すること）---");
     for (const w of allWarnings) console.log(`  ${w}`);
+  }
+
+  if (failures.length > 0) {
+    console.error("\n--- 取得失敗 ---");
+    for (const f of failures) console.error(`  ${f}`);
+    process.exitCode = 1;
   }
 }
 
