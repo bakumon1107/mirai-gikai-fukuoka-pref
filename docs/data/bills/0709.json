@@ -1,0 +1,565 @@
+{
+  "sessionName": "令和7年9月定例会",
+  "dbSessionName": "令和7年 9月定例会",
+  "sessionKey": "0709",
+  "startDate": "2025-09-08",
+  "endDate": "2025-10-14",
+  "councilUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/menu-0709.html",
+  "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html",
+  "voteResultUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/saiketsu-0709.html",
+  "scrapedAt": "2026-09-23T15:42:03.210Z",
+  "billCount": 61,
+  "declaredInitialCount": 40,
+  "bills": [
+    {
+      "billNumber": "第127号",
+      "billType": "bill",
+      "name": "令和7年度福岡県一般会計補正予算（第2号）",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第128号",
+      "billType": "bill",
+      "name": "福岡県行政手続等における情報通信の技術の利用に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第129号",
+      "billType": "bill",
+      "name": "福岡県議会議員及び福岡県知事の選挙における選挙運動用自動車の使用及びポスター等の作成の公営に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第130号",
+      "billType": "bill",
+      "name": "福岡県住民基本台帳法施行条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第131号",
+      "billType": "bill",
+      "name": "福岡県民生委員の定数を定める条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第132号",
+      "billType": "bill",
+      "name": "福岡県建築都市関係手数料条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第133号",
+      "billType": "bill",
+      "name": "福岡県公営企業の設置等に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第134号",
+      "billType": "bill",
+      "name": "福岡県風俗案内業の規制に関する条例の一部を改正する条例の制定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第135号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第136号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第137号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第138号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第139号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第140号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第141号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第142号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第143号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第144号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第145号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第146号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第147号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第148号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第149号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第150号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第151号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第152号",
+      "billType": "bill",
+      "name": "工事請負契約の締結についての議決内容の一部変更について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第153号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第154号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第155号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第156号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第157号",
+      "billType": "bill",
+      "name": "工事請負契約の締結について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第158号",
+      "billType": "bill",
+      "name": "農業農村環境整備事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第159号",
+      "billType": "bill",
+      "name": "県営土地改良事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第160号",
+      "billType": "bill",
+      "name": "県営林道開設事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第161号",
+      "billType": "bill",
+      "name": "港湾関係事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第162号",
+      "billType": "bill",
+      "name": "街路関係事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第163号",
+      "billType": "bill",
+      "name": "流域下水道事業の経費の負担について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第164号",
+      "billType": "bill",
+      "name": "福岡県都市計画基本方針の策定について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第165号",
+      "billType": "bill",
+      "name": "副知事の選任について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第166号",
+      "billType": "bill",
+      "name": "教育委員会委員の任命について",
+      "submittedDate": "2025-09-08",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第167号",
+      "billType": "bill",
+      "name": "令和6年度福岡県一般会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第168号",
+      "billType": "bill",
+      "name": "令和6年度福岡県財政調整基金特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第169号",
+      "billType": "bill",
+      "name": "令和6年度福岡県公債管理特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第170号",
+      "billType": "bill",
+      "name": "令和6年度福岡県市町村振興基金特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第171号",
+      "billType": "bill",
+      "name": "令和6年度福岡県国民健康保険特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第172号",
+      "billType": "bill",
+      "name": "令和6年度福岡県母子父子寡婦福祉資金貸付事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第173号",
+      "billType": "bill",
+      "name": "令和6年度福岡県災害救助基金特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第174号",
+      "billType": "bill",
+      "name": "令和6年度福岡県就農支援資金貸付事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第175号",
+      "billType": "bill",
+      "name": "令和6年度福岡県県営林造成事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第176号",
+      "billType": "bill",
+      "name": "令和6年度福岡県林業改善資金助成事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第177号",
+      "billType": "bill",
+      "name": "令和6年度福岡県沿岸漁業改善資金助成事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第178号",
+      "billType": "bill",
+      "name": "令和6年度福岡県小規模企業者等設備導入資金貸付事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第179号",
+      "billType": "bill",
+      "name": "令和6年度福岡県公共用地先行取得事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第180号",
+      "billType": "bill",
+      "name": "令和6年度福岡県県営埠頭施設整備運営事業特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第181号",
+      "billType": "bill",
+      "name": "令和6年度福岡県住宅管理特別会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第182号",
+      "billType": "bill",
+      "name": "令和6年度福岡県病院事業会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第183号",
+      "billType": "bill",
+      "name": "令和6年度福岡県流域下水道事業会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第184号",
+      "billType": "bill",
+      "name": "令和6年度福岡県電気事業会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第185号",
+      "billType": "bill",
+      "name": "令和6年度福岡県工業用水道事業会計利益の処分及び決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第186号",
+      "billType": "bill",
+      "name": "令和6年度福岡県工業用地造成事業会計決算",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年10月14日、第167号議案から第186号議案の20件の決算関係議案については、いずれも認定、または原案可決及び認定されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    },
+    {
+      "billNumber": "第187号",
+      "billType": "bill",
+      "name": "令和7年度福岡県一般会計補正予算（第3号）",
+      "submittedDate": "2025-09-16",
+      "status": "approved",
+      "statusNote": "令和7年9月29日、第127号議案から第166号議案、第187号議案の41件については、いずれも原案のとおり可決または同意されました。",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0709.html"
+    }
+  ],
+  "warnings": []
+}

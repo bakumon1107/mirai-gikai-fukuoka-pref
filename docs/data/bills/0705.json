@@ -1,0 +1,55 @@
+{
+  "sessionName": "令和7年5月臨時会",
+  "dbSessionName": "令和7年 5月臨時会",
+  "sessionKey": "0705",
+  "startDate": "2025-05-16",
+  "endDate": "2025-05-16",
+  "councilUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/menu-0705.html",
+  "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0705.html",
+  "voteResultUrl": null,
+  "scrapedAt": "2026-09-23T15:42:19.713Z",
+  "billCount": 4,
+  "declaredInitialCount": null,
+  "bills": [
+    {
+      "billNumber": "第81号",
+      "billType": "bill",
+      "name": "福岡県職員定数条例の一部を改正する条例の制定について",
+      "submittedDate": null,
+      "status": "submitted",
+      "statusNote": "採決結果ページ未掲載",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0705.html"
+    },
+    {
+      "billNumber": "第82号",
+      "billType": "bill",
+      "name": "専決処分について（令和7年度福岡県一般会計暫定補正予算＜第1号＞）",
+      "submittedDate": null,
+      "status": "submitted",
+      "statusNote": "採決結果ページ未掲載",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0705.html"
+    },
+    {
+      "billNumber": "第83号",
+      "billType": "bill",
+      "name": "専決処分について（福岡県税条例の一部を改正する条例の制定について）",
+      "submittedDate": null,
+      "status": "submitted",
+      "statusNote": "採決結果ページ未掲載",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0705.html"
+    },
+    {
+      "billNumber": "第84号",
+      "billType": "bill",
+      "name": "福岡県有明海区漁業調整委員会委員の任命について",
+      "submittedDate": null,
+      "status": "submitted",
+      "statusNote": "採決結果ページ未掲載",
+      "sourceUrl": "https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/gian-0705.html"
+    }
+  ],
+  "warnings": [
+    "採決結果ページが未掲載です: https://www.gikai.pref.fukuoka.lg.jp/site/honkaigi/saiketsu-0705.html",
+    "議決結果が確定しない議案 4件（要確認）: 第81号・第82号・第83号・第84号"
+  ]
+}

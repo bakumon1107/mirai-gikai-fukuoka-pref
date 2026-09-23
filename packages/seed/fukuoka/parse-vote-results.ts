@@ -34,13 +34,28 @@ export type ParseVoteResultsResult = {
 };
 
 /**
- * 可決を宣言している文の判定。
+ * 可決扱いを宣言している文の判定。
  *
- * 実データの語尾は「可決されました」「可決または同意されました」
- * 「可決・承認または同意されました」など揺れるため、
- * 「可決」を含み「されました」で終わる文を対象にする。
+ * 語尾の揺れが大きい。実データで確認できた表現:
+ *   …原案のとおり可決されました。
+ *   …いずれも原案のとおり可決または同意されました。
+ *   …いずれも原案のとおり可決・承認または同意されました。
+ *   …原案のとおり同意されました。          ← 人事議案（副知事の選任等）
+ *
+ * **「可決」だけを条件にすると人事議案を取りこぼす。** 令和7年4月臨時会の
+ * 第80号議案（副知事の選任）は「同意されました」のみで可決の語が無い。
  */
-const APPROVED_SENTENCE_RE = /可決[^。]*されました。?$/;
+const POSITIVE_OUTCOME_RE = /(?:可決|同意|承認|認定|採択)[^。]*されました。?$/;
+
+/**
+ * 可決扱いにしてはいけない表現。
+ *
+ * `POSITIVE_OUTCOME_RE` の肯定語はいずれも「不」を冠した否定形に
+ * **部分一致してしまう**（「採択」⊂「不採択」、「認定」⊂「不認定」など）。
+ * そのため否定形を漏れなく列挙して弾く必要がある。
+ * とくに決算議案は「認定／不認定」で議決されるため「不認定」は実在する。
+ */
+const NEGATIVE_OUTCOME_RE = /否決|不採択|不同意|不承認|不認定|不可決/;
 
 /** 議案番号を含まない宣言（諮問など）は対象外 */
 const HAS_BILL_NUMBER_RE = /第\d+号議案/;
@@ -62,7 +77,11 @@ export function parseVoteResults(html: string): ParseVoteResultsResult {
   const approvedMemberBillNumbers = new Set<number>();
 
   for (const line of lines) {
-    if (!APPROVED_SENTENCE_RE.test(line)) continue;
+    if (!POSITIVE_OUTCOME_RE.test(line)) continue;
+    if (NEGATIVE_OUTCOME_RE.test(line)) {
+      warnings.push(`否決・不採択を含む宣言文を検出しました（要確認）: ${line}`);
+      continue;
+    }
     if (!HAS_BILL_NUMBER_RE.test(line)) continue;
 
     try {
