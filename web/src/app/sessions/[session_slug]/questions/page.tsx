@@ -20,8 +20,8 @@ export async function generateMetadata({ params }: Props) {
   }
 
   return {
-    title: `${session.name}の一般質問 | ${siteConfig.siteName}`,
-    description: `${session.name}で行われた一般質問の一覧です。議員が知事・局長に直接質問した内容をわかりやすく解説します。`,
+    title: `${session.name}の代表質問・一般質問 | ${siteConfig.siteName}`,
+    description: `${session.name}で行われた代表質問・一般質問の一覧です。議員が知事・局長に直接質問した内容をわかりやすく解説します。`,
   };
 }
 
@@ -48,7 +48,7 @@ export default async function SessionQuestionsPage({ params }: Props) {
       </div>
       <div className="mb-6">
         <h1 className="text-2xl font-bold text-mirai-text">
-          {session.name}の一般質問
+          {session.name}の代表質問・一般質問
         </h1>
         <p className="mt-2 text-sm text-mirai-text-secondary">
           議員が問い、県が答えた。あなたの暮らしに関わる取り組みをテーマ別にまとめました。

@@ -8,6 +8,7 @@ import { RawTranscriptView } from "@/features/general-questions/server/component
 import { QuestionChatView } from "@/features/general-questions/client/components/question-chat-view";
 import { QuestionViewToggle } from "@/features/general-questions/client/components/question-view-toggle";
 import { getGeneralQuestionById } from "@/features/general-questions/server/loaders/get-general-question-by-id";
+import { questionTypeLabel } from "@/features/general-questions/shared/utils/question-type-label";
 import { getCouncilSessionById } from "@/features/council-sessions/server/loaders/get-council-session-by-id";
 
 type Props = {
@@ -23,19 +24,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${question.questioner_name} 議員の一般質問 | ${siteConfig.siteName}`,
+    title: `${question.questioner_name} 議員の${questionTypeLabel(
+      question.question_type
+    )} | ${siteConfig.siteName}`,
     description: question.summary ?? undefined,
   };
 }
-
-const DAY_LABELS: Record<number, string> = {
-  1: "第1日",
-  2: "第2日",
-  3: "第3日",
-  4: "第4日",
-  5: "第5日",
-  6: "第6日",
-};
 
 export default async function GeneralQuestionDetailPage({ params }: Props) {
   const { id } = await params;
@@ -53,8 +47,7 @@ export default async function GeneralQuestionDetailPage({ params }: Props) {
     ? `/sessions/${session.slug}/questions`
     : "/questions";
 
-  const dayLabel =
-    DAY_LABELS[question.session_day] ?? `第${question.session_day}日`;
+  const typeLabel = questionTypeLabel(question.question_type);
 
   return (
     <Container className="py-8 max-w-2xl">
@@ -64,7 +57,7 @@ export default async function GeneralQuestionDetailPage({ params }: Props) {
           className="inline-flex items-center gap-1 text-sm text-mirai-text-secondary hover:text-mirai-text"
         >
           <ChevronLeft className="w-4 h-4" />
-          一般質問の一覧に戻る
+          質問の一覧に戻る
         </Link>
       </div>
       <div className="mb-6">
@@ -75,7 +68,7 @@ export default async function GeneralQuestionDetailPage({ params }: Props) {
           {question.questioner_party && (
             <span>{question.questioner_party}　｜　</span>
           )}
-          {dayLabel}
+          {typeLabel}　｜　第{question.session_day}日
         </p>
       </div>
 

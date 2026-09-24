@@ -786,6 +786,7 @@ export type Database = {
           id: string
           publish_status: string
           question_order: number
+          question_type: string
           questioner_name: string
           questioner_number: number | null
           questioner_party: string | null
@@ -803,6 +804,7 @@ export type Database = {
           id?: string
           publish_status?: string
           question_order?: number
+          question_type?: string
           questioner_name: string
           questioner_number?: number | null
           questioner_party?: string | null
@@ -820,6 +822,7 @@ export type Database = {
           id?: string
           publish_status?: string
           question_order?: number
+          question_type?: string
           questioner_name?: string
           questioner_number?: number | null
           questioner_party?: string | null
