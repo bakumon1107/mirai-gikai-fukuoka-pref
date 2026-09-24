@@ -42,6 +42,32 @@ type Change = {
   endDate: { from: string | null; to: string | null };
 };
 
+type Creation = {
+  name: string;
+  slug: string;
+  startDate: string;
+  endDate: string | null;
+  councilUrl: string | null;
+};
+
+/**
+ * slug を組み立てる。
+ *
+ * 既存の表記に合わせる（例: 令和8年 6月定例会 → r8-6）。
+ * 臨時会は定例会と衝突しないよう接尾辞を付ける（令和7年 4月臨時会 → r7-4-rinji）。
+ *
+ * ※ 既存レコードには `r8-budget`（令和8年2月）のような例外もあるが、
+ *   既存レコードは名前で引き当てて更新するだけなので slug は作り直さない。
+ */
+export function buildSessionSlug(dbSessionName: string): string | null {
+  const match = dbSessionName.match(/^令和(\d+)年\s*(\d+)月(定例会|臨時会)$/);
+  if (!match) return null;
+
+  const [, eraYear, month, kind] = match;
+  const base = `r${eraYear}-${month}`;
+  return kind === "臨時会" ? `${base}-rinji` : base;
+}
+
 async function loadScrapedSessions(): Promise<ScrapedSession[]> {
   const files = (await readdir(DATA_DIR)).filter((f) => f.endsWith(".json"));
   const sessions: ScrapedSession[] = [];
@@ -74,6 +100,7 @@ async function main() {
   console.log(`📋 スクレイプ済み会期: ${scraped.length} 件\n`);
 
   const changes: Change[] = [];
+  const creations: Creation[] = [];
   let unchanged = 0;
   let notFound = 0;
   let failures = 0;
@@ -93,18 +120,29 @@ async function main() {
       continue;
     }
 
-    if (!existing) {
-      console.log(
-        `⏭️  DBに会期がありません（スキップ）: ${session.dbSessionName}`
-      );
-      notFound++;
-      continue;
-    }
-
-    // 日程が取れていない会期は触らない（既存値を消さない）
+    // 日程が取れていない会期は触らない（既存値を消さない・新規作成もしない）
     if (!session.startDate) {
       console.log(`⏭️  開会日が未取得（スキップ）: ${session.dbSessionName}`);
       unchanged++;
+      continue;
+    }
+
+    if (!existing) {
+      const slug = buildSessionSlug(session.dbSessionName);
+      if (!slug) {
+        console.warn(
+          `⚠️  slug を組み立てられません（スキップ）: ${session.dbSessionName}`
+        );
+        notFound++;
+        continue;
+      }
+      creations.push({
+        name: session.dbSessionName,
+        slug,
+        startDate: session.startDate,
+        endDate: session.endDate ?? null,
+        councilUrl: session.councilUrl ?? null,
+      });
       continue;
     }
 
@@ -122,6 +160,18 @@ async function main() {
       startDate: { from: existing.start_date, to: session.startDate },
       endDate: { from: existing.end_date ?? null, to: session.endDate ?? null },
     });
+  }
+
+  if (creations.length > 0) {
+    console.log(`\n🆕 新規作成: ${creations.length} 件`);
+    for (const c of creations) {
+      console.log(
+        `  ${c.name}（${c.slug}）${c.startDate}〜${c.endDate ?? "(未定)"}`
+      );
+    }
+    console.log(
+      "  ※ is_active は false で作成する。現在の会期を切り替える場合は別途手動で更新すること"
+    );
   }
 
   if (changes.length === 0) {
@@ -144,6 +194,22 @@ async function main() {
   }
 
   if (!isDryRun) {
+    for (const creation of creations) {
+      const { error } = await supabase.from("council_sessions").insert({
+        name: creation.name,
+        slug: creation.slug,
+        start_date: creation.startDate,
+        end_date: creation.endDate,
+        council_url: creation.councilUrl,
+        is_active: false,
+      });
+
+      if (error) {
+        console.error(`❌ ${creation.name} 作成エラー: ${error.message}`);
+        failures++;
+      }
+    }
+
     for (const change of changes) {
       const { error } = await supabase
         .from("council_sessions")
@@ -161,12 +227,13 @@ async function main() {
   }
 
   console.log("\n────────────────");
+  console.log(`新規作成${isDryRun ? "予定" : "済み"}: ${creations.length} 件`);
   console.log(`更新${isDryRun ? "予定" : "済み"}: ${changes.length} 件`);
   console.log(`変更なし: ${unchanged} 件`);
-  console.log(`DB未登録: ${notFound} 件`);
+  console.log(`スキップ: ${notFound} 件`);
   console.log(`失敗: ${failures} 件`);
 
-  if (isDryRun && changes.length > 0) {
+  if (isDryRun && changes.length + creations.length > 0) {
     console.log("\n※ 実際に反映するには --dry-run を外して再実行してください");
   }
 
