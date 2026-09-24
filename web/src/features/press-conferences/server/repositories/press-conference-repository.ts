@@ -1,6 +1,6 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
-import type { PressConference } from "../../shared/types";
+import type { PressConference, PressConferenceRef } from "../../shared/types";
 
 type TurnRow = {
   id: string;
@@ -130,4 +130,38 @@ export async function findLatestPublishedPressConference(): Promise<PressConfere
   return data
     ? mapToPressConference(data as unknown as PressConferenceRow)
     : null;
+}
+
+/**
+ * 直近の会見を、日付チップに必要な項目だけで取得する（設計書 5.4 節）。
+ *
+ * `findPublishedPressConferences()` は全会見の発表・質疑・発言本文まで
+ * ネストで引くため、日付を数件並べる用途には過剰。こちらを使う。
+ *
+ * @param limit 取得件数（開催日の新しい順）
+ */
+export async function findRecentPressConferenceRefs(
+  limit: number
+): Promise<PressConferenceRef[]> {
+  if (limit <= 0) return [];
+
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("press_conferences")
+    .select("id, slug, held_at")
+    .eq("status", "published")
+    .order("held_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    throw new Error(
+      `Failed to fetch recent press conferences: ${error.message}`
+    );
+  }
+
+  return (data ?? []).map((row) => ({
+    id: row.id,
+    slug: row.slug,
+    heldAt: row.held_at,
+  }));
 }

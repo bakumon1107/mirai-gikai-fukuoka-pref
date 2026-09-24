@@ -28,6 +28,8 @@ type MeetingRow = {
   source_document_id: number;
   source_url: string;
   summary: string | null;
+  /** 生成列。取得していない経路では undefined */
+  speech_count?: number | null;
   speeches: unknown;
   committee_meeting_topics: TopicRow[];
 };
@@ -60,6 +62,7 @@ function mapSummary(row: MeetingRow): CommitteeMeetingSummary {
     sourceUrl: row.source_url,
     summary: row.summary,
     topics: mapTopics(row.committee_meeting_topics ?? []),
+    speechCount: row.speech_count ?? null,
   };
 }
 
@@ -72,6 +75,7 @@ function isMissingTableError(error: { code?: string | null }): boolean {
   return error.code === "42P01" || error.code === "PGRST205";
 }
 
+// speeches（全発言本文）は載せない。件数は生成列 speech_count から取る
 const LIST_SELECT = `
   id,
   committee_name,
@@ -81,6 +85,7 @@ const LIST_SELECT = `
   source_document_id,
   source_url,
   summary,
+  speech_count,
   committee_meeting_topics (*)
 ` as const;
 

@@ -1,7 +1,7 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
-import type { MiraiStance } from "../../shared/types";
+import type { BillStatusEnum, MiraiStance } from "../../shared/types";
 
 // ============================================================
 // Bills
@@ -276,6 +276,34 @@ export async function findPreviousSessionBills(
   }
 
   return data ?? [];
+}
+
+/**
+ * 会期内の公開済み議案の審議状況を取得（設計書 5.9.1 節）。
+ *
+ * トップの件数チップ用。status 列だけを引くので軽い。
+ * 集計は純粋関数 `summarizeBillStatuses()`（shared/utils）で行う。
+ *
+ * **必ず publish_status = "published" で絞ること。**
+ * 議案スクレイプ（#52）で draft の議案が大量に入るため、
+ * 絞り忘れると画面の件数と遷移先の件数が食い違う。
+ */
+export async function findPublishedBillStatusesBySession(
+  councilSessionId: string
+): Promise<BillStatusEnum[]> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("bills")
+    .select("status")
+    .eq("council_session_id", councilSessionId)
+    .eq("publish_status", "published");
+
+  if (error) {
+    console.error("Failed to fetch bill statuses by session:", error);
+    return [];
+  }
+
+  return (data ?? []).map((row) => row.status);
 }
 
 /**
