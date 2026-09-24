@@ -19,7 +19,8 @@
  */
 
 import { readdir, readFile } from "node:fs/promises";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
+import { fileURLToPath } from "node:url";
 import { createAdminClient } from "@mirai-gikai/supabase";
 
 /** docs/data/bills/*.json の必要部分 */
@@ -33,7 +34,10 @@ type ScrapedSession = {
   councilUrl?: string | null;
 };
 
-const DATA_DIR = join(process.cwd(), "docs/data/bills");
+// packages/seed/fukuoka/ からリポジトリルートへ。
+// 実行時のカレントディレクトリに依存させない
+const REPO_ROOT = join(dirname(fileURLToPath(import.meta.url)), "../../..");
+const DATA_DIR = join(REPO_ROOT, "docs/data/bills");
 
 type Change = {
   name: string;
