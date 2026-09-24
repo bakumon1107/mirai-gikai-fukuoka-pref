@@ -18,6 +18,11 @@ export const previewRegistry: PreviewGroup[] = [
         label: "UI Components",
         description: "Button, Badge, Card, SpeechBubble",
       },
+      {
+        path: "/dev/design-tokens",
+        label: "Design Tokens",
+        description: "トップページ刷新のカラートークンと見出しフォント",
+      },
     ],
   },
   {
