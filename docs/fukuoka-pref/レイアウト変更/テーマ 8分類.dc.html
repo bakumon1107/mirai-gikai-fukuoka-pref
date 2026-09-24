@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&amp;family=Noto+Sans+JP:wght@400;500;700&amp;display=swap">
+<style>
+body{margin:0;background:#E9E5DA}
+a{color:#5A5591;text-decoration:none}a:hover{color:#474277}
+</style>
+</helmet>
+<section style="padding: 64px; font-family: 'Noto Sans JP', sans-serif; color: #1F2A2A; display: flex; flex-direction: column; gap: 32px;">
+<div style="display: flex; flex-direction: column; gap: 8px; max-width: 960px;">
+<h1 style="margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-size: 32px;">気になるテーマから（8分類）</h1>
+<p style="margin: 0; font-size: 16px; line-height: 1.8; color: #3C4A48;">一般質問の11分類をすべてどこかに収めるため、6→8テーマに。当面のリンク先は検索ページ（/search?q=…）。</p>
+</div>
+
+<div id="2a" style="display: flex; gap: 40px; align-items: flex-start; flex-wrap: wrap;">
+
+<div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 14px; font-weight: 700; color: #3C4A48;">PC（1280px）</span>
+<div style="flex-shrink: 0; width: 1280px; box-sizing: border-box; background: #F7F4EE; border-radius: 12px; padding: 40px 64px;">
+<section style="padding: 32px 36px; background: #FFFFFF; border-radius: 32px;">
+<div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 20px;"><h2 style="margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-size: 24px;">気になるテーマから</h2><span style="font-size: 14px; color: #5B6563;">テーマで横断検索できます</span></div>
+<div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px;">
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">育</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">子育て・教育</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">医</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">福祉・医療</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #F7F4EE; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #EAE6DD; color: #4A4336; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">防</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">防災・安全</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">街</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">まち・交通</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">環</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">環境・エネルギー</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #F7F4EE; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #EAE6DD; color: #4A4336; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">農</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">しごと・農業</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">観</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">観光・文化</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 20px 6px; border-radius: 22px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 56px; height: 56px; border-radius: 18px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 26px;">県</span><span style="font-size: 14px; font-weight: 500; white-space: nowrap;">県政・お金</span></a>
+</div>
+</section>
+</div>
+</div>
+
+<div style="flex-shrink: 0; display: flex; flex-direction: column; gap: 12px;">
+<span style="font-size: 14px; font-weight: 700; color: #3C4A48;">スマホ（390px）</span>
+<div style="flex-shrink: 0; width: 390px; box-sizing: border-box; background: #F7F4EE; border-radius: 12px; padding: 24px 16px;">
+<section style="padding: 20px 14px; background: #FFFFFF; border-radius: 28px;">
+<h2 style="margin: 0 0 4px; padding: 0 4px; font-family: 'Zen Maru Gothic', sans-serif; font-size: 20px;">気になるテーマから</h2>
+<p style="margin: 0 0 14px; padding: 0 4px; font-size: 13px; color: #5B6563;">テーマで横断検索できます</p>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px;">
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">育</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">子育て<br>教育</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">医</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">福祉<br>医療</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #F7F4EE; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #EAE6DD; color: #4A4336; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">防</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">防災<br>安全</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">街</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">まち<br>交通</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">環</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">環境<br>エネルギー</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #F7F4EE; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #EAE6DD; color: #4A4336; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">農</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">しごと<br>農業</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #FFF4F0; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #FDE2D6; color: #7A2F14; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">観</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">観光<br>文化</span></a>
+<a href="#" style="display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 12px 2px; min-height: 96px; box-sizing: border-box; border-radius: 16px; background: #F5F4FA; color: #1F2A2A;"><span style="width: 40px; height: 40px; border-radius: 13px; background: #DBD3F9; color: #332E5E; display: flex; align-items: center; justify-content: center; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; font-size: 19px;">県</span><span style="font-size: 12px; font-weight: 500; line-height: 1.35; text-align: center;">県政<br>お金</span></a>
+</div>
+</section>
+</div>
+</div>
+
+</div>
+
+<div style="max-width: 1280px; background: #FFFFFF; border-radius: 22px; padding: 24px 28px; display: flex; flex-direction: column; gap: 12px;">
+<h2 style="margin: 0; font-family: 'Zen Maru Gothic', sans-serif; font-size: 20px;">対応表（実装用・1か所で定義）</h2>
+<div style="display: grid; grid-template-columns: 160px minmax(0, 1.4fr) minmax(0, 1fr) 140px; font-size: 14px; line-height: 1.6;">
+<span style="padding: 8px 0; border-bottom: 2px solid #EAE6DD; font-weight: 700;">テーマ</span><span style="padding: 8px 0; border-bottom: 2px solid #EAE6DD; font-weight: 700;">一般質問（11分類）</span><span style="padding: 8px 0; border-bottom: 2px solid #EAE6DD; font-weight: 700;">議案（3タグ）</span><span style="padding: 8px 0; border-bottom: 2px solid #EAE6DD; font-weight: 700;">当面の検索 q</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">育 子育て・教育</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">子育て・教育</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">子育て・教育</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">子育て</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">医 福祉・医療</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">健康・医療／高齢者・福祉</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">福祉・医療</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">医療</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">防 防災・安全</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">防災・安全／警察・人権</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2; color: #5B6563;">—（個別に付与）</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">防災</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">街 まち・交通</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">交通・まちづくり</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">まちづくり・環境（大半）</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">交通</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">環 環境・エネルギー</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">環境・脱炭素</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">まちづくり・環境（環境分）</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">環境</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">農 しごと・農業</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">産業・農林水産</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2; color: #5B6563;">—（個別に付与）</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">農業</span>
+<span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">観 観光・文化</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">観光・地域振興／スポーツ・文化</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2; color: #5B6563;">—（個別に付与）</span><span style="padding: 8px 0; border-bottom: 1px solid #F0ECE2;">観光</span>
+<span style="padding: 8px 0;">県 県政・お金</span><span style="padding: 8px 0;">行政・県政</span><span style="padding: 8px 0; color: #5B6563;">—（予算・条例など）</span><span style="padding: 8px 0;">県政</span>
+</div>
+</div>
+</section>
+</x-dc>
+</body>
+</html>
