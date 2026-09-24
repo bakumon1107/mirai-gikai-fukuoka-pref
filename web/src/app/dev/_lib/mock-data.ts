@@ -63,6 +63,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-001",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "山田ゆみこ",
     questioner_party: "福岡市民クラブ",
     questioner_number: 1,
@@ -109,6 +110,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-002",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "堀内徹夫",
     questioner_party: "自民党福岡市議団",
     questioner_number: 2,
@@ -146,6 +148,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-003",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "中山郁美",
     questioner_party: "公明党福岡市議団",
     questioner_number: 3,
@@ -192,6 +195,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-004",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "新村まさる",
     questioner_party: "新しい風ふくおか",
     questioner_number: 4,
@@ -229,6 +233,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-005",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "倉元達朗",
     questioner_party: "自民党福岡市議団",
     questioner_number: 5,
@@ -266,6 +271,7 @@ export const mockGeneralQuestions: GeneralQuestion[] = [
   {
     id: "q-006",
     council_session_id: "session-r7-5",
+    question_type: "general",
     questioner_name: "天野こう",
     questioner_party: "日本共産党福岡市議団",
     questioner_number: 6,

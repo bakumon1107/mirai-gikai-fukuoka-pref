@@ -9,7 +9,7 @@ export function GeneralQuestionList({ questions }: GeneralQuestionListProps) {
   if (questions.length === 0) {
     return (
       <div className="text-center py-16 text-mirai-text-secondary">
-        <p>現在、一般質問のデータを準備中です。</p>
+        <p>現在、代表質問・一般質問のデータを準備中です。</p>
         <p className="text-sm mt-2">しばらくお待ちください。</p>
       </div>
     );
