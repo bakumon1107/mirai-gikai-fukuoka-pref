@@ -122,11 +122,22 @@ export default function DesignTokensPreview() {
         </PreviewSection>
 
         <PreviewSection label="使ってはいけない組み合わせ（2.3節）">
-          <div className="bg-pref-pill-bg text-pref-accent rounded-full px-5 py-3 flex items-center justify-between gap-4">
-            <span className="text-sm font-bold">
-              pref-accent / pref-pill-bg
-            </span>
-            <span className="text-xs">4.16:1 — pill-text を使うこと</span>
+          {/* 見本は禁止の配色そのままで見せるが、説明文まで読みにくくしない。
+              説明は通常の本文色で外に出す */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center gap-3">
+              <span className="bg-pref-pill-bg text-pref-accent rounded-full px-5 py-3 text-sm font-bold">
+                読みにくい見本
+              </span>
+              <span className="bg-pref-pill-bg text-pref-pill-text rounded-full px-5 py-3 text-sm font-bold">
+                正しい見本
+              </span>
+            </div>
+            <p className="text-sm text-mirai-text">
+              <code>pref-accent</code> を <code>pref-pill-bg</code> の上に置くと
+              <strong> 4.16:1</strong> で 4.5:1 を下回る。ピルの文字は
+              <code> pref-pill-text</code>（7.72:1）を使う。
+            </p>
           </div>
         </PreviewSection>
       </ComponentShowcase>
