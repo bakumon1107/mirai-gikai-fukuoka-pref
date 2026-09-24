@@ -5,6 +5,7 @@ import { Header } from "@/components/header";
 import { AuthGate } from "@/components/layouts/auth-gate";
 import { Footer } from "@/components/layouts/footer/footer";
 import { MainLayout } from "@/components/layouts/main-layout";
+import { MobileBottomNav } from "@/components/layouts/navigation/mobile-bottom-nav";
 import { siteConfig } from "@/config/site.config";
 import { env } from "@/lib/env";
 import { RubyfulInitializer } from "@/lib/rubyful";
@@ -36,10 +37,13 @@ export default function MainGroupLayout({
 
       <MainLayout>
         <Header />
-        <main className="min-h-dvh md:min-h-[calc(100dvh-96px)] bg-mirai-surface">
+        {/* ボトムナビ（72px + セーフエリア）にコンテンツ末尾が隠れないよう
+            下余白を確保する。PC はボトムナビを出さないため 0 に戻す */}
+        <main className="min-h-dvh md:min-h-[calc(100dvh-96px)] bg-mirai-surface pb-[calc(72px+env(safe-area-inset-bottom))] pc:pb-0">
           {children}
         </main>
         <Footer />
+        <MobileBottomNav />
       </MainLayout>
     </>
   );

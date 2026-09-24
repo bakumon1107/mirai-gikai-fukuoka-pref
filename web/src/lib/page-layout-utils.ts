@@ -25,6 +25,8 @@ export function isMainPage(pathname: string): boolean {
  * PC幅いっぱい（ヘッダと同じ max-w-[1440px]）で表示する。
  */
 export function isWidePage(pathname: string): boolean {
+  // トップページは刷新でPC全幅レイアウトになった（設計書 4.2節）
+  if (pathname === "/") return true;
   return pathname.startsWith("/jimu-jigyo");
 }
 

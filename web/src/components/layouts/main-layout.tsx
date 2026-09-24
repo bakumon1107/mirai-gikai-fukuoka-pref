@@ -21,10 +21,21 @@ export function MainLayout({ children }: MainLayoutProps) {
   const isWide = isWidePage(pathname);
 
   // 幅広ページ: 700px制約を外してヘッダと同じ1440pxまで使う。
-  // 固定ヘッダに重ならないよう、モバイル含む全幅で上余白を確保する
+  // 固定ヘッダに重ならないよう、モバイル含む全幅で上余白を確保する。
+  //
+  // ここで早期returnすると useSidebarLayout の余白が付かず、aiChat を
+  // 有効にしたときに固定表示の ChatWindow（右500px）と本文が重なる。
+  // 条件を合成して両立させる（設計書 4.2節）
   if (isWide) {
     return (
-      <div className="relative max-w-[1440px] mx-auto mt-24">{children}</div>
+      <div
+        className={cn(
+          "relative max-w-[1440px] mx-auto mt-24",
+          useSidebarLayout && "pc:mr-[500px]"
+        )}
+      >
+        {children}
+      </div>
     );
   }
 
