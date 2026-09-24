@@ -17,7 +17,9 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-noto-sans-jp);
-  --font-lexend: var(--font-lexend-giga);
+  /* 見出し用の丸ゴシック（設計書 3章）。適用範囲は h1/h2/h3・数字チップ・
+   * 定例会カードの「◯月」・テーマタイルの漢字に限定し、本文には使わない */
+  --font-rounded: var(--font-zen-maru-gothic);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -103,6 +105,44 @@
   /* Gradient endpoints */
   --color-mirai-gradient-start: #dbd3f9;
   --color-mirai-gradient-end: #ede9fd;
+
+  /* --- 福岡県版 トップページ用トークン（pref-*） ---
+   *
+   * 本リポジトリは上流のフォークで、mirai-* は上流由来の共通トークン。
+   * そこに県版固有の色を足すと同期時に衝突するため pref-* に隔離する。
+   * 設計書 docs/fukuoka-pref/20260922_1645_トップページレイアウト刷新設計書.md 2章
+   *
+   * 使い分けの原則（2.2節）:
+   * - 紫のベタ塗り＋白文字は使わない。状態ピルは pill-bg + pill-text で表す
+   * - 黄色は使わない（サイトの紫と補色でぶつかる）。紫＋ベージュの2系統
+   * - --primary(#a495d6) / --primary-accent(#7a6cc0) は白文字とのコントラストが
+   *   2.68:1 / 4.44:1 で不足するため文字・塗りには使わない。pref-accent を使う
+   */
+
+  /* 主役の紫 */
+  --color-pref-accent: #5a5591; /* 塗り・リンク・強調文字。白比 6.68:1 */
+  --color-pref-accent-hover: #474277; /* hover。白比 9.08:1 */
+  --color-pref-accent-deep: #3d3868; /* 淡色面の上に置く濃い文字 */
+
+  /* 選択中・状態ピル（ナビ現在地、「いま定例会中」等） */
+  --color-pref-pill-bg: #cec8ea;
+  --color-pref-pill-text: #332e5e; /* pill-bg 上で 7.72:1 */
+
+  /* 面 */
+  --color-pref-hero: #eeebf8; /* ヒーロー面 */
+  --color-pref-surface-tint: #f5f4fa; /* サブ面・「いまここ」の面 */
+  --color-pref-surface-sub: #f6f4ee; /* 定例会カード等（ベージュ寄り） */
+
+  /* ベージュ面の上の文字（面は既存の mirai-surface-warm を使う） */
+  --color-pref-beige-text: #4a4336;
+
+  /* テーマタイルの差し色 */
+  --color-pref-coral-bg: #fde2d6;
+  --color-pref-coral-text: #7a2f14;
+  --color-pref-coral-tint: #fff4f0;
+
+  /* 区切り線 */
+  --color-pref-divider: #f0ece2;
 
   /* 事務事業評価: 3軸方向インジケータ */
   --color-jimu-up: #1f8a4c;
@@ -282,8 +322,10 @@
     background-clip: padding-box, border-box;
   }
 
-  .font-lexend {
-    font-family: var(--font-lexend-giga), system-ui, sans-serif;
+  .font-rounded {
+    font-family:
+      var(--font-zen-maru-gothic), var(--font-noto-sans-jp), system-ui,
+      sans-serif;
   }
 }
 

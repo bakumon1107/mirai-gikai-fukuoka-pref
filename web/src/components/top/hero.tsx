@@ -20,7 +20,7 @@ export function Hero() {
             いま{siteConfig.councilName}で議論されていること <br />
             やさしい言葉で説明します
           </p>
-          <p className="mt-2 font-lexend text-xs">
+          <p className="mt-2 text-xs">
             {/* 表示したい場合は `powered by ${siteConfig.operator.name}` とかで*/}
             {siteConfig.features.showTeamMiraiSection
               ? "powered by Team Mirai & AI"
@@ -32,9 +32,7 @@ export function Hero() {
       {/* スクロールインジケーター */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center animate-bounce-gentle">
         <div className="w-[1px] h-[34px] bg-black"></div>
-        <p className="mt-2 font-lexend text-[10px] leading-[20px] text-black">
-          Scroll
-        </p>
+        <p className="mt-2 text-[10px] leading-[20px] text-black">Scroll</p>
       </div>
     </div>
   );
