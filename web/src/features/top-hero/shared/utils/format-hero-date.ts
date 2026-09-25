@@ -61,3 +61,42 @@ export function formatNextSessionPill(isoDate: string | null): string | null {
   if (!ymd) return null;
   return `次の定例会 ${ymd.month}月${ymd.day}日から`;
 }
+
+/**
+ * 会期中モードの2つ目のピル用（設計書 5.3.2 節 段階1）。
+ *
+ * 会期名から「◯月定例会」を取り出し、閉会日と組み合わせる。
+ * PC は「9月定例会 10月16日まで」、スマホは幅が足りないので「10月16日まで」。
+ *
+ * 会期名をそのまま使うのは、月から組み立てると臨時会のとき
+ * 「8月定例会」のような誤った文言になるため。
+ *
+ * @param sessionName `council_sessions.name`（例: "令和8年 9月定例会"）
+ * @param endDate 閉会日。未定なら null
+ */
+export function formatCurrentSessionPill(
+  sessionName: string,
+  endDate: string | null
+): { full: string; short: string } | null {
+  const ymd = endDate ? parseYmd(endDate) : null;
+  if (!ymd) return null;
+
+  const until = `${ymd.month}月${ymd.day}日まで`;
+  const label = extractSessionLabel(sessionName);
+
+  return {
+    full: label ? `${label} ${until}` : until,
+    short: until,
+  };
+}
+
+/**
+ * 会期名から「◯月定例会」「◯月臨時会」を取り出す。
+ *
+ * "令和8年 9月定例会" → "9月定例会"
+ * 取り出せなければ null（呼び出し側は日付だけ出す）。
+ */
+export function extractSessionLabel(sessionName: string): string | null {
+  const match = sessionName.match(/(\d+月(?:定例会|臨時会))/);
+  return match ? match[1] : null;
+}

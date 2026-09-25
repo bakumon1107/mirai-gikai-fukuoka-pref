@@ -1,6 +1,8 @@
 import { describe, expect, it } from "vitest";
 import {
+  extractSessionLabel,
   formatConferenceHeading,
+  formatCurrentSessionPill,
   formatNextSessionPill,
   formatShortDate,
 } from "./format-hero-date";
@@ -53,5 +55,51 @@ describe("formatNextSessionPill", () => {
     expect(formatNextSessionPill(null)).toBeNull();
     expect(formatNextSessionPill("")).toBeNull();
     expect(formatNextSessionPill("invalid")).toBeNull();
+  });
+});
+
+describe("extractSessionLabel", () => {
+  it("会期名から「◯月定例会」を取り出す", () => {
+    expect(extractSessionLabel("令和8年 9月定例会")).toBe("9月定例会");
+    expect(extractSessionLabel("令和7年 12月定例会")).toBe("12月定例会");
+  });
+
+  it("臨時会も種別ごと取り出す（定例会と言い換えない）", () => {
+    expect(extractSessionLabel("令和8年 8月臨時会")).toBe("8月臨時会");
+  });
+
+  it("取り出せなければ null", () => {
+    expect(extractSessionLabel("令和8年度予算")).toBeNull();
+    expect(extractSessionLabel("")).toBeNull();
+  });
+});
+
+describe("formatCurrentSessionPill", () => {
+  it("PCは会期名つき、スマホは日付だけ", () => {
+    const pill = formatCurrentSessionPill("令和8年 9月定例会", "2026-10-16");
+    expect(pill).toEqual({
+      full: "9月定例会 10月16日まで",
+      short: "10月16日まで",
+    });
+  });
+
+  it("臨時会でも「定例会」と言わない", () => {
+    // 月から文言を組み立てると「8月定例会」になってしまう。
+    // 会期名から取るので種別が保たれる
+    const pill = formatCurrentSessionPill("令和8年 8月臨時会", "2026-08-17");
+    expect(pill?.full).toBe("8月臨時会 8月17日まで");
+  });
+
+  it("閉会日が未定ならピルごと出さない", () => {
+    expect(formatCurrentSessionPill("令和8年 9月定例会", null)).toBeNull();
+    expect(formatCurrentSessionPill("令和8年 9月定例会", "invalid")).toBeNull();
+  });
+
+  it("会期名から種別を取れない場合は日付だけ出す", () => {
+    const pill = formatCurrentSessionPill("臨時の会議", "2026-10-16");
+    expect(pill).toEqual({
+      full: "10月16日まで",
+      short: "10月16日まで",
+    });
   });
 });
