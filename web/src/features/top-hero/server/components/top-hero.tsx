@@ -1,5 +1,6 @@
 import "server-only";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
+import { isRegularSession } from "@/features/council-sessions/shared/utils/resolve-session-slot-status";
 import type {
   PressConferenceRef,
   PressConferenceSummary,
@@ -32,6 +33,15 @@ export function TopHero({
   recentConferences,
 }: Props) {
   const isInSession = currentSession !== null;
+
+  // 臨時会のときに「いま定例会中」と出さない。
+  // getCurrentCouncilSession は会期名で絞らないため臨時会も返ってくる
+  const statusLabel = !currentSession
+    ? "いまは閉会中"
+    : isRegularSession(currentSession)
+      ? "いま定例会中"
+      : "いま臨時会中";
+
   const nextSessionLabel = formatNextSessionPill(
     nextSession?.start_date ?? null
   );
@@ -42,7 +52,7 @@ export function TopHero({
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-2">
             <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
-              {isInSession ? "いま定例会中" : "いまは閉会中"}
+              {statusLabel}
             </span>
             {/* 日程が取れないときはピルごと出さない（設計書 7章） */}
             {nextSessionLabel && !isInSession && (
