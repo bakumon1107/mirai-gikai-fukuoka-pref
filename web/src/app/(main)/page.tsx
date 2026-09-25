@@ -1,11 +1,14 @@
 import { Container } from "@/components/layouts/container";
 import { About } from "@/components/top/about";
 import { BannerAccordion } from "@/components/top/banner-accordion";
-import { BudgetOverviewBanner } from "@/components/top/budget-overview-banner";
-import { CommitteeBanner } from "@/components/top/committee-banner";
-import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
 import { TopHero } from "@/features/top-hero/server/components/top-hero";
 import { loadTopHeroData } from "@/features/top-hero/server/loaders/load-top-hero-data";
+import { BottomCards } from "@/features/top-sections/server/components/bottom-cards";
+import { CommitteeSection } from "@/features/top-sections/server/components/committee-section";
+import { QuestionsSection } from "@/features/top-sections/server/components/questions-section";
+import { SessionBand } from "@/features/top-sections/server/components/session-band";
+import { ThemeSection } from "@/features/top-sections/server/components/theme-section";
+import { loadTopSectionsData } from "@/features/top-sections/server/loaders/load-top-sections-data";
 import { JimuJigyoArchiveSection } from "@/components/top/jimu-jigyo-archive-section";
 import { JimuJigyoBanner } from "@/components/top/jimu-jigyo-banner";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
@@ -21,7 +24,6 @@ import type { BillWithContent } from "@/features/bills/shared/types";
 import { getSessionsWithBudget } from "@/features/budget-overview/server/loaders/get-sessions-with-budget";
 import { HomeChatClient } from "@/features/chat/client/components/home-chat-client";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
-import { getLatestSessionWithQuestions } from "@/features/general-questions/server/loaders/get-latest-session-with-questions";
 import { PressConferenceArchiveSection } from "@/features/press-conferences/client/components/press-conference-archive-section";
 import { getPressConferences } from "@/features/press-conferences/server/loaders/get-press-conferences";
 
@@ -31,17 +33,17 @@ export default async function Home() {
   // ゆくゆくタグ機能がマージされたらBFFに統合する
   const [
     heroData,
+    sectionsData,
     currentDifficulty,
     pastSessions,
     budgetSessions,
-    latestQuestionsSlug,
     pressConferences,
   ] = await Promise.all([
     loadTopHeroData(),
+    loadTopSectionsData(),
     getDifficultyLevel(),
     getAllPastSessions(),
     getSessionsWithBudget(),
-    getLatestSessionWithQuestions(),
     getPressConferences(),
   ]);
 
@@ -66,30 +68,39 @@ export default async function Home() {
         recentConferences={heroData.recentConferences}
       />
 
-      {/* 一般質問バナー */}
-      {latestQuestionsSlug && (
-        <Container className="pt-6">
-          <GeneralQuestionsBanner sessionSlug={latestQuestionsSlug} />
-        </Container>
-      )}
+      {/* 定例会の帯（設計書 5.5節） */}
+      <SessionBand slots={sectionsData.sessionSlots} />
 
-      {/* 委員会バナー */}
-      <Container className="pt-3">
-        <CommitteeBanner />
-      </Container>
+      {/* 委員会の最新の話し合い（設計書 5.6節） */}
+      <CommitteeSection
+        meetings={sectionsData.committeeMeetings}
+        isInSession={heroData.currentSession !== null}
+      />
 
-      {/* 予算・事務事業評価・お金の使い道（まとめてアコーディオン） */}
-      <Container className="pt-3">
+      {/* 代表質問・一般質問から（設計書 5.7節） */}
+      <QuestionsSection
+        questions={sectionsData.questions}
+        sessionName={sectionsData.questionSessionName}
+      />
+
+      {/* 気になるテーマから（設計書 5.8節） */}
+      <ThemeSection />
+
+      {/* 下段カード（設計書 5.9節） */}
+      <BottomCards
+        budgetSlug={sectionsData.budgetSlug}
+        budgetLabel={sectionsData.budgetLabel}
+        billSummary={sectionsData.billSummary}
+        billsSessionSlug={sectionsData.billsSessionSlug}
+        isInSession={heroData.currentSession !== null}
+      />
+
+      {/* 事務事業評価・お金の使い道は下段カードに入りきらないためアコーディオンで残す */}
+      <Container className="pt-8">
         <BannerAccordion
-          title="福岡県の予算・評価・お金の使い道"
-          description="予算の概要、事務事業評価、財政の状況をまとめて見る"
+          title="福岡県の評価・お金の使い道"
+          description="事務事業評価、財政の状況をまとめて見る"
         >
-          {budgetSessions[0]?.slug && (
-            <BudgetOverviewBanner
-              sessionSlug={budgetSessions[0].slug}
-              sessionName={budgetSessions[0].name}
-            />
-          )}
           <JimuJigyoBanner />
           <PrefFinanceBanner />
         </BannerAccordion>
