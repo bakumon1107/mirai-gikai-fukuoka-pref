@@ -34,7 +34,10 @@ export function HamburgerMenu() {
       </PopoverTrigger>
       <PopoverContent className="w-52" align="end">
         <nav className="flex flex-col">
-          <ul className="flex flex-col divide-y divide-mirai-border">
+          {/* PC はヘッダーに横並びナビがあるためリンクは出さない。
+              ただしルビ・文字サイズの設定はここにしか無いので、
+              メニュー自体は全幅で残す（PCでは設定のみのメニューになる） */}
+          <ul className="flex flex-col divide-y divide-mirai-border pc:hidden">
             {NAV_LINKS.map(({ href, label }) => (
               <li key={href}>
                 <Link
@@ -46,7 +49,7 @@ export function HamburgerMenu() {
               </li>
             ))}
           </ul>
-          <div className="pt-3 mt-3 border-t border-mirai-border flex flex-col gap-3">
+          <div className="pt-3 mt-3 border-t border-mirai-border flex flex-col gap-3 pc:pt-0 pc:mt-0 pc:border-t-0">
             <RubyToggle />
             <TextSizeToggle />
           </div>

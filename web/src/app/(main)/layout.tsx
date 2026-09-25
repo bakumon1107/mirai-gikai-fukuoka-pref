@@ -42,13 +42,7 @@ export default function MainGroupLayout({
         </main>
         <Footer />
         {/* ボトムナビは fixed なので、ページ末尾（=フッターの下端）が隠れる。
-            余白は main ではなくドキュメント末尾に置く。
-            main に付けると本文とフッターのあいだに無用な隙間ができるだけで、
-            実際に隠れるフッター下端は救えない */}
-        <div
-          aria-hidden
-          className="h-[calc(72px+env(safe-area-inset-bottom))] pc:hidden"
-        />
+            余白はナビ側が自分で出す（ナビと同じ条件で出し入れするため） */}
         <MobileBottomNav />
       </MainLayout>
     </>
