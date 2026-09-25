@@ -4,7 +4,8 @@ import { BannerAccordion } from "@/components/top/banner-accordion";
 import { BudgetOverviewBanner } from "@/components/top/budget-overview-banner";
 import { CommitteeBanner } from "@/components/top/committee-banner";
 import { GeneralQuestionsBanner } from "@/components/top/general-questions-banner";
-import { Hero } from "@/components/top/hero";
+import { TopHero } from "@/features/top-hero/server/components/top-hero";
+import { loadTopHeroData } from "@/features/top-hero/server/loaders/load-top-hero-data";
 import { JimuJigyoArchiveSection } from "@/components/top/jimu-jigyo-archive-section";
 import { JimuJigyoBanner } from "@/components/top/jimu-jigyo-banner";
 import { PastSessionsSection } from "@/components/top/past-sessions-section";
@@ -19,38 +20,28 @@ import { loadHomeData } from "@/features/bills/server/loaders/load-home-data";
 import type { BillWithContent } from "@/features/bills/shared/types";
 import { getSessionsWithBudget } from "@/features/budget-overview/server/loaders/get-sessions-with-budget";
 import { HomeChatClient } from "@/features/chat/client/components/home-chat-client";
-import { CurrentCouncilSession } from "@/features/council-sessions/client/components/current-council-session";
-import { getActiveCouncilSession } from "@/features/council-sessions/server/loaders/get-active-council-session";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
-import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
 import { getLatestSessionWithQuestions } from "@/features/general-questions/server/loaders/get-latest-session-with-questions";
 import { PressConferenceArchiveSection } from "@/features/press-conferences/client/components/press-conference-archive-section";
-import { PressConferenceNoticeBanner } from "@/features/press-conferences/client/components/press-conference-notice-banner";
-import { getLatestPressConference } from "@/features/press-conferences/server/loaders/get-latest-press-conference";
 import { getPressConferences } from "@/features/press-conferences/server/loaders/get-press-conferences";
-import { getJapanTime } from "@/lib/utils/date";
 
 export default async function Home() {
   const { billsByTag, featuredBills } = await loadHomeData();
 
   // ゆくゆくタグ機能がマージされたらBFFに統合する
   const [
-    currentSession,
-    activeSession,
+    heroData,
     currentDifficulty,
     pastSessions,
     budgetSessions,
     latestQuestionsSlug,
-    latestPressConference,
     pressConferences,
   ] = await Promise.all([
-    getCurrentCouncilSession(getJapanTime()),
-    getActiveCouncilSession(),
+    loadTopHeroData(),
     getDifficultyLevel(),
     getAllPastSessions(),
     getSessionsWithBudget(),
     getLatestSessionWithQuestions(),
-    getLatestPressConference(),
     getPressConferences(),
   ]);
 
@@ -65,19 +56,15 @@ export default async function Home() {
 
   return (
     <>
-      <Hero />
-
-      {/* 本日の定例会セクション */}
-      <CurrentCouncilSession session={currentSession} />
-
-      {/* 知事記者会見バナー */}
-      {latestPressConference && (
-        <Container className="pt-4">
-          <PressConferenceNoticeBanner
-            pressConference={latestPressConference}
-          />
-        </Container>
-      )}
+      {/* ヒーロー（設計書 5.3節）。
+          旧 Hero（背景画像 + Scroll）と CurrentCouncilSession（「本日は 開会中/閉会中」）、
+          および知事会見バナーを置き換えている */}
+      <TopHero
+        currentSession={heroData.currentSession}
+        nextSession={heroData.nextSession}
+        latestConference={heroData.latestConference}
+        recentConferences={heroData.recentConferences}
+      />
 
       {/* 一般質問バナー */}
       {latestQuestionsSlug && (
