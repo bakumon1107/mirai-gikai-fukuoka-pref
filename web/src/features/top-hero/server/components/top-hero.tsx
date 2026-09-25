@@ -1,5 +1,6 @@
 import "server-only";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
+import { isRegularSession } from "@/features/council-sessions/shared/utils/resolve-session-slot-status";
 import type {
   PressConferenceRef,
   PressConferenceSummary,
@@ -25,8 +26,8 @@ type Props = {
  * 現行の Hero（背景画像 + Scroll）と CurrentCouncilSession（「本日は 開会中/閉会中」）
  * を置き換える。
  *
- * **いまは閉会中モードのみ**。会期中モードは PR5（段階1）で追加する。
- * `currentSession` が非 null なら会期中と判定できるので、分岐点だけ用意しておく。
+ * 会期中モードは段階1（文言差し替え）まで。レイアウトは閉会中と共通で、
+ * ヒーローを定例会に差し替える段階2は後続PRで対応する（設計書 5.3.2 節）。
  */
 export function TopHero({
   currentSession,
@@ -35,6 +36,14 @@ export function TopHero({
   recentConferences,
 }: Props) {
   const isInSession = currentSession !== null;
+
+  // 臨時会のときに「いま定例会中」と出さない。
+  // getCurrentCouncilSession は会期名で絞らないため臨時会も返ってくる
+  const statusLabel = !currentSession
+    ? "いまは閉会中"
+    : isRegularSession(currentSession)
+      ? "いま定例会中"
+      : "いま臨時会中";
 
   // 会期中は「◯月定例会 ◯月◯日まで」、閉会中は「次の定例会 ◯月◯日から」。
   // どちらも日付が取れなければピルごと出さない（設計書 7章）
@@ -53,11 +62,11 @@ export function TopHero({
             {isInSession ? (
               // 会期中は塗りピルで強調する（設計書 5.3.2節 段階1）
               <span className="rounded-full bg-pref-pill-bg px-3.5 py-1.5 text-xs font-bold text-pref-pill-text">
-                いま定例会中
+                {statusLabel}
               </span>
             ) : (
               <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
-                いまは閉会中
+                {statusLabel}
               </span>
             )}
 
