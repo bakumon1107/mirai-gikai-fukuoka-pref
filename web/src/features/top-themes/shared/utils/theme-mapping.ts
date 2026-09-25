@@ -136,6 +136,29 @@ export function themeHref(theme: TopTheme): string {
 export const OTHER_KEYWORDS_HREF = "/search";
 
 /**
+ * タイルのラベルを「・」で2行に割る（設計書 5.8.3 節）。
+ *
+ * 幅の狭い画面では 1行に収まらないため、デザイン指定どおり
+ * **「・」を落として2行**にする（「子育て・教育」→「子育て」「教育」）。
+ * 素のまま折り返させると「環境・エネ / ルギー」のように
+ * 意味の切れ目でない位置で割れる。
+ *
+ * 「・」が無いラベルは `tail` が null（1行のまま）。
+ */
+export function splitThemeLabel(label: string): {
+  head: string;
+  tail: string | null;
+} {
+  const index = label.indexOf("・");
+  if (index === -1) return { head: label, tail: null };
+
+  return {
+    head: label.slice(0, index),
+    tail: label.slice(index + 1),
+  };
+}
+
+/**
  * 一般質問の分類ラベルから対応するテーマを引く。
  *
  * `CATEGORY_MAP` のフォールバック「その他」など、

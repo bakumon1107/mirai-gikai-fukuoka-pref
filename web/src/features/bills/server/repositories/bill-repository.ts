@@ -322,6 +322,56 @@ export async function findBillStatusesBySession(
   }));
 }
 
+/** 議案を持つ会期の識別情報 */
+export type BillSession = {
+  id: string;
+  slug: string | null;
+  name: string;
+};
+
+/**
+ * 件数を出せる議案がある会期のうち、最も新しいものを返す。
+ *
+ * トップの議案カードは「どの会期の件数か」をここで決める。
+ * 質問が公開されている会期から選ぶと、**議案は入っているが質問が
+ * まだ公開されていない新しい会期**があるときに、古い会期の件数を
+ * 出してしまう。
+ *
+ * 議案側を全件引いて会期を絞る書き方はしない。PostgREST の
+ * `max_rows`（このリポジトリでは1000）に当たると新しい会期の行が
+ * 返らず、古い会期を「最新」と誤判定する。会期側を起点に
+ * `!inner` で存在だけを見て、`start_date` の降順で1件取る。
+ *
+ * **まだ開会していない会期は返さない。** 議案は告示の時点で
+ * `coming_soon` として入りうるため、開会日で絞らないと未来の会期が
+ * 選ばれ、呼び出し側がそれを「前回の議案」として出してしまう。
+ *
+ * @param today 基準日（"YYYY-MM-DD"）。これより後に開会する会期は除く
+ */
+export async function findLatestSessionWithBills(
+  today: string
+): Promise<BillSession | null> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("council_sessions")
+    .select("id, slug, name, bills!inner(id)")
+    .in("bills.publish_status", ["published", "coming_soon"])
+    .lte("start_date", today)
+    .order("start_date", { ascending: false })
+    // 存在確認だけなので、埋め込む議案は1件に絞る
+    .limit(1, { referencedTable: "bills" })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    console.error("Failed to fetch latest session with bills:", error);
+    return null;
+  }
+
+  if (!data) return null;
+  return { id: data.id, slug: data.slug, name: data.name };
+}
+
 /**
  * 前回の定例会の公開済み議案数を取得
  */
