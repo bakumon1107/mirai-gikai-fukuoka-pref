@@ -153,6 +153,56 @@ describe("resolveSessionSlots", () => {
     expect(slots[2].status).toBe("in_session");
   });
 
+  it("end_date が無い過去の会期は、次の会期が始まったら会期中にしない", () => {
+    // 閉会日を取り損ねた古い会期が永久に「会期中」になると、
+    // 強調枠が2つ並んでどちらが「いま」か分からなくなる
+    const slots = resolveSessionSlots(
+      [
+        makeSession({
+          name: "令和8年2月定例会",
+          start_date: "2026-02-20",
+          end_date: null,
+        }),
+        r8.sep,
+      ],
+      "2026-09-24"
+    );
+    expect(slots[0].status).not.toBe("in_session");
+    expect(slots[2].status).toBe("in_session");
+    expect(
+      slots.filter((s) => s.status === "in_session" || s.status === "next")
+    ).toHaveLength(1);
+  });
+
+  it("end_date が無い会期が複数あっても強調は1つに収まる", () => {
+    const slots = resolveSessionSlots(
+      [
+        makeSession({
+          name: "令和8年2月定例会",
+          start_date: "2026-02-20",
+          end_date: null,
+        }),
+        makeSession({
+          name: "令和8年6月定例会",
+          start_date: "2026-06-08",
+          end_date: null,
+        }),
+        makeSession({
+          name: "令和8年9月定例会",
+          start_date: "2026-09-09",
+          end_date: null,
+        }),
+      ],
+      "2026-09-24"
+    );
+    expect(slots.map((s) => s.status)).toEqual([
+      "finished",
+      "finished",
+      "in_session",
+      "upcoming",
+    ]);
+  });
+
   it("各枠に固定の説明文が付く", () => {
     const slots = resolveSessionSlots([], "2026-09-24");
     expect(slots[0].description).toBe("新しい年度の予算を決める");

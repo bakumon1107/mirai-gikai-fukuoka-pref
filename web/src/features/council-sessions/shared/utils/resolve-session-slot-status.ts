@@ -70,10 +70,25 @@ export function resolveSessionSlots(
     }
   }
 
-  // 会期中の回があるか。あるなら「つぎはここ」は出さない（強調は常に1つ）
-  const hasInSession = [...byMonth.values()].some((session) =>
-    isInSession(session, now)
+  // 各会期について「次に開会する会期の開会日」を求めておく。
+  // end_date が無い会期の打ち切り判定に使う
+  const ordered = [...byMonth.values()].sort((a, b) =>
+    a.start_date.localeCompare(b.start_date)
   );
+  const nextStartById = new Map<string, number | null>();
+  for (let i = 0; i < ordered.length; i++) {
+    const next = ordered[i + 1];
+    nextStartById.set(
+      ordered[i].id,
+      next ? toComparable(next.start_date) : null
+    );
+  }
+
+  const inSessionOf = (session: CouncilSession) =>
+    isInSession(session, now, nextStartById.get(session.id) ?? null);
+
+  // 会期中の回があるか。あるなら「つぎはここ」は出さない（強調は常に1つ）
+  const hasInSession = ordered.some(inSessionOf);
 
   // 「つぎはここ」に当たる回（まだ開会していない回のうち最も早いもの）
   let nextMonth: number | null = null;
@@ -93,29 +108,49 @@ export function resolveSessionSlots(
     return {
       month,
       description: MONTH_DESCRIPTIONS[month],
-      status: resolveStatus(session, now, month === nextMonth),
+      status: resolveStatus(session, now, month === nextMonth, inSessionOf),
       session,
     };
   });
 }
 
-function isInSession(session: CouncilSession, now: number): boolean {
+/**
+ * 会期中かどうか。
+ *
+ * `end_date` が無い会期（閉会日が未取得・会期中で未確定）は、開会済みなら
+ * 会期中とみなす。ただし**次の会期が既に開会していれば、そこで打ち切る**。
+ * そうしないと、閉会日を取り損ねた古い会期が永久に「会期中」になり、
+ * 「強調枠は常に1つ」（設計書 5.5節）が壊れる。
+ *
+ * @param nextStart 次に開会する会期の開会日（数値比較用）。無ければ null
+ */
+function isInSession(
+  session: CouncilSession,
+  now: number,
+  nextStart: number | null
+): boolean {
   const start = toComparable(session.start_date);
   if (start > now) return false;
-  // end_date が無い＝閉会日未定。開会済みなら会期中とみなす
-  if (!session.end_date) return true;
+
+  if (!session.end_date) {
+    // 次の会期が始まっていれば、この会期は終わったものとして扱う
+    if (nextStart !== null && nextStart <= now) return false;
+    return true;
+  }
+
   return now <= toComparable(session.end_date);
 }
 
 function resolveStatus(
   session: CouncilSession | null,
   now: number,
-  isNext: boolean
+  isNext: boolean,
+  inSessionOf: (session: CouncilSession) => boolean
 ): SessionSlotStatus {
   // 日程がまだ公式に掲載されていない回。フォールバックで「これから」
   if (!session) return isNext ? "next" : "upcoming";
 
-  if (isInSession(session, now)) return "in_session";
+  if (inSessionOf(session)) return "in_session";
 
   if (session.end_date && toComparable(session.end_date) < now) {
     return "finished";

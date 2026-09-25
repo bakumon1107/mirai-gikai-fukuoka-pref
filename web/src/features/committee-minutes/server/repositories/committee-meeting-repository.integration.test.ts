@@ -13,6 +13,9 @@ import { findAllMeetings } from "./committee-meeting-repository";
 const DOC_ID_MANY = 990001;
 const DOC_ID_FEW = 990002;
 
+/** このテストが作った行のid。後始末はこれだけを消す */
+const createdIds: string[] = [];
+
 function buildSpeeches(count: number) {
   return Array.from({ length: count }, (_, i) => ({
     voiceNo: i + 1,
@@ -22,9 +25,30 @@ function buildSpeeches(count: number) {
   }));
 }
 
+/**
+ * 同じ source_document_id の行が既にあれば中断する。
+ *
+ * 後始末で他人のデータを巻き込まないため、衝突時は消さずに落とす。
+ */
+async function assertNoCollision() {
+  const supabase = createAdminClient();
+  const { data } = await supabase
+    .from("committee_meetings")
+    .select("source_document_id")
+    .in("source_document_id", [DOC_ID_MANY, DOC_ID_FEW]);
+
+  if (data && data.length > 0) {
+    const ids = data.map((r) => r.source_document_id).join(", ");
+    throw new Error(
+      `テスト用の source_document_id が既に使われています: ${ids}。` +
+        "手動で確認してください（このテストは削除しません）"
+    );
+  }
+}
+
 async function seed() {
   const supabase = createAdminClient();
-  await supabase.from("committee_meetings").insert([
+  const rows = [
     {
       committee_name: "テスト農林水産委員会",
       committee_slug: "test-nourin",
@@ -47,15 +71,24 @@ async function seed() {
       speeches: buildSpeeches(6),
       publish_status: "published",
     },
-  ]);
+  ];
+
+  const { data, error } = await supabase
+    .from("committee_meetings")
+    .insert(rows)
+    .select("id");
+
+  if (error) throw new Error(`テストデータの投入に失敗: ${error.message}`);
+  createdIds.push(...(data ?? []).map((r) => r.id));
 }
 
+/** このテストが作った行だけを消す */
 async function cleanup() {
+  if (createdIds.length === 0) return;
+
   const supabase = createAdminClient();
-  await supabase
-    .from("committee_meetings")
-    .delete()
-    .in("source_document_id", [DOC_ID_MANY, DOC_ID_FEW]);
+  await supabase.from("committee_meetings").delete().in("id", createdIds);
+  createdIds.length = 0;
 }
 
 describe("committee-meeting-repository / speech_count", () => {
@@ -64,7 +97,7 @@ describe("committee-meeting-repository / speech_count", () => {
   });
 
   it("一覧取得で speech_count が実値として返る", async () => {
-    await cleanup();
+    await assertNoCollision();
     await seed();
 
     const meetings = await findAllMeetings();

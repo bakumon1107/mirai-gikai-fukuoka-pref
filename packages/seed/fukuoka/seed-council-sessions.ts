@@ -150,8 +150,13 @@ async function main() {
       continue;
     }
 
+    // 閉会日が取れていない場合は既存値を残す。
+    // 日程表に「閉会」が未掲載だと parseSessionSchedule は endDate=null を返すため、
+    // そのまま書くと一度入った正しい閉会日を消してしまう
+    const nextEndDate = session.endDate ?? existing.end_date ?? null;
+
     const startSame = existing.start_date === session.startDate;
-    const endSame = (existing.end_date ?? null) === (session.endDate ?? null);
+    const endSame = (existing.end_date ?? null) === nextEndDate;
 
     if (startSame && endSame) {
       unchanged++;
@@ -162,7 +167,7 @@ async function main() {
       name: session.dbSessionName,
       id: existing.id,
       startDate: { from: existing.start_date, to: session.startDate },
-      endDate: { from: existing.end_date ?? null, to: session.endDate ?? null },
+      endDate: { from: existing.end_date ?? null, to: nextEndDate },
     });
   }
 
