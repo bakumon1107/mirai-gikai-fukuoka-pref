@@ -6,6 +6,7 @@
   "scripts": {
     "seed": "tsx main/run.ts",
     "seed:csv": "tsx csv/import-csv.ts",
+    "seed:council-sessions": "tsx fukuoka/seed-council-sessions.ts",
     "seed:jimu-jigyo": "tsx fukuoka/seed-jimu-jigyo.ts",
     "seed:jimu-ai-summary": "tsx fukuoka/apply-jimu-ai-summary.ts",
     "test": "vitest run",

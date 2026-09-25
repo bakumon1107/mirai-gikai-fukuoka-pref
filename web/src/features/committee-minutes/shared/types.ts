@@ -35,6 +35,13 @@ export type CommitteeMeetingSummary = {
   /** 会議全体の要約（AI生成・確認後に格納） */
   summary: string | null;
   topics: CommitteeMeetingTopic[];
+  /**
+   * 発言数。`committee_meetings.speech_count`（生成列）から取る。
+   *
+   * 一覧用SELECTは `speeches`（全発言本文）を載せない方針なので、
+   * 件数だけを生成列で受け取る。取得していない経路では null。
+   */
+  speechCount: number | null;
 };
 
 /** 委員会の開催1回分（詳細用・発言つき） */
