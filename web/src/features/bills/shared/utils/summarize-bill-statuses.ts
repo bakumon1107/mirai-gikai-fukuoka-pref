@@ -19,10 +19,20 @@ export type BillStatusChip = {
   count: number;
 };
 
+/** {@link getCardStatusLabel} が審議中の議案に付けるラベル */
+const DELIBERATING_LABEL = "議会審議中";
+
 export type BillStatusSummary = {
   /** 件数チップの合計（published + coming_soon） */
   total: number;
   chips: BillStatusChip[];
+  /**
+   * まだ審議が終わっていない議案の数。
+   *
+   * 可決・否決・専決処分報告・議案上程前は含まない。
+   * 「いまN件を審議中」はこの数で出す
+   */
+  deliberatingCount: number;
   /** 中身が読める議案の数。0 なら詳細への導線を出さない */
   publishedCount: number;
   /** 中身が未掲載（紙をスキャン中）の議案の数 */
@@ -58,6 +68,7 @@ export function summarizeBillStatuses(
   return {
     total: entries.length,
     chips,
+    deliberatingCount: counts.get(DELIBERATING_LABEL) ?? 0,
     publishedCount,
     comingSoonCount,
     isUniform: chips.length === 1,
@@ -67,9 +78,16 @@ export function summarizeBillStatuses(
 /**
  * 件数要約の見出し文言（設計書 5.9.1 節）。
  *
- * - 会期中: 「いまN件を審議中」
- * - 閉会後・全件同一: 「前回の議案はすべて可決」
- * - 閉会後・混在: 「N件中M件が可決」
+ * - 会期中で審議中の議案がある: 「いまN件を審議中」
+ * - 全件同一: 「この会期の議案はすべて可決」
+ * - 混在: 「N件中M件が可決」
+ *
+ * **「審議中」は議案のステータスから決める。** 会期が開いていても
+ * 採決が済んでいれば審議中の議案は0件になる（採決日から閉会日までの
+ * 数日など）。`isInSession` だけで「いま審議中」と言うと、
+ * 可決済みの議案を審議中だと言ってしまう。
+ *
+ * @param isInSession 件数を数えた会期がいま開会中か
  */
 export function buildBillSummaryHeadline(
   summary: BillStatusSummary,
@@ -77,12 +95,15 @@ export function buildBillSummaryHeadline(
 ): string | null {
   if (summary.total === 0) return null;
 
-  if (isInSession) {
-    return `いま${summary.total}件を審議中`;
+  if (isInSession && summary.deliberatingCount > 0) {
+    return `いま${summary.deliberatingCount}件を審議中`;
   }
 
+  // 開会中なら「前回」とは呼べない
+  const scope = isInSession ? "この会期" : "前回";
+
   if (summary.isUniform) {
-    return `前回の議案はすべて${summary.chips[0].label}`;
+    return `${scope}の議案はすべて${summary.chips[0].label}`;
   }
 
   const approved = summary.chips.find((chip) => chip.label === "可決");
@@ -90,7 +111,7 @@ export function buildBillSummaryHeadline(
     return `${summary.total}件中${approved.count}件が可決`;
   }
 
-  return `前回の議案は${summary.total}件`;
+  return `${scope}の議案は${summary.total}件`;
 }
 
 /**

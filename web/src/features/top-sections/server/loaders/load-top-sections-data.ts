@@ -1,21 +1,24 @@
 import "server-only";
-import { findBillStatusesBySession } from "@/features/bills/server/repositories/bill-repository";
+import {
+  findBillStatusesBySession,
+  findLatestSessionWithBills,
+} from "@/features/bills/server/repositories/bill-repository";
 import type { BillStatusSummary } from "@/features/bills/shared/utils/summarize-bill-statuses";
 import { summarizeBillStatuses } from "@/features/bills/shared/utils/summarize-bill-statuses";
 import { getSessionsWithBudget } from "@/features/budget-overview/server/loaders/get-sessions-with-budget";
 import { findAllMeetings } from "@/features/committee-minutes/server/repositories/committee-meeting-repository";
 import type { CommitteeMeetingSummary } from "@/features/committee-minutes/shared/types";
 import { selectFeaturedMeetings } from "@/features/committee-minutes/shared/utils/select-featured-meetings";
-import { findCouncilSessionsByYear } from "@/features/council-sessions/server/repositories/council-session-repository";
+import {
+  findCouncilSessionsByYear,
+  findCurrentCouncilSession,
+} from "@/features/council-sessions/server/repositories/council-session-repository";
 import {
   type SessionSlot,
   resolveSessionSlots,
 } from "@/features/council-sessions/shared/utils/resolve-session-slot-status";
 import { getGeneralQuestionsBySession } from "@/features/general-questions/server/loaders/get-general-questions-by-session";
-import {
-  type LatestQuestionSession,
-  findLatestSessionWithPublishedQuestions,
-} from "@/features/general-questions/server/repositories/general-questions-repository";
+import { findLatestSessionWithPublishedQuestions } from "@/features/general-questions/server/repositories/general-questions-repository";
 import type { GeneralQuestion } from "@/features/general-questions/shared/types";
 import { getJapanTime } from "@/lib/utils/date";
 
@@ -67,12 +70,14 @@ export async function loadTopSectionsData(): Promise<TopSectionsData> {
   const today = todayInJst();
   const year = Number(today.slice(0, 4));
 
-  const [sessionsThisYear, meetings, questionSession, budgetSessions] =
+  // 議案カードは質問・帯とは別の会期を見るので、並列に取れる
+  const [sessionsThisYear, meetings, questionSession, budgetSessions, bills] =
     await Promise.all([
       findCouncilSessionsByYear(year),
       findAllMeetings(),
       findLatestSessionWithPublishedQuestions(),
       getSessionsWithBudget(),
+      resolveBillSummary(today),
     ]);
 
   const questions = questionSession
@@ -82,13 +87,10 @@ export async function loadTopSectionsData(): Promise<TopSectionsData> {
       )
     : [];
 
-  const sessionSlots = resolveSessionSlots(sessionsThisYear, today);
-  const bills = await resolveBillSummary(sessionSlots, questionSession);
-
   const budgetSession = budgetSessions[0] ?? null;
 
   return {
-    sessionSlots,
+    sessionSlots: resolveSessionSlots(sessionsThisYear, today),
     committeeMeetings: selectFeaturedMeetings(meetings, COMMITTEE_COUNT),
     questions,
     questionSessionName: questionSession?.name ?? null,
@@ -103,21 +105,22 @@ export async function loadTopSectionsData(): Promise<TopSectionsData> {
 /**
  * 議案カードの件数を、どの会期から数えるか決める。
  *
- * 素直に「質問がある最新会期」を使うと、**会期が始まってから質問が
- * 公開されるまでの数週間**、前回会期の議案を数えたまま見出しだけ
- * 「いまN件を審議中」になり、可決済みの議案を審議中と言ってしまう。
- * 開会中の会期があればそちらを優先し、その会期に議案がまだ1件も
- * 入っていなければ前回会期の実績に戻す（そのときは「いま」と言わない）。
+ * 会期は**議案データと開会日から選ぶ**。判断材料にしてはいけないものが2つある。
+ *
+ * - **質問の会期**: 議案は入っているが質問がまだ公開されていない会期があると、
+ *   古い会期の件数を「前回の議案」として出してしまう。
+ * - **帯のスロット**: 帯は当年に開会した会期だけを並べるので、12月に開会して
+ *   翌1月まで続く会期が落ちる。日付で引く {@link findCurrentCouncilSession} を使う。
+ *
+ * 開会中の会期に議案がまだ1件も入っていなければ、議案がある直近の会期に戻す
+ * （そのときは「いま」と言わない）。
  */
-async function resolveBillSummary(
-  slots: SessionSlot[],
-  fallbackSession: LatestQuestionSession | null
-): Promise<{
+async function resolveBillSummary(today: string): Promise<{
   summary: BillStatusSummary;
   sessionSlug: string | null;
   isInSession: boolean;
 }> {
-  const current = slots.find((slot) => slot.status === "in_session")?.session;
+  const current = await findCurrentCouncilSession(today);
 
   if (current) {
     const statuses = await findBillStatusesBySession(current.id);
@@ -130,7 +133,8 @@ async function resolveBillSummary(
     }
   }
 
-  if (!fallbackSession) {
+  const latestWithBills = await findLatestSessionWithBills();
+  if (!latestWithBills) {
     return {
       summary: summarizeBillStatuses([]),
       sessionSlug: null,
@@ -140,9 +144,9 @@ async function resolveBillSummary(
 
   return {
     summary: summarizeBillStatuses(
-      await findBillStatusesBySession(fallbackSession.id)
+      await findBillStatusesBySession(latestWithBills.id)
     ),
-    sessionSlug: fallbackSession.slug,
+    sessionSlug: latestWithBills.slug,
     isInSession: false,
   };
 }

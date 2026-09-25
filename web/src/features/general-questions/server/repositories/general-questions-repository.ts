@@ -27,30 +27,7 @@ export async function findPublishedGeneralQuestionsBySession(
 export async function findLatestSessionSlugWithPublishedQuestions(): Promise<
   string | null
 > {
-  const supabase = createAdminClient();
-
-  const { data: rows, error: qErr } = await supabase
-    .from("general_questions")
-    .select("council_session_id")
-    .eq("publish_status", "published");
-
-  if (qErr || !rows?.length) return null;
-
-  const ids = [
-    ...new Set(
-      rows.map((r: { council_session_id: string }) => r.council_session_id)
-    ),
-  ];
-
-  const { data: session, error: sErr } = await supabase
-    .from("council_sessions")
-    .select("slug")
-    .in("id", ids)
-    .order("start_date", { ascending: false })
-    .limit(1)
-    .single();
-
-  if (sErr) return null;
+  const session = await findLatestSessionWithPublishedQuestions();
   return session?.slug ?? null;
 }
 
@@ -67,33 +44,32 @@ export type LatestQuestionSession = {
  * `findLatestSessionSlugWithPublishedQuestions()` は slug しか返さないため、
  * 質問本体を引くにも出典ラベルを出すにも会期を引き直す必要があった。
  * トップの「代表質問・一般質問から」はどちらも要るのでこちらを使う。
+ *
+ * 質問側を全件引いて会期を絞る書き方はしない。PostgREST の
+ * `max_rows`（このリポジトリでは1000）に当たると新しい会期の行が返らず、
+ * 古い会期を「最新」と誤判定する。会期側を起点に `!inner` で公開質問の
+ * 存在だけを見て、`start_date` の降順で1件取る。
  */
 export async function findLatestSessionWithPublishedQuestions(): Promise<LatestQuestionSession | null> {
   const supabase = createAdminClient();
 
-  const { data: rows, error: qErr } = await supabase
-    .from("general_questions")
-    .select("council_session_id")
-    .eq("publish_status", "published");
-
-  if (qErr || !rows?.length) return null;
-
-  const ids = [
-    ...new Set(
-      rows.map((r: { council_session_id: string }) => r.council_session_id)
-    ),
-  ];
-
-  const { data: session, error: sErr } = await supabase
+  const { data, error } = await supabase
     .from("council_sessions")
-    .select("id, slug, name")
-    .in("id", ids)
+    .select("id, slug, name, general_questions!inner(id)")
+    .eq("general_questions.publish_status", "published")
     .order("start_date", { ascending: false })
+    // 存在確認だけなので、埋め込む質問は1件に絞る
+    .limit(1, { referencedTable: "general_questions" })
     .limit(1)
     .maybeSingle();
 
-  if (sErr || !session) return null;
-  return { id: session.id, slug: session.slug, name: session.name };
+  if (error) {
+    console.error("Failed to fetch latest session with questions:", error);
+    return null;
+  }
+
+  if (!data) return null;
+  return { id: data.id, slug: data.slug, name: data.name };
 }
 
 export async function findPublishedGeneralQuestionById(
