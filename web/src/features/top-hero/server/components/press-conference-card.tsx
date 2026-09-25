@@ -1,22 +1,19 @@
 import "server-only";
 import Link from "next/link";
 import type {
-  PressConference,
   PressConferenceRef,
+  PressConferenceSummary,
 } from "@/features/press-conferences/shared/types";
 import {
   formatConferenceHeading,
   formatShortDate,
 } from "../../shared/utils/format-hero-date";
 
-/** 話題の表示上限（設計書 5.4 節） */
-const MAX_TOPICS = 4;
-
 /** 日付チップの表示上限 */
 const MAX_RECENT = 3;
 
 type Props = {
-  conference: PressConference;
+  conference: PressConferenceSummary;
   /** 「これまでの会見」に出す過去分（最新1件を除いたもの） */
   recent: PressConferenceRef[];
 };
@@ -28,10 +25,6 @@ type Props = {
  * 当面は press_conference_items.title をそのまま出す（設計書 7章）。
  */
 export function PressConferenceCard({ conference, recent }: Props) {
-  const topics = [...conference.items]
-    .sort((a, b) => a.orderIndex - b.orderIndex)
-    .slice(0, MAX_TOPICS);
-
   const detailHref = `/press-conferences/${conference.slug}`;
 
   return (
@@ -48,13 +41,18 @@ export function PressConferenceCard({ conference, recent }: Props) {
         </span>
       </div>
 
-      {topics.length > 0 && (
+      {conference.topics.length > 0 && (
         <ol className="flex flex-col">
-          {topics.map((topic, index) => (
-            <li key={topic.id}>
+          {conference.topics.map((topic, index) => (
+            // 区切り線は li に付ける。a は li の唯一の子なので常に :last-child になり、
+            // a 側に last: を付けると全件で線が消える
+            <li
+              key={topic.id}
+              className="border-b border-pref-divider last:border-b-0"
+            >
               <Link
                 href={`${detailHref}#item-${topic.id}`}
-                className="flex gap-2.5 border-b border-pref-divider py-3 text-base leading-relaxed text-mirai-text last:border-b-0 hover:text-pref-accent"
+                className="flex gap-2.5 py-3 text-base leading-relaxed text-mirai-text hover:text-pref-accent"
               >
                 <span
                   aria-hidden

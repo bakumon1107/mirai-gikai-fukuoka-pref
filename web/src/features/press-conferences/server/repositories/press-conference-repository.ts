@@ -1,6 +1,10 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
-import type { PressConference, PressConferenceRef } from "../../shared/types";
+import type {
+  PressConference,
+  PressConferenceRef,
+  PressConferenceSummary,
+} from "../../shared/types";
 
 type TurnRow = {
   id: string;
@@ -140,6 +144,56 @@ export async function findLatestPublishedPressConference(): Promise<PressConfere
  *
  * @param limit 取得件数（開催日の新しい順）
  */
+/**
+ * 最新の会見を、トップのカードに必要な項目だけで取得する（設計書 5.4 節）。
+ *
+ * `findLatestPublishedPressConference()` は press_conference_turns
+ * （全発言本文）までネストで引くが、カードに出すのは話題のタイトルだけ。
+ * トップの初期表示に全発言を載せる必要はないため、こちらを使う。
+ */
+export async function findLatestPressConferenceSummary(
+  maxTopics: number
+): Promise<PressConferenceSummary | null> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("press_conferences")
+    .select(
+      "id, slug, held_at, press_conference_items (id, title, order_index)"
+    )
+    .eq("status", "published")
+    .order("held_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw new Error(
+      `Failed to fetch latest press conference summary: ${error.message}`
+    );
+  }
+  if (!data) return null;
+
+  const row = data as unknown as {
+    id: string;
+    slug: string;
+    held_at: string;
+    press_conference_items: {
+      id: string;
+      title: string;
+      order_index: number;
+    }[];
+  };
+
+  return {
+    id: row.id,
+    slug: row.slug,
+    heldAt: row.held_at,
+    topics: [...(row.press_conference_items ?? [])]
+      .sort((a, b) => a.order_index - b.order_index)
+      .slice(0, maxTopics)
+      .map((item) => ({ id: item.id, title: item.title })),
+  };
+}
+
 export async function findRecentPressConferenceRefs(
   limit: number
 ): Promise<PressConferenceRef[]> {

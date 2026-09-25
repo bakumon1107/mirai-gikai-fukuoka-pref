@@ -3,21 +3,26 @@ import { findCouncilSessionsByYear } from "@/features/council-sessions/server/re
 import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import { findNextRegularSession } from "@/features/council-sessions/shared/utils/find-next-session";
-import { getLatestPressConference } from "@/features/press-conferences/server/loaders/get-latest-press-conference";
-import { findRecentPressConferenceRefs } from "@/features/press-conferences/server/repositories/press-conference-repository";
+import {
+  findLatestPressConferenceSummary,
+  findRecentPressConferenceRefs,
+} from "@/features/press-conferences/server/repositories/press-conference-repository";
 import type {
-  PressConference,
   PressConferenceRef,
+  PressConferenceSummary,
 } from "@/features/press-conferences/shared/types";
 import { getJapanTime } from "@/lib/utils/date";
 
 /** 「これまでの会見」に出す件数 + 最新1件ぶん */
 const RECENT_FETCH_COUNT = 4;
 
+/** 会見カードに出す話題の上限（設計書 5.4 節） */
+const MAX_TOPICS = 4;
+
 export type TopHeroData = {
   currentSession: CouncilSession | null;
   nextSession: CouncilSession | null;
-  latestConference: PressConference | null;
+  latestConference: PressConferenceSummary | null;
   recentConferences: PressConferenceRef[];
 };
 
@@ -39,12 +44,14 @@ export async function loadTopHeroData(): Promise<TopHeroData> {
   const today = todayInJst();
   const year = Number(today.slice(0, 4));
 
+  // 会見は「最新1件（話題つき）」と「直近の日付だけ」の2本で足りる。
+  // getPressConferences() は全会見の全発言本文まで引くので使わない（設計書 5.4節）
   const [currentSession, thisYear, nextYear, latestConference, recentRefs] =
     await Promise.all([
       getCurrentCouncilSession(getJapanTime()),
       findCouncilSessionsByYear(year),
       findCouncilSessionsByYear(year + 1),
-      getLatestPressConference(),
+      findLatestPressConferenceSummary(MAX_TOPICS),
       findRecentPressConferenceRefs(RECENT_FETCH_COUNT),
     ]);
 

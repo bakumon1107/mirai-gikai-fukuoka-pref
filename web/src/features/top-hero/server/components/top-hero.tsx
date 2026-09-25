@@ -1,8 +1,8 @@
 import "server-only";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import type {
-  PressConference,
   PressConferenceRef,
+  PressConferenceSummary,
 } from "@/features/press-conferences/shared/types";
 import { formatNextSessionPill } from "../../shared/utils/format-hero-date";
 import { PressConferenceCard } from "./press-conference-card";
@@ -12,7 +12,7 @@ type Props = {
   currentSession: CouncilSession | null;
   /** 次に開会する定例会。日程未掲載なら null */
   nextSession: CouncilSession | null;
-  latestConference: PressConference | null;
+  latestConference: PressConferenceSummary | null;
   recentConferences: PressConferenceRef[];
 };
 

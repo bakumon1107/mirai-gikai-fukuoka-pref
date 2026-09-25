@@ -47,3 +47,12 @@ export type PressConferenceRef = {
   slug: string;
   heldAt: string;
 };
+
+/**
+ * トップの会見カード用の軽量な表現（設計書 5.4 節）。
+ *
+ * カードに出すのは話題のタイトルだけなので、発言本文は持たない。
+ */
+export type PressConferenceSummary = PressConferenceRef & {
+  topics: { id: string; title: string }[];
+};
