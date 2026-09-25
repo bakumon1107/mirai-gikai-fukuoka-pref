@@ -341,13 +341,22 @@ export type BillSession = {
  * `max_rows`（このリポジトリでは1000）に当たると新しい会期の行が
  * 返らず、古い会期を「最新」と誤判定する。会期側を起点に
  * `!inner` で存在だけを見て、`start_date` の降順で1件取る。
+ *
+ * **まだ開会していない会期は返さない。** 議案は告示の時点で
+ * `coming_soon` として入りうるため、開会日で絞らないと未来の会期が
+ * 選ばれ、呼び出し側がそれを「前回の議案」として出してしまう。
+ *
+ * @param today 基準日（"YYYY-MM-DD"）。これより後に開会する会期は除く
  */
-export async function findLatestSessionWithBills(): Promise<BillSession | null> {
+export async function findLatestSessionWithBills(
+  today: string
+): Promise<BillSession | null> {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("council_sessions")
     .select("id, slug, name, bills!inner(id)")
     .in("bills.publish_status", ["published", "coming_soon"])
+    .lte("start_date", today)
     .order("start_date", { ascending: false })
     // 存在確認だけなので、埋め込む議案は1件に絞る
     .limit(1, { referencedTable: "bills" })

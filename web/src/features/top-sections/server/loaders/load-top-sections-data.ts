@@ -113,7 +113,9 @@ export async function loadTopSectionsData(): Promise<TopSectionsData> {
  *   翌1月まで続く会期が落ちる。日付で引く {@link findCurrentCouncilSession} を使う。
  *
  * 開会中の会期に議案がまだ1件も入っていなければ、議案がある直近の会期に戻す
- * （そのときは「いま」と言わない）。
+ * （そのときは「いま」と言わない）。戻し先は**開会済みの会期に限る**。
+ * 議案は告示の時点で `coming_soon` として入るため、絞らないと未来の会期を
+ * 「前回の議案」として出してしまう。
  */
 async function resolveBillSummary(today: string): Promise<{
   summary: BillStatusSummary;
@@ -133,7 +135,7 @@ async function resolveBillSummary(today: string): Promise<{
     }
   }
 
-  const latestWithBills = await findLatestSessionWithBills();
+  const latestWithBills = await findLatestSessionWithBills(today);
   if (!latestWithBills) {
     return {
       summary: summarizeBillStatuses([]),
