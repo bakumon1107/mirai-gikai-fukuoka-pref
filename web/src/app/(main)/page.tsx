@@ -17,21 +17,13 @@ import { TeamMirai } from "@/components/top/team-mirai";
 import { siteConfig } from "@/config/site.config";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import { BillDisclaimer } from "@/features/bills/client/components/bill-detail/bill-disclaimer";
-import { loadHomeData } from "@/features/bills/server/loaders/load-home-data";
-import type { BillWithContent } from "@/features/bills/shared/types";
 import { getSessionsWithBudget } from "@/features/budget-overview/server/loaders/get-sessions-with-budget";
-import { HomeChatClient } from "@/features/chat/client/components/home-chat-client";
+import { HomeChatSection } from "@/features/chat/server/components/home-chat-section";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
 import { PressConferenceArchiveSection } from "@/features/press-conferences/client/components/press-conference-archive-section";
 import { getPressConferences } from "@/features/press-conferences/server/loaders/get-press-conferences";
 
 export default async function Home() {
-  // 議案一覧（注目の議案・タグ別）はトップから外し、議案一覧ページに一本化した
-  // （設計書 9章 PR7）。ここで残っているのは下の AIチャットに渡す文脈だけで、
-  // siteConfig.features.aiChat が false の間は使われない
-  const { billsByTag, featuredBills } = await loadHomeData();
-
-  // ゆくゆくタグ機能がマージされたらBFFに統合する
   const [
     heroData,
     sectionsData,
@@ -47,15 +39,6 @@ export default async function Home() {
     getSessionsWithBudget(),
     getPressConferences(),
   ]);
-
-  const toBillChatContext = (bill: BillWithContent) => {
-    return {
-      name: `${bill.bill_content?.title}（${bill.name}）`,
-      summary: bill.bill_content?.summary,
-      tags: bill.tags?.map((tag) => tag.label) || [],
-      isFeatured: featuredBills.some((b) => b.id === bill.id),
-    };
-  };
 
   return (
     <>
@@ -144,15 +127,10 @@ export default async function Home() {
         <BillDisclaimer />
       </Container>
 
-      {/* チャット機能 */}
+      {/* チャット機能。議案の取得は HomeChatSection の中に閉じてあるので、
+          無効な間は取得も走らない */}
       {siteConfig.features.aiChat && (
-        <HomeChatClient
-          currentDifficulty={currentDifficulty}
-          bills={billsByTag
-            .flatMap((x) => x.bills)
-            .concat(featuredBills)
-            .map(toBillChatContext)}
-        />
+        <HomeChatSection currentDifficulty={currentDifficulty} />
       )}
     </>
   );
