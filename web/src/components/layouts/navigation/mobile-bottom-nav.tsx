@@ -42,7 +42,7 @@ export function MobileBottomNav() {
     >
       {MOBILE_NAV_ITEMS.map((item) => {
         const Icon = ICONS[item.icon];
-        const isActive = isNavItemActive(item.href, pathname);
+        const isActive = isNavItemActive(item, pathname);
         return (
           <Link
             key={item.href}

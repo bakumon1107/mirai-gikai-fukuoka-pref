@@ -19,7 +19,7 @@ export function DesktopNav() {
       className="hidden pc:flex items-center gap-1"
     >
       {PC_NAV_ITEMS.map((item) => {
-        const isActive = isNavItemActive(item.href, pathname);
+        const isActive = isNavItemActive(item, pathname);
         return (
           <Link
             key={item.href}

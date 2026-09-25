@@ -37,12 +37,18 @@ export default function MainGroupLayout({
 
       <MainLayout>
         <Header />
-        {/* ボトムナビ（72px + セーフエリア）にコンテンツ末尾が隠れないよう
-            下余白を確保する。PC はボトムナビを出さないため 0 に戻す */}
-        <main className="min-h-dvh md:min-h-[calc(100dvh-96px)] bg-mirai-surface pb-[calc(72px+env(safe-area-inset-bottom))] pc:pb-0">
+        <main className="min-h-dvh md:min-h-[calc(100dvh-96px)] bg-mirai-surface">
           {children}
         </main>
         <Footer />
+        {/* ボトムナビは fixed なので、ページ末尾（=フッターの下端）が隠れる。
+            余白は main ではなくドキュメント末尾に置く。
+            main に付けると本文とフッターのあいだに無用な隙間ができるだけで、
+            実際に隠れるフッター下端は救えない */}
+        <div
+          aria-hidden
+          className="h-[calc(72px+env(safe-area-inset-bottom))] pc:hidden"
+        />
         <MobileBottomNav />
       </MainLayout>
     </>
