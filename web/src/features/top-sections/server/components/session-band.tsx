@@ -92,10 +92,13 @@ function SlotLink({ slot }: { slot: SessionSlot }) {
   const { session, status } = slot;
   if (!session) return null;
 
+  // slug は null を取りうる。埋めると `/sessions//bills` になるのでリンクを出さない
   if (status === "finished") {
+    if (!session.slug) return null;
+
     return (
       <Link
-        href={`/sessions/${session.slug ?? ""}/bills`}
+        href={`/sessions/${session.slug}/bills`}
         className="mt-auto text-xs font-medium text-pref-accent hover:text-pref-accent-hover"
       >
         議案・一般質問を見る

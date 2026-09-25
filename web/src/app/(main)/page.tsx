@@ -92,7 +92,7 @@ export default async function Home() {
         budgetLabel={sectionsData.budgetLabel}
         billSummary={sectionsData.billSummary}
         billsSessionSlug={sectionsData.billsSessionSlug}
-        isInSession={heroData.currentSession !== null}
+        isInSession={sectionsData.isBillSessionInSession}
       />
 
       {/* 事務事業評価・お金の使い道は下段カードに入りきらないためアコーディオンで残す */}

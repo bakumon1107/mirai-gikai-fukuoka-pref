@@ -11,8 +11,12 @@ type Props = {
   budgetSlug: string | null;
   budgetLabel: string | null;
   billSummary: BillStatusSummary;
-  /** 議案一覧への入口（最新会期の slug） */
+  /** 議案一覧への入口（件数を数えた会期の slug） */
   billsSessionSlug: string | null;
+  /**
+   * 件数を数えた会期が開会中か。サイト全体の会期状態ではない。
+   * 見出しで「いま」と言ってよいかの判断にだけ使う
+   */
   isInSession: boolean;
 };
 

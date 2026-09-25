@@ -12,7 +12,10 @@ import {
   resolveSessionSlots,
 } from "@/features/council-sessions/shared/utils/resolve-session-slot-status";
 import { getGeneralQuestionsBySession } from "@/features/general-questions/server/loaders/get-general-questions-by-session";
-import { findLatestSessionWithPublishedQuestions } from "@/features/general-questions/server/repositories/general-questions-repository";
+import {
+  type LatestQuestionSession,
+  findLatestSessionWithPublishedQuestions,
+} from "@/features/general-questions/server/repositories/general-questions-repository";
 import type { GeneralQuestion } from "@/features/general-questions/shared/types";
 import { getJapanTime } from "@/lib/utils/date";
 
@@ -31,6 +34,13 @@ export type TopSectionsData = {
   budgetLabel: string | null;
   billSummary: BillStatusSummary;
   billsSessionSlug: string | null;
+  /**
+   * 件数を数えた会期が、いま開会中の会期かどうか。
+   *
+   * 見出しの「いまN件を審議中」はこれで出し分ける。サイト全体の
+   * 「会期中か」ではないことに注意（下の {@link loadTopSectionsData} 参照）。
+   */
+  isBillSessionInSession: boolean;
 };
 
 /** 日本時間の "YYYY-MM-DD" */
@@ -72,21 +82,67 @@ export async function loadTopSectionsData(): Promise<TopSectionsData> {
       )
     : [];
 
-  // 件数チップは質問と同じ最新会期を見る。会期が取れなければ空集計
-  const billStatuses = questionSession
-    ? await findBillStatusesBySession(questionSession.id)
-    : [];
+  const sessionSlots = resolveSessionSlots(sessionsThisYear, today);
+  const bills = await resolveBillSummary(sessionSlots, questionSession);
 
   const budgetSession = budgetSessions[0] ?? null;
 
   return {
-    sessionSlots: resolveSessionSlots(sessionsThisYear, today),
+    sessionSlots,
     committeeMeetings: selectFeaturedMeetings(meetings, COMMITTEE_COUNT),
     questions,
     questionSessionName: questionSession?.name ?? null,
     budgetSlug: budgetSession?.slug ?? null,
     budgetLabel: budgetSession ? toBudgetLabel(budgetSession.name) : null,
-    billSummary: summarizeBillStatuses(billStatuses),
-    billsSessionSlug: questionSession?.slug ?? null,
+    billSummary: bills.summary,
+    billsSessionSlug: bills.sessionSlug,
+    isBillSessionInSession: bills.isInSession,
+  };
+}
+
+/**
+ * 議案カードの件数を、どの会期から数えるか決める。
+ *
+ * 素直に「質問がある最新会期」を使うと、**会期が始まってから質問が
+ * 公開されるまでの数週間**、前回会期の議案を数えたまま見出しだけ
+ * 「いまN件を審議中」になり、可決済みの議案を審議中と言ってしまう。
+ * 開会中の会期があればそちらを優先し、その会期に議案がまだ1件も
+ * 入っていなければ前回会期の実績に戻す（そのときは「いま」と言わない）。
+ */
+async function resolveBillSummary(
+  slots: SessionSlot[],
+  fallbackSession: LatestQuestionSession | null
+): Promise<{
+  summary: BillStatusSummary;
+  sessionSlug: string | null;
+  isInSession: boolean;
+}> {
+  const current = slots.find((slot) => slot.status === "in_session")?.session;
+
+  if (current) {
+    const statuses = await findBillStatusesBySession(current.id);
+    if (statuses.length > 0) {
+      return {
+        summary: summarizeBillStatuses(statuses),
+        sessionSlug: current.slug,
+        isInSession: true,
+      };
+    }
+  }
+
+  if (!fallbackSession) {
+    return {
+      summary: summarizeBillStatuses([]),
+      sessionSlug: null,
+      isInSession: false,
+    };
+  }
+
+  return {
+    summary: summarizeBillStatuses(
+      await findBillStatusesBySession(fallbackSession.id)
+    ),
+    sessionSlug: fallbackSession.slug,
+    isInSession: false,
   };
 }

@@ -4,6 +4,7 @@ import {
   OTHER_KEYWORDS_HREF,
   QUESTION_CATEGORIES,
   TOP_THEMES,
+  splitThemeLabel,
   themeForQuestionCategory,
   themeHref,
 } from "./theme-mapping";
@@ -102,5 +103,34 @@ describe("themeHref", () => {
 
   it("「ほかのキーワードで探す」は検索語なしの検索ページ", () => {
     expect(OTHER_KEYWORDS_HREF).toBe("/search");
+  });
+});
+
+describe("splitThemeLabel", () => {
+  it("「・」で2行に割り、区切り文字は落とす", () => {
+    expect(splitThemeLabel("子育て・教育")).toEqual({
+      head: "子育て",
+      tail: "教育",
+    });
+  });
+
+  it("最長のラベルも2行に収まる", () => {
+    expect(splitThemeLabel("環境・エネルギー")).toEqual({
+      head: "環境",
+      tail: "エネルギー",
+    });
+  });
+
+  it("「・」が無いラベルは1行のまま", () => {
+    expect(splitThemeLabel("県政")).toEqual({ head: "県政", tail: null });
+  });
+
+  it("全テーマが2行に割れ、各行は5文字以内に収まる", () => {
+    for (const theme of TOP_THEMES) {
+      const { head, tail } = splitThemeLabel(theme.label);
+      expect(tail, theme.label).not.toBeNull();
+      expect([...head].length, theme.label).toBeLessThanOrEqual(5);
+      expect([...(tail ?? "")].length, theme.label).toBeLessThanOrEqual(5);
+    }
   });
 });

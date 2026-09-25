@@ -41,11 +41,15 @@ export function QuestionsSection({ questions, sessionName }: Props) {
               key={question.id}
               className="border-b border-pref-divider last:border-b-0"
             >
+              {/*
+                子の span が色を上書きするため、リンク側に hover:text-* を
+                置いても効かない。group 経由で見出しだけ色を変える
+              */}
               <Link
                 href={`/questions/${question.id}`}
-                className="flex flex-col gap-0.5 py-3 hover:text-pref-accent"
+                className="group flex flex-col gap-0.5 py-3"
               >
-                <span className="text-sm leading-relaxed text-mirai-text">
+                <span className="text-sm leading-relaxed text-mirai-text group-hover:text-pref-accent">
                   {headline}
                 </span>
                 <span className="text-xs text-mirai-text-secondary">

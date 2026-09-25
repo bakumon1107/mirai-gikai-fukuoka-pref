@@ -5,6 +5,7 @@ import {
   OTHER_KEYWORDS_HREF,
   TOP_THEMES,
   type ThemeTone,
+  splitThemeLabel,
   themeHref,
 } from "@/features/top-themes/shared/utils/theme-mapping";
 
@@ -33,6 +34,10 @@ const TONE_STYLES: Record<ThemeTone, { tile: string; icon: string }> = {
  * ※ 8タイル横一列は 1280px 前提。`pc:`（1000px）で8列にすると
  *   1タイル約88pxまで縮み「環境・エネルギー」が溢れるため、
  *   4列×2行 → `pcl:`（1400px）で8列、としている（設計書 5.8.3節）。
+ *
+ * ラベルは 390px では1行に収まらない（1タイル約70px に対し
+ * 「環境・エネルギー」は 12px×8字＝96px）。デザイン指定どおり
+ * 「・」で2行に割り、`md:`（700px）以上で1行に戻す。
  */
 export function ThemeSection() {
   return (
@@ -46,14 +51,15 @@ export function ThemeSection() {
         </p>
       </div>
 
-      <ul className="mt-4 grid grid-cols-4 gap-2.5 pcl:grid-cols-8 pcl:gap-3.5">
+      <ul className="mt-4 grid grid-cols-4 gap-2 md:gap-2.5 pcl:grid-cols-8 pcl:gap-3">
         {TOP_THEMES.map((theme) => {
           const tone = TONE_STYLES[theme.tone];
+          const { head, tail } = splitThemeLabel(theme.label);
           return (
             <li key={theme.slug}>
               <Link
                 href={themeHref(theme)}
-                className={`${tone.tile} flex h-full flex-col items-center gap-2.5 rounded-[18px] px-1.5 py-5 text-center hover:opacity-80`}
+                className={`${tone.tile} flex h-full flex-col items-center gap-1.5 rounded-2xl px-0.5 py-3 text-center hover:opacity-80 md:gap-2.5 md:rounded-[18px] md:px-1.5 md:py-5`}
               >
                 <span
                   aria-hidden
@@ -61,8 +67,15 @@ export function ThemeSection() {
                 >
                   {theme.kanji}
                 </span>
-                <span className="text-xs font-medium text-mirai-text pcl:text-sm">
-                  {theme.label}
+                <span className="text-xs leading-[1.35] font-medium text-mirai-text md:whitespace-nowrap pcl:text-sm">
+                  {head}
+                  {tail && (
+                    <>
+                      {/* 狭い画面では「・」を落として改行する（上のコメント参照） */}
+                      <span className="hidden md:inline">・</span>
+                      <span className="block md:inline">{tail}</span>
+                    </>
+                  )}
                 </span>
               </Link>
             </li>
