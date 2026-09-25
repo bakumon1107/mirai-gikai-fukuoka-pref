@@ -5,7 +5,10 @@ import type {
   PressConferenceRef,
   PressConferenceSummary,
 } from "@/features/press-conferences/shared/types";
-import { formatNextSessionPill } from "../../shared/utils/format-hero-date";
+import {
+  formatCurrentSessionPill,
+  formatNextSessionPill,
+} from "../../shared/utils/format-hero-date";
 import { PressConferenceCard } from "./press-conference-card";
 
 type Props = {
@@ -23,8 +26,8 @@ type Props = {
  * 現行の Hero（背景画像 + Scroll）と CurrentCouncilSession（「本日は 開会中/閉会中」）
  * を置き換える。
  *
- * **いまは閉会中モードのみ**。会期中モードは PR5（段階1）で追加する。
- * `currentSession` が非 null なら会期中と判定できるので、分岐点だけ用意しておく。
+ * 会期中モードは段階1（文言差し替え）まで。レイアウトは閉会中と共通で、
+ * ヒーローを定例会に差し替える段階2は後続PRで対応する（設計書 5.3.2 節）。
  */
 export function TopHero({
   currentSession,
@@ -42,6 +45,11 @@ export function TopHero({
       ? "いま定例会中"
       : "いま臨時会中";
 
+  // 会期中は「◯月定例会 ◯月◯日まで」、閉会中は「次の定例会 ◯月◯日から」。
+  // どちらも日付が取れなければピルごと出さない（設計書 7章）
+  const currentPill = currentSession
+    ? formatCurrentSessionPill(currentSession.name, currentSession.end_date)
+    : null;
   const nextSessionLabel = formatNextSessionPill(
     nextSession?.start_date ?? null
   );
@@ -51,15 +59,31 @@ export function TopHero({
       <div className="grid gap-8 pc:grid-cols-2 pc:items-center pc:gap-10">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-2">
-            <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
-              {statusLabel}
-            </span>
-            {/* 日程が取れないときはピルごと出さない（設計書 7章） */}
-            {nextSessionLabel && !isInSession && (
-              <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
-                {nextSessionLabel}
+            {isInSession ? (
+              // 会期中は塗りピルで強調する（設計書 5.3.2節 段階1）
+              <span className="rounded-full bg-pref-pill-bg px-3.5 py-1.5 text-xs font-bold text-pref-pill-text">
+                {statusLabel}
+              </span>
+            ) : (
+              <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
+                {statusLabel}
               </span>
             )}
+
+            {/* 日程が取れないときはピルごと出さない（設計書 7章） */}
+            {isInSession
+              ? currentPill && (
+                  <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
+                    {/* スマホは幅が足りないので日付だけにする */}
+                    <span className="pc:hidden">{currentPill.short}</span>
+                    <span className="hidden pc:inline">{currentPill.full}</span>
+                  </span>
+                )
+              : nextSessionLabel && (
+                  <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
+                    {nextSessionLabel}
+                  </span>
+                )}
           </div>
 
           <h1 className="font-rounded text-[26px] font-bold leading-[1.45] text-mirai-text pc:text-[42px] pc:leading-[1.4]">
