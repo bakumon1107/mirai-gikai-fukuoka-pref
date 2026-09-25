@@ -9,6 +9,7 @@ import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/type
 import { InterviewHeaderActions } from "@/features/interview-session/client/components/interview-header-actions";
 import { isInterviewPage, isMainPage } from "@/lib/page-layout-utils";
 import { siteConfig } from "@/config/site.config";
+import { DesktopNav } from "@/components/layouts/navigation/desktop-nav";
 import { HamburgerMenu } from "./hamburger-menu";
 
 interface HeaderClientProps {
@@ -45,6 +46,9 @@ export function HeaderClient({ difficultyLevel }: HeaderClientProps) {
             </Link>
           </div>
 
+          {/* PC のみ: 横並びグローバルナビ（設計書 5.1節） */}
+          <DesktopNav />
+
           {/* Navigation */}
           <nav
             className="flex items-center space-x-2"
@@ -61,6 +65,8 @@ export function HeaderClient({ difficultyLevel }: HeaderClientProps) {
             >
               <Search className="size-5" />
             </Link>
+            {/* PC でも残す。ルビ・文字サイズの設定はここにしか無いため。
+                PC ではナビリンクが隠れ、設定のみのメニューになる */}
             <HamburgerMenu />
           </nav>
         </div>

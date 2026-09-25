@@ -44,8 +44,12 @@ describe("isWidePage", () => {
     expect(isWidePage("/jimu-jigyo/r7/somu-001")).toBe(true);
   });
 
-  it("returns false for the top page and bills pages", () => {
-    expect(isWidePage("/")).toBe(false);
+  // トップページはレイアウト刷新でPC全幅になった（設計書 4.2節）
+  it("returns true for the top page", () => {
+    expect(isWidePage("/")).toBe(true);
+  });
+
+  it("returns false for bills and budget pages", () => {
     expect(isWidePage("/bills/abc-123")).toBe(false);
     expect(isWidePage("/budget/r8")).toBe(false);
   });

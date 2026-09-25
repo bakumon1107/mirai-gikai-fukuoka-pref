@@ -5,6 +5,7 @@ import { Header } from "@/components/header";
 import { AuthGate } from "@/components/layouts/auth-gate";
 import { Footer } from "@/components/layouts/footer/footer";
 import { MainLayout } from "@/components/layouts/main-layout";
+import { MobileBottomNav } from "@/components/layouts/navigation/mobile-bottom-nav";
 import { siteConfig } from "@/config/site.config";
 import { env } from "@/lib/env";
 import { RubyfulInitializer } from "@/lib/rubyful";
@@ -40,6 +41,9 @@ export default function MainGroupLayout({
           {children}
         </main>
         <Footer />
+        {/* ボトムナビは fixed なので、ページ末尾（=フッターの下端）が隠れる。
+            余白はナビ側が自分で出す（ナビと同じ条件で出し入れするため） */}
+        <MobileBottomNav />
       </MainLayout>
     </>
   );
