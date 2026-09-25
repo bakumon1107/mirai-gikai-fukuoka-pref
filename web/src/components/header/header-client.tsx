@@ -65,10 +65,9 @@ export function HeaderClient({ difficultyLevel }: HeaderClientProps) {
             >
               <Search className="size-5" />
             </Link>
-            {/* PC は横並びナビがあるためハンバーガーを出さない */}
-            <div className="pc:hidden">
-              <HamburgerMenu />
-            </div>
+            {/* PC でも残す。ルビ・文字サイズの設定はここにしか無いため。
+                PC ではナビリンクが隠れ、設定のみのメニューになる */}
+            <HamburgerMenu />
           </nav>
         </div>
       </div>

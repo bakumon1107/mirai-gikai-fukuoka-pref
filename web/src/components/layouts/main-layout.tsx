@@ -31,7 +31,11 @@ export function MainLayout({ children }: MainLayoutProps) {
       <div
         className={cn(
           "relative max-w-[1440px] mx-auto mt-24",
-          useSidebarLayout && "pc:mr-[500px]"
+          // ChatWindow は pc で right-4・幅450px、xl では
+          // right-[calc((100%-1180px)/2)] に中央寄せされる。
+          // xl では右端からの距離が広がるため、pc の 500px だけでは足りない
+          useSidebarLayout &&
+            "pc:mr-[500px] xl:mr-[calc(calc(100vw-1180px)/2+480px)]"
         )}
       >
         {children}

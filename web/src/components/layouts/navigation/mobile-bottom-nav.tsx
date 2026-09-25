@@ -36,37 +36,46 @@ export function MobileBottomNav() {
   if (isInterviewSection(pathname)) return null;
 
   return (
-    <nav
-      aria-label="グローバルナビゲーション"
-      className="pc:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 border-t border-pref-divider bg-white pb-[env(safe-area-inset-bottom)]"
-    >
-      {MOBILE_NAV_ITEMS.map((item) => {
-        const Icon = ICONS[item.icon];
-        const isActive = isNavItemActive(item, pathname);
-        return (
-          <Link
-            key={item.href}
-            href={item.href}
-            aria-current={isActive ? "page" : undefined}
-            className={cn(
-              "flex h-[72px] flex-col items-center justify-center gap-1 transition-colors",
-              isActive ? "text-pref-pill-text" : "text-mirai-text-secondary"
-            )}
-          >
-            <span
+    <>
+      {/* ページ末尾がナビに隠れないための余白。
+          ナビと同じ条件で出し入れする必要があるためここに置く
+          （レイアウト側に置くと、ナビが出ないインタビューでも隙間が空く） */}
+      <div
+        aria-hidden
+        className="h-[calc(72px+env(safe-area-inset-bottom))] pc:hidden"
+      />
+      <nav
+        aria-label="グローバルナビゲーション"
+        className="pc:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-5 border-t border-pref-divider bg-white pb-[env(safe-area-inset-bottom)]"
+      >
+        {MOBILE_NAV_ITEMS.map((item) => {
+          const Icon = ICONS[item.icon];
+          const isActive = isNavItemActive(item, pathname);
+          return (
+            <Link
+              key={item.href}
+              href={item.href}
+              aria-current={isActive ? "page" : undefined}
               className={cn(
-                "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
-                isActive && "bg-pref-pill-bg"
+                "flex h-[72px] flex-col items-center justify-center gap-1 transition-colors",
+                isActive ? "text-pref-pill-text" : "text-mirai-text-secondary"
               )}
             >
-              <Icon className="size-5" aria-hidden />
-            </span>
-            <span className={cn("text-xs", isActive && "font-medium")}>
-              {item.label}
-            </span>
-          </Link>
-        );
-      })}
-    </nav>
+              <span
+                className={cn(
+                  "flex h-7 w-12 items-center justify-center rounded-full transition-colors",
+                  isActive && "bg-pref-pill-bg"
+                )}
+              >
+                <Icon className="size-5" aria-hidden />
+              </span>
+              <span className={cn("text-xs", isActive && "font-medium")}>
+                {item.label}
+              </span>
+            </Link>
+          );
+        })}
+      </nav>
+    </>
   );
 }
