@@ -1,7 +1,11 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { DifficultyLevelEnum } from "@/features/bill-difficulty/shared/types";
-import type { MiraiStance } from "../../shared/types";
+import type {
+  BillPublishStatus,
+  BillStatusEnum,
+  MiraiStance,
+} from "../../shared/types";
 
 // ============================================================
 // Bills
@@ -276,6 +280,46 @@ export async function findPreviousSessionBills(
   }
 
   return data ?? [];
+}
+
+/**
+ * 会期内の議案の審議状況を取得（設計書 5.9.1 節）。
+ *
+ * トップの件数チップ用。status 列だけを引くので軽い。
+ * 集計は純粋関数 `summarizeBillStatuses()`（shared/utils）で行う。
+ *
+ * **`published` と `coming_soon` の両方を含める。**
+ * 県議会の議案は本文が紙で配布され、スキャンして掲載するまで時間がかかる。
+ * `published` だけで数えると、会期が始まってスキャンが終わるまでのあいだ
+ * 件数が0になり、いちばん見てほしい時期に議案の入口が消えてしまう。
+ * 中身が未掲載でも「いま何件が審議されているか」は伝える価値があるため、
+ * 掲載待ち（`coming_soon`）も件数に入れる。
+ *
+ * **`draft` は含めない。** 議案スクレイプ（#52）で draft が大量に入るため、
+ * 含めると未確認のデータが画面に出てしまう。
+ *
+ * 遷移先リンクを出せるのは `published` のものだけなので、
+ * 呼び出し側が判別できるよう publish_status も返す。
+ */
+export async function findBillStatusesBySession(
+  councilSessionId: string
+): Promise<{ status: BillStatusEnum; publishStatus: BillPublishStatus }[]> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("bills")
+    .select("status, publish_status")
+    .eq("council_session_id", councilSessionId)
+    .in("publish_status", ["published", "coming_soon"]);
+
+  if (error) {
+    console.error("Failed to fetch bill statuses by session:", error);
+    return [];
+  }
+
+  return (data ?? []).map((row) => ({
+    status: row.status,
+    publishStatus: row.publish_status,
+  }));
 }
 
 /**

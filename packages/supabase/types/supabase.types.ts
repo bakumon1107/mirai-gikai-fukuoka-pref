@@ -551,6 +551,7 @@ export type Database = {
           raw_text: string
           source_document_id: number
           source_url: string
+          speech_count: number | null
           speeches: Json
           summary: string | null
           title: string
@@ -567,6 +568,7 @@ export type Database = {
           raw_text: string
           source_document_id: number
           source_url: string
+          speech_count?: number | null
           speeches?: Json
           summary?: string | null
           title: string
@@ -583,6 +585,7 @@ export type Database = {
           raw_text?: string
           source_document_id?: number
           source_url?: string
+          speech_count?: number | null
           speeches?: Json
           summary?: string | null
           title?: string

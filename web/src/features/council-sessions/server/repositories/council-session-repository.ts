@@ -117,6 +117,36 @@ export async function findPreviousCouncilSession(
 }
 
 /**
+ * 指定年に開会した会期をすべて取得（設計書 5.5 節）。
+ *
+ * `findAllPastCouncilSessions()` は「is_active = false かつ published な議案を
+ * 1件以上持つ会期」に絞るため、一般質問はあるが議案未投入の会期が落ちる。
+ * 定例会の帯は年4枠を必ず描くので、絞り込みのない本関数を使う。
+ *
+ * 臨時会も含まれる。定例会だけに絞る処理は
+ * `resolveSessionSlots()`（shared/utils）側で行う。
+ */
+export async function findCouncilSessionsByYear(
+  year: number
+): Promise<CouncilSession[]> {
+  const supabase = createAdminClient();
+
+  const { data, error } = await supabase
+    .from("council_sessions")
+    .select("*")
+    .gte("start_date", `${year}-01-01`)
+    .lte("start_date", `${year}-12-31`)
+    .order("start_date", { ascending: true });
+
+  if (error) {
+    console.error("Failed to fetch council sessions by year:", error);
+    return [];
+  }
+
+  return data ?? [];
+}
+
+/**
  * IDで定例会を取得
  */
 export async function findCouncilSessionById(
