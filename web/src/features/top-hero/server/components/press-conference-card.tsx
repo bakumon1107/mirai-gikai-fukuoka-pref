@@ -51,7 +51,11 @@ export function PressConferenceCard({ conference, recent }: Props) {
               className="border-b border-pref-divider last:border-b-0"
             >
               <Link
-                href={`${detailHref}#item-${topic.id}`}
+                // アンカー（#item-<id>）は announcement-item / qa-item 側が
+                // まだ id を出していないため付けない。付けても飛ばず、
+                // 「押したのに何も起きない」ように見える。
+                // アンカー実装後に `${detailHref}#item-${topic.id}` へ戻す
+                href={detailHref}
                 className="flex gap-2.5 py-3 text-base leading-relaxed text-mirai-text hover:text-pref-accent"
               >
                 <span
