@@ -1,10 +1,12 @@
-name: Code Check kawasaki/develop
+name: Code Check
 
 on:
+  # 福岡県版の統合ブランチ。川崎版からのfork時の設定（kawasaki/develop）が
+  # 残っていたため、このワークフローは一度も起動していなかった
   push:
-    branches: [kawasaki/develop]
+    branches: [fukuoka-pref/develop]
   pull_request:
-    branches: [kawasaki/develop]
+    branches: [fukuoka-pref/develop]
 
 jobs:
   lint-and-typecheck:
@@ -34,8 +36,13 @@ jobs:
       - name: Run TypeScript type checking
         run: pnpm run typecheck
 
-      - name: Run Test with Coverage
-        run: pnpm run test:coverage
+      # test:coverage スクリプトを持つのは web だけなので、これだけだと
+      # admin・packages のテストが CI で一度も走らない。全体を先に流す
+      - name: Run all workspace tests
+        run: pnpm run test
+
+      - name: Run web tests with coverage
+        run: pnpm --filter web run test:coverage
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@671740ac38dd9b0130fbe1cec585b89eea48d3de # v5
