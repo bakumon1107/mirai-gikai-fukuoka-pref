@@ -1,10 +1,12 @@
 name: Integration Tests
 
 on:
+  # このリポジトリに main / develop は存在せず、fukuoka-pref/develop が
+  # 既定ブランチ兼デプロイ元。本家の設定のままだったため起動していなかった
   push:
-    branches: [main, develop]
+    branches: [fukuoka-pref/develop]
   pull_request:
-    branches: [main, develop]
+    branches: [fukuoka-pref/develop]
 
 jobs:
   integration-test:
