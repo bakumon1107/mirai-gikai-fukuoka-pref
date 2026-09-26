@@ -31,9 +31,8 @@ const STEP_TAGS = {
  * 会期中は定例会が主役になり、知事会見はヒーロー直下の1行帯に降りる。
  * セクションの優先順位そのものが閉会中と入れ替わる。
  *
- * **「会期の流れ」は開会・閉会の2行だけ。** 代表質問・委員会・議案採決の
- * 日程は会期日程ページにしか無く、DBに入れていないため出せない
- * （設計書 5.3.3 節）。パーサーを拡張したら中間ステップを足す。
+ * 「会期の流れ」は `schedule_milestones` から組み立てる。節目が未取得の
+ * 会期では開会・閉会の2行に退化する（設計書 7章）。
  */
 export function InSessionHero({ session, today, counts, statusLabel }: Props) {
   const progress = calcSessionProgress(
@@ -41,7 +40,12 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
     session.end_date,
     today
   );
-  const steps = buildSessionSteps(session.start_date, session.end_date, today);
+  const steps = buildSessionSteps(
+    session.start_date,
+    session.end_date,
+    today,
+    session.schedule_milestones
+  );
   const billsHref = session.slug ? `/sessions/${session.slug}/bills` : null;
   const questionsHref = session.slug
     ? `/sessions/${session.slug}/questions`
@@ -112,7 +116,12 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
                       step.status === "current" ? "bg-pref-surface-tint" : ""
                     }`}
                   >
-                    <span className="w-[4.5rem] shrink-0 text-xs font-medium text-mirai-text-secondary">
+                    {/*
+                      範囲（「9月15日〜25日」）は単日より長い。固定幅だと
+                      折り返すので、min-w で短い日付の桁を揃えつつ
+                      必要なぶんは広がるようにする
+                    */}
+                    <span className="min-w-[4.5rem] shrink-0 text-xs font-medium whitespace-nowrap text-mirai-text-secondary">
                       {step.date}
                     </span>
                     <span className="flex-1 text-sm text-mirai-text">

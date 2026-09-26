@@ -22,6 +22,8 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createAdminClient } from "@mirai-gikai/supabase";
+import { mergeSessionMilestones } from "./merge-session-milestones";
+import type { SessionMilestones } from "./parse-session-schedule";
 
 /** docs/data/bills/*.json の必要部分 */
 type ScrapedSession = {
@@ -31,6 +33,8 @@ type ScrapedSession = {
   sessionKey: string;
   startDate: string | null;
   endDate: string | null;
+  /** 会期の節目（設計書 5.3.3 節）。日程ページ未掲載なら null */
+  scheduleMilestones?: SessionMilestones | null;
   councilUrl?: string | null;
 };
 
@@ -44,6 +48,8 @@ type Change = {
   id: string;
   startDate: { from: string | null; to: string | null };
   endDate: { from: string | null; to: string | null };
+  milestonesChanged: boolean;
+  milestones: SessionMilestones | null;
 };
 
 type Creation = {
@@ -51,6 +57,7 @@ type Creation = {
   slug: string;
   startDate: string;
   endDate: string | null;
+  milestones: SessionMilestones | null;
   councilUrl: string | null;
 };
 
@@ -112,7 +119,7 @@ async function main() {
   for (const session of scraped) {
     const { data: existing, error } = await supabase
       .from("council_sessions")
-      .select("id, name, start_date, end_date")
+      .select("id, name, start_date, end_date, schedule_milestones")
       .eq("name", session.dbSessionName)
       .maybeSingle();
 
@@ -145,6 +152,7 @@ async function main() {
         slug,
         startDate: session.startDate,
         endDate: session.endDate ?? null,
+        milestones: session.scheduleMilestones ?? null,
         councilUrl: session.councilUrl ?? null,
       });
       continue;
@@ -155,10 +163,21 @@ async function main() {
     // そのまま書くと一度入った正しい閉会日を消してしまう
     const nextEndDate = session.endDate ?? existing.end_date ?? null;
 
+    // 節目も閉会日と同じ扱い。**項目ごとに**既存値を残す。
+    // 全項目 null の結果で上書きすると、一度入った節目を全部失う
+    const existingMilestones =
+      (existing.schedule_milestones as SessionMilestones | null) ?? null;
+    const nextMilestones = mergeSessionMilestones(
+      existingMilestones,
+      session.scheduleMilestones ?? null
+    );
+    const milestonesChanged =
+      JSON.stringify(existingMilestones) !== JSON.stringify(nextMilestones);
+
     const startSame = existing.start_date === session.startDate;
     const endSame = (existing.end_date ?? null) === nextEndDate;
 
-    if (startSame && endSame) {
+    if (startSame && endSame && !milestonesChanged) {
       unchanged++;
       continue;
     }
@@ -168,6 +187,8 @@ async function main() {
       id: existing.id,
       startDate: { from: existing.start_date, to: session.startDate },
       endDate: { from: existing.end_date ?? null, to: nextEndDate },
+      milestonesChanged,
+      milestones: nextMilestones,
     });
   }
 
@@ -209,6 +230,7 @@ async function main() {
         slug: creation.slug,
         start_date: creation.startDate,
         end_date: creation.endDate,
+        schedule_milestones: creation.milestones,
         council_url: creation.councilUrl,
         is_active: false,
       });
@@ -225,6 +247,10 @@ async function main() {
         .update({
           start_date: change.startDate.to as string,
           end_date: change.endDate.to,
+          // 取れなかったときは既存値を残すため、変化があるときだけ書く
+          ...(change.milestonesChanged
+            ? { schedule_milestones: change.milestones }
+            : {}),
         })
         .eq("id", change.id);
 

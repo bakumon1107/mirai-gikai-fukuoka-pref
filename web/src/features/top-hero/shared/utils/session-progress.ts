@@ -1,4 +1,22 @@
+import type {
+  DateRange,
+  SessionMilestones,
+} from "@/features/council-sessions/shared/types";
 import { extractSessionLabel } from "./format-hero-date";
+
+/** 2つの範囲を繋ぐ。片方が無ければもう片方をそのまま返す */
+function mergeRanges(
+  a: DateRange | null,
+  b: DateRange | null
+): DateRange | null {
+  if (!a) return b;
+  if (!b) return a;
+
+  return {
+    from: a.from <= b.from ? a.from : b.from,
+    to: a.to >= b.to ? a.to : b.to,
+  };
+}
 
 /**
  * 会期中ヒーロー（設計書 5.3.2 節 段階2 / 5.3.3 節）で使う算出。
@@ -84,20 +102,46 @@ export function formatStepDate(isoDate: string): string {
   return `${Number(match[1])}月${Number(match[2])}日`;
 }
 
+/** 期間を「9月15日〜17日」の形にする。同じ月なら月を繰り返さない */
+function formatStepRange(range: DateRange): string {
+  const from = formatStepDate(range.from);
+  if (range.from === range.to) return from;
+
+  const sameMonth = range.from.slice(0, 7) === range.to.slice(0, 7);
+  const to = sameMonth
+    ? `${Number(range.to.slice(8, 10))}日`
+    : formatStepDate(range.to);
+  return `${from}〜${to}`;
+}
+
+/** 期間に対する状態。終わっていれば done、含んでいれば current */
+function rangeStatus(range: DateRange, now: number): SessionStep["status"] {
+  const from = toUtcMs(range.from);
+  const to = toUtcMs(range.to);
+  if (from === null || to === null) return "upcoming";
+
+  if (now > to) return "done";
+  if (now >= from) return "current";
+  return "upcoming";
+}
+
 /**
  * 「会期の流れ」を組み立てる（設計書 5.3.3 節）。
  *
- * **開会と閉会の2行だけ。** 中間の3ステップ（代表質問・委員会・議案採決）は
- * 日程表がDBに無いため出せない。設計書の指示どおり行ごと非表示にする。
+ * **採決日と閉会日は別の行にする。** 令和8年9月定例会は採決 10月1日の
+ * あとに決算特別委員会が続き、閉会は 10月16日。参照デザインは
+ * 「10月16日 採決・閉会」と1行にまとめているが、それでは議案が
+ * いつ決まったかを誤って伝える。同じ日になる会期（令和7年12月定例会）
+ * もあるため、重なったときだけ1行に畳む。
  *
- * **採決日は閉会日と別の日**（令和8年9月定例会なら採決 10月1日・閉会 10月16日）。
- * 採決日が取れない以上、閉会の行に「採決」を含めてはいけない。
- * パーサーを拡張して採決日を取れるようにしたら、独立した行として足すこと。
+ * 節目が取れていない行は出さない（設計書 7章）。`milestones` が
+ * null なら開会・閉会の2行に退化する。
  */
 export function buildSessionSteps(
   startDate: string,
   endDate: string | null,
-  today: string
+  today: string,
+  milestones?: SessionMilestones | null
 ): SessionStep[] {
   const start = toUtcMs(startDate);
   const now = toUtcMs(today);
@@ -111,12 +155,46 @@ export function buildSessionSteps(
     },
   ];
 
+  // 代表質問と一般質問は続けて行われるので1行にまとめる
+  const questions = mergeRanges(
+    milestones?.representativeQuestions ?? null,
+    milestones?.generalQuestions ?? null
+  );
+  if (questions) {
+    steps.push({
+      date: formatStepRange(questions),
+      label: "代表質問・一般質問",
+      status: rangeStatus(questions, now),
+    });
+  }
+
+  if (milestones?.standingCommittees) {
+    steps.push({
+      date: formatStepRange(milestones.standingCommittees),
+      label: "委員会でくわしく審査",
+      status: rangeStatus(milestones.standingCommittees, now),
+    });
+  }
+
+  const voteDate = milestones?.billVote ?? null;
+  const voteIsClosingDay = voteDate !== null && voteDate === endDate;
+
+  if (voteDate && !voteIsClosingDay) {
+    const vote = toUtcMs(voteDate);
+    steps.push({
+      date: formatStepDate(voteDate),
+      label: "議案の採決",
+      status: vote !== null && now >= vote ? "done" : "upcoming",
+    });
+  }
+
   if (endDate) {
     const end = toUtcMs(endDate);
     if (end !== null) {
       steps.push({
         date: formatStepDate(endDate),
-        label: "閉会",
+        // 採決と閉会が同じ日の会期はまとめて示す
+        label: voteIsClosingDay ? "議案の採決・閉会" : "閉会",
         status: now >= end ? "done" : "upcoming",
       });
     }

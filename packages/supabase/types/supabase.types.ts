@@ -642,6 +642,7 @@ export type Database = {
           id: string
           is_active: boolean
           name: string
+          schedule_milestones: Json | null
           slug: string | null
           start_date: string
           updated_at: string
@@ -653,6 +654,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           name: string
+          schedule_milestones?: Json | null
           slug?: string | null
           start_date: string
           updated_at?: string
@@ -664,6 +666,7 @@ export type Database = {
           id?: string
           is_active?: boolean
           name?: string
+          schedule_milestones?: Json | null
           slug?: string | null
           start_date?: string
           updated_at?: string

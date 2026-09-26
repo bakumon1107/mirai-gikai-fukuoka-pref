@@ -129,6 +129,158 @@ describe("buildSessionSteps", () => {
   });
 });
 
+// 令和8年9月定例会の実日程（パーサーの抽出結果と同じ）
+const R8_9_MILESTONES = {
+  representativeQuestions: { from: "2026-09-15", to: "2026-09-17" },
+  generalQuestions: { from: "2026-09-18", to: "2026-09-25" },
+  standingCommittees: { from: "2026-09-28", to: "2026-09-30" },
+  billVote: "2026-10-01",
+};
+
+describe("buildSessionSteps（節目あり）", () => {
+  it("採決日と閉会日が別の日なら、行を分ける", () => {
+    const steps = buildSessionSteps(
+      R8_9_START,
+      R8_9_END,
+      "2026-09-24",
+      R8_9_MILESTONES
+    );
+
+    const labels = steps.map((s) => s.label);
+    expect(labels).toEqual([
+      "開会・議案の説明",
+      "代表質問・一般質問",
+      "委員会でくわしく審査",
+      "議案の採決",
+      "閉会",
+    ]);
+
+    // 採決は 10/1、閉会は 10/16。混ぜると議案がいつ決まったかを誤って伝える
+    expect(steps[3].date).toBe("10月1日");
+    expect(steps[4].date).toBe("10月16日");
+  });
+
+  it("採決日と閉会日が同じ日なら1行に畳む", () => {
+    // 令和7年12月定例会は 12/19 に採決と閉会を同日で行う
+    const steps = buildSessionSteps("2025-12-01", "2025-12-19", "2025-12-10", {
+      representativeQuestions: { from: "2025-12-05", to: "2025-12-08" },
+      generalQuestions: { from: "2025-12-10", to: "2025-12-12" },
+      standingCommittees: { from: "2025-12-15", to: "2025-12-17" },
+      billVote: "2025-12-19",
+    });
+
+    const labels = steps.map((s) => s.label);
+    expect(labels).toContain("議案の採決・閉会");
+    expect(labels).not.toContain("議案の採決");
+    expect(labels.filter((l) => l.includes("閉会"))).toHaveLength(1);
+  });
+
+  it("質問期間は代表質問と一般質問をまとめて1行にする", () => {
+    const steps = buildSessionSteps(
+      R8_9_START,
+      R8_9_END,
+      "2026-09-24",
+      R8_9_MILESTONES
+    );
+    const q = steps.find((s) => s.label === "代表質問・一般質問");
+
+    // 9/15（代表質問の開始）〜 9/25（一般質問の終了）
+    expect(q?.date).toBe("9月15日〜25日");
+  });
+
+  it("月をまたぐ期間は月を省略しない", () => {
+    const steps = buildSessionSteps("2026-09-09", "2026-10-16", "2026-09-24", {
+      ...R8_9_MILESTONES,
+      standingCommittees: { from: "2026-09-28", to: "2026-10-02" },
+    });
+    const c = steps.find((s) => s.label === "委員会でくわしく審査");
+
+    expect(c?.date).toBe("9月28日〜10月2日");
+  });
+
+  it("進行中の段階が current、過ぎた段階が done になる", () => {
+    // 9/24 は一般質問の期間内（9/18〜9/25）
+    const steps = buildSessionSteps(
+      R8_9_START,
+      R8_9_END,
+      "2026-09-24",
+      R8_9_MILESTONES
+    );
+
+    expect(steps.find((s) => s.label === "開会・議案の説明")?.status).toBe(
+      "done"
+    );
+    expect(steps.find((s) => s.label === "代表質問・一般質問")?.status).toBe(
+      "current"
+    );
+    expect(steps.find((s) => s.label === "委員会でくわしく審査")?.status).toBe(
+      "upcoming"
+    );
+    expect(steps.find((s) => s.label === "議案の採決")?.status).toBe(
+      "upcoming"
+    );
+  });
+
+  it("current は常に1つ以下", () => {
+    for (const day of [
+      "2026-09-09",
+      "2026-09-16",
+      "2026-09-24",
+      "2026-09-29",
+      "2026-10-01",
+      "2026-10-16",
+    ]) {
+      const steps = buildSessionSteps(
+        R8_9_START,
+        R8_9_END,
+        day,
+        R8_9_MILESTONES
+      );
+      const current = steps.filter((s) => s.status === "current");
+      expect(
+        current.length,
+        `${day} で current が ${current.length} 件`
+      ).toBeLessThanOrEqual(1);
+    }
+  });
+
+  it("取れていない節目の行は出さない", () => {
+    const steps = buildSessionSteps(R8_9_START, R8_9_END, "2026-09-24", {
+      representativeQuestions: null,
+      generalQuestions: null,
+      standingCommittees: null,
+      billVote: "2026-10-01",
+    });
+
+    expect(steps.map((s) => s.label)).toEqual([
+      "開会・議案の説明",
+      "議案の採決",
+      "閉会",
+    ]);
+  });
+
+  it("節目が null なら開会・閉会の2行に退化する", () => {
+    const steps = buildSessionSteps(R8_9_START, R8_9_END, "2026-09-24", null);
+
+    expect(steps.map((s) => s.label)).toEqual(["開会・議案の説明", "閉会"]);
+  });
+
+  it("臨時会のように1日で終わる会期も壊れない", () => {
+    const steps = buildSessionSteps("2025-05-16", "2025-05-16", "2025-05-16", {
+      representativeQuestions: null,
+      generalQuestions: null,
+      standingCommittees: { from: "2025-05-16", to: "2025-05-16" },
+      billVote: "2025-05-16",
+    });
+
+    expect(steps.map((s) => s.label)).toEqual([
+      "開会・議案の説明",
+      "委員会でくわしく審査",
+      "議案の採決・閉会",
+    ]);
+  });
+});
+
 describe("buildInSessionHeadline", () => {
   it("会期名から「◯月定例会」を取って見出しにする", () => {
     expect(buildInSessionHeadline("令和8年 9月定例会")).toBe(

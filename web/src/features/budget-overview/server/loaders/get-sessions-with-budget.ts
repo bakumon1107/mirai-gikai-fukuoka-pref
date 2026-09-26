@@ -14,7 +14,8 @@ const _getCachedSessionsWithBudget = unstable_cache(
   async (): Promise<CouncilSession[]> => {
     return findAllSessionsWithBudget();
   },
-  ["sessions-with-budget"],
+  // schedule_milestones を足してシェイプが変わったため -v2（CLAUDE.md 規約）
+  ["sessions-with-budget-v2"],
   {
     revalidate: 3600,
     tags: [CACHE_TAGS.COUNCIL_SESSIONS],

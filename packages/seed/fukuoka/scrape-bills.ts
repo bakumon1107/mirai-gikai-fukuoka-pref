@@ -32,7 +32,10 @@ import {
   extractDeclaredBillCount,
   parseBillList,
 } from "./parse-bill-list";
-import { parseSessionSchedule } from "./parse-session-schedule";
+import {
+  type SessionMilestones,
+  parseSessionSchedule,
+} from "./parse-session-schedule";
 import {
   type ParseVoteResultsResult,
   parseVoteResults,
@@ -138,6 +141,8 @@ type SessionOutput = {
   sessionKey: string;
   startDate: string | null;
   endDate: string | null;
+  /** 会期の節目（設計書 5.3.3 節）。日程ページが未掲載なら null */
+  scheduleMilestones: SessionMilestones | null;
   councilUrl: string;
   sourceUrl: string;
   voteResultUrl: string | null;
@@ -230,6 +235,7 @@ async function scrapeSession(
   const scheduleRes = await fetchHtml(entry.scheduleUrl);
   let startDate: string | null = null;
   let endDate: string | null = null;
+  let scheduleMilestones: SessionMilestones | null = null;
   if (scheduleRes.kind === "notFound") {
     warnings.push(`会期日程ページが未掲載です: ${entry.scheduleUrl}`);
     console.log("  会期日程: 未掲載（404）");
@@ -237,8 +243,14 @@ async function scrapeSession(
     const schedule = parseSessionSchedule(scheduleRes.html);
     startDate = schedule.startDate;
     endDate = schedule.endDate;
+    scheduleMilestones = schedule.milestones;
     warnings.push(...schedule.warnings);
     console.log(`  会期日程: ${startDate ?? "?"} 〜 ${endDate ?? "（会期中）"}`);
+    console.log(
+      `  節目: 採決 ${scheduleMilestones.billVote ?? "?"} / 代表質問 ${
+        scheduleMilestones.representativeQuestions?.from ?? "-"
+      } / 一般質問 ${scheduleMilestones.generalQuestions?.from ?? "-"}`
+    );
   }
 
   // 知事議案説明要旨の件数（検算用）
@@ -295,6 +307,7 @@ async function scrapeSession(
     sessionKey: entry.sessionKey,
     startDate,
     endDate,
+    scheduleMilestones,
     councilUrl: entry.menuUrl,
     sourceUrl: entry.billListUrl,
     voteResultUrl,
