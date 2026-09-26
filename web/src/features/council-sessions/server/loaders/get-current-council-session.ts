@@ -23,7 +23,8 @@ const _getCachedCurrentCouncilSession = unstable_cache(
   async (targetDate: string): Promise<CouncilSession | null> => {
     return findCurrentCouncilSession(targetDate);
   },
-  ["current-council-session"],
+  // schedule_milestones を足してシェイプが変わったため -v2（CLAUDE.md 規約）
+  ["current-council-session-v2"],
   {
     revalidate: 3600, // 1時間（3600秒）
     tags: [CACHE_TAGS.COUNCIL_SESSIONS],
