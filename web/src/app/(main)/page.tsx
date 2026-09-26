@@ -17,20 +17,13 @@ import { TeamMirai } from "@/components/top/team-mirai";
 import { siteConfig } from "@/config/site.config";
 import { getDifficultyLevel } from "@/features/bill-difficulty/server/loaders/get-difficulty-level";
 import { BillDisclaimer } from "@/features/bills/client/components/bill-detail/bill-disclaimer";
-import { BillsByTagSection } from "@/features/bills/server/components/bills-by-tag-section";
-import { FeaturedBillSection } from "@/features/bills/server/components/featured-bill-section";
-import { loadHomeData } from "@/features/bills/server/loaders/load-home-data";
-import type { BillWithContent } from "@/features/bills/shared/types";
 import { getSessionsWithBudget } from "@/features/budget-overview/server/loaders/get-sessions-with-budget";
-import { HomeChatClient } from "@/features/chat/client/components/home-chat-client";
+import { HomeChatSection } from "@/features/chat/server/components/home-chat-section";
 import { getAllPastSessions } from "@/features/council-sessions/server/loaders/get-all-past-sessions";
 import { PressConferenceArchiveSection } from "@/features/press-conferences/client/components/press-conference-archive-section";
 import { getPressConferences } from "@/features/press-conferences/server/loaders/get-press-conferences";
 
 export default async function Home() {
-  const { billsByTag, featuredBills } = await loadHomeData();
-
-  // ゆくゆくタグ機能がマージされたらBFFに統合する
   const [
     heroData,
     sectionsData,
@@ -47,20 +40,9 @@ export default async function Home() {
     getPressConferences(),
   ]);
 
-  const toBillChatContext = (bill: BillWithContent) => {
-    return {
-      name: `${bill.bill_content?.title}（${bill.name}）`,
-      summary: bill.bill_content?.summary,
-      tags: bill.tags?.map((tag) => tag.label) || [],
-      isFeatured: featuredBills.some((b) => b.id === bill.id),
-    };
-  };
-
   return (
     <>
-      {/* ヒーロー（設計書 5.3節）。
-          旧 Hero（背景画像 + Scroll）と CurrentCouncilSession（「本日は 開会中/閉会中」）、
-          および知事会見バナーを置き換えている */}
+      {/* ヒーロー（設計書 5.3節） */}
       <TopHero
         currentSession={heroData.currentSession}
         nextSession={heroData.nextSession}
@@ -106,19 +88,6 @@ export default async function Home() {
         </BannerAccordion>
       </Container>
 
-      {/* 議案一覧セクション */}
-      <Container className="">
-        <div className="py-10">
-          <main className="flex flex-col gap-16">
-            {/* 注目の議案セクション */}
-            <FeaturedBillSection bills={featuredBills} />
-
-            {/* タグ別議案一覧セクション */}
-            <BillsByTagSection billsByTag={billsByTag} />
-          </main>
-        </div>
-      </Container>
-
       {/* 過去の定例会セクション（Archive） */}
       <div className="bg-mirai-surface-muted py-10">
         <Container>
@@ -158,15 +127,10 @@ export default async function Home() {
         <BillDisclaimer />
       </Container>
 
-      {/* チャット機能 */}
+      {/* チャット機能。議案の取得は HomeChatSection の中に閉じてあるので、
+          無効な間は取得も走らない */}
       {siteConfig.features.aiChat && (
-        <HomeChatClient
-          currentDifficulty={currentDifficulty}
-          bills={billsByTag
-            .flatMap((x) => x.bills)
-            .concat(featuredBills)
-            .map(toBillChatContext)}
-        />
+        <HomeChatSection currentDifficulty={currentDifficulty} />
       )}
     </>
   );

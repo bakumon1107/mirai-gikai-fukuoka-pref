@@ -242,47 +242,6 @@ export async function findPublishedBillsByDietSession(
 }
 
 /**
- * 前回の定例会の公開済み議案を取得（件数制限あり）
- */
-export async function findPreviousSessionBills(
-  councilSessionId: string,
-  difficultyLevel: DifficultyLevelEnum,
-  limit: number
-) {
-  const supabase = createAdminClient();
-  const { data, error } = await supabase
-    .from("bills")
-    .select(
-      `
-      *,
-      bill_contents!inner (
-        id,
-        bill_id,
-        title,
-        summary,
-        content,
-        difficulty_level,
-        created_at,
-        updated_at
-      )
-    `
-    )
-    .eq("council_session_id", councilSessionId)
-    .eq("publish_status", "published")
-    .eq("bill_contents.difficulty_level", difficultyLevel)
-    .order("status_order", { ascending: true })
-    .order("published_at", { ascending: false })
-    .limit(limit);
-
-  if (error) {
-    console.error("Failed to fetch previous session bills:", error);
-    return [];
-  }
-
-  return data ?? [];
-}
-
-/**
  * 会期内の議案の審議状況を取得（設計書 5.9.1 節）。
  *
  * トップの件数チップ用。status 列だけを引くので軽い。
@@ -370,32 +329,6 @@ export async function findLatestSessionWithBills(
 
   if (!data) return null;
   return { id: data.id, slug: data.slug, name: data.name };
-}
-
-/**
- * 前回の定例会の公開済み議案数を取得
- */
-export async function countPublishedBillsByDietSession(
-  councilSessionId: string,
-  difficultyLevel: DifficultyLevelEnum
-): Promise<number> {
-  const supabase = createAdminClient();
-  const { count, error } = await supabase
-    .from("bills")
-    .select("*, bill_contents!inner(difficulty_level)", {
-      count: "exact",
-      head: true,
-    })
-    .eq("council_session_id", councilSessionId)
-    .eq("publish_status", "published")
-    .eq("bill_contents.difficulty_level", difficultyLevel);
-
-  if (error) {
-    console.error("Failed to count previous session bills:", error);
-    return 0;
-  }
-
-  return count ?? 0;
 }
 
 // ============================================================
@@ -521,47 +454,6 @@ export async function findFeaturedBillsWithContents(
 
   if (error) {
     console.error("Failed to fetch featured bills:", error);
-    return [];
-  }
-
-  return data ?? [];
-}
-
-// ============================================================
-// Coming Soon
-// ============================================================
-
-/**
- * Coming Soon議案を取得
- */
-export async function findComingSoonBills(councilSessionId: string | null) {
-  const supabase = createAdminClient();
-  let query = supabase
-    .from("bills")
-    .select(
-      `
-      id,
-      name,
-      bill_contents (
-        title,
-        difficulty_level
-      ),
-      council_sessions (
-        council_url
-      )
-    `
-    )
-    .eq("publish_status", "coming_soon")
-    .order("created_at", { ascending: false });
-
-  if (councilSessionId) {
-    query = query.eq("council_session_id", councilSessionId);
-  }
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Failed to fetch coming soon bills:", error);
     return [];
   }
 
