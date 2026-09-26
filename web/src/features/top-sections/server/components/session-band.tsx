@@ -31,7 +31,12 @@ function formatMonthDay(isoDate: string): string {
 export function SessionBand({ slots }: Props) {
   return (
     <section className="mx-4 mt-10 rounded-[28px] bg-white p-5 pc:mx-16 pc:mt-12 pc:rounded-[32px] pc:p-9">
-      <div className="flex flex-col gap-1 pc:flex-row pc:items-baseline pc:justify-between pc:gap-6">
+      {/*
+        横並びは pcl:(1400px) から。pc:(1000px) で並べると
+        見出しも説明も末尾1文字だけが次行に落ちる
+        （「議会の本番で / す」「開かれま / す。」）
+      */}
+      <div className="flex flex-col gap-1 pcl:flex-row pcl:items-baseline pcl:justify-between pcl:gap-6">
         <h2 className="font-rounded text-xl font-bold text-mirai-text pc:text-2xl">
           定例会は年4回。議会の本番です
         </h2>

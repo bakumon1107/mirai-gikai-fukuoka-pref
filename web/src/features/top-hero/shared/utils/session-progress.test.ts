@@ -1,6 +1,5 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildInSessionHeadline,
   buildInSessionLead,
   buildSessionSteps,
   calcSessionProgress,
@@ -127,14 +126,6 @@ describe("buildSessionSteps", () => {
     const steps = buildSessionSteps(R8_9_START, null, "2026-09-24");
     expect(steps).toHaveLength(1);
     expect(steps[0].label).toBe("開会・議案の説明");
-  });
-});
-
-describe("buildInSessionHeadline", () => {
-  it("主語を県議会にする（会期名を見出しに出さない）", () => {
-    // 「9月定例会、いま何を決めてる？」だと、初見の人が前置きなしに
-    // 定例会の中の話から始まる。どの会期かは説明文とピルで示す
-    expect(buildInSessionHeadline()).toBe("福岡県議会、いま何を決めてる？");
   });
 });
 
