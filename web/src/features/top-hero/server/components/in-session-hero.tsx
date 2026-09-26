@@ -2,7 +2,7 @@ import "server-only";
 import Link from "next/link";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import {
-  buildInSessionHeadline,
+  buildInSessionLead,
   buildSessionSteps,
   calcSessionProgress,
   formatSessionRange,
@@ -46,6 +46,7 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
     today,
     session.schedule_milestones
   );
+  const lead = buildInSessionLead(session.name) ?? "";
   const billsHref = session.slug ? `/sessions/${session.slug}/bills` : null;
   const questionsHref = session.slug
     ? `/sessions/${session.slug}/questions`
@@ -64,12 +65,30 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
             </span>
           </div>
 
+          {/*
+            読点で改行する。閉会中の「福岡県、/ いま何が話されてる？」と
+            同じ割り方。自然な折り返しだと「いま何を決め / てる？」のように
+            語の途中で割れる
+          */}
           <h1 className="font-rounded text-[26px] font-bold leading-[1.45] text-mirai-text pc:text-[42px] pc:leading-[1.4]">
-            {buildInSessionHeadline(session.name)}
+            福岡県議会、
+            <br />
+            いま何を決めてる？
           </h1>
 
+          {/*
+            1文目はサイトの説明。会期中はヒーローが定例会に、知事会見が
+            1行帯に降りるため、ここが無いと初見の人に何のサイトか伝わらない
+            （デザイン v4）
+          */}
+          {/*
+            PCでは意味の切れ目で改行する。自然な折り返しに任せると
+            「決め / てる？」のように語の途中で割れる
+          */}
           <p className="text-sm leading-relaxed text-mirai-text-secondary pc:text-base">
-            年4回の議会の本番。
+            県議会で話されていることを、
+            <br className="hidden pc:inline" />
+            やさしく読めるサイトです。{lead}
             <br className="hidden pc:inline" />
             補正予算や条例は、この期間に採決されます。
           </p>

@@ -15,9 +15,10 @@ export async function findAllSessionsWithBudget(): Promise<CouncilSession[]> {
 
   const { data, error } = await supabase
     .from("budget_overviews")
+    // is_active では絞らない。運用で手動更新するフラグで実際の会期と
+    // ずれるため、予算が公開済みの会期が消えることがある
     .select("council_session_id, council_sessions!inner(*)")
-    .eq("publish_status", "published")
-    .eq("council_sessions.is_active", false);
+    .eq("publish_status", "published");
 
   if (error) {
     console.error("Failed to fetch sessions with budget:", error);

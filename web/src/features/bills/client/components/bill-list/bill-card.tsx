@@ -11,7 +11,8 @@ interface BillCardProps {
 }
 
 export function BillCard({ bill }: BillCardProps) {
-  const displayTitle = bill.bill_content?.title;
+  // わかりやすいタイトルが無ければ正式名称を出す（空欄にしない）
+  const displayTitle = bill.bill_content?.title ?? bill.name;
   const summary = bill.bill_content?.summary;
 
   return (

@@ -101,10 +101,13 @@ export async function findAllPastCouncilSessions(): Promise<CouncilSession[]> {
     return [];
   }
 
+  // **is_active では絞らない。** このフラグは運用で手動更新するもので、
+  // 実際の会期とずれる（令和8年9月定例会が開会中なのに6月のまま、など）。
+  // ずれていると、議案が公開済みの会期が一覧から丸ごと消える。
+  // 会期が終わったかどうかは start_date の並びで十分に伝わる
   const { data, error } = await supabase
     .from("council_sessions")
     .select("*")
-    .eq("is_active", false)
     .in("id", sessionIds)
     .order("start_date", { ascending: false });
 
@@ -143,8 +146,8 @@ export async function findPreviousCouncilSession(
 /**
  * 指定年に開会した会期をすべて取得（設計書 5.5 節）。
  *
- * `findAllPastCouncilSessions()` は「is_active = false かつ published な議案を
- * 1件以上持つ会期」に絞るため、一般質問はあるが議案未投入の会期が落ちる。
+ * `findAllPastCouncilSessions()` は「published な議案を1件以上持つ会期」に
+ * 絞るため、一般質問はあるが議案未投入の会期が落ちる。
  * 定例会の帯は年4枠を必ず描くので、絞り込みのない本関数を使う。
  *
  * 臨時会も含まれる。定例会だけに絞る処理は

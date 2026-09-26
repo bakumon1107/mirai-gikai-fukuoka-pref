@@ -45,7 +45,8 @@ const _getCachedSessionBills = unstable_cache(
       };
     });
   },
-  ["session-bills"],
+  // coming_soon を含めるようになり中身が変わったため -v2（CLAUDE.md 規約）
+  ["session-bills-v2"],
   {
     revalidate: 600,
     tags: [CACHE_TAGS.BILLS],

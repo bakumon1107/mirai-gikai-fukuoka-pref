@@ -19,9 +19,6 @@ import { getJapanTime } from "@/lib/utils/date";
 /** 「これまでの会見」に出す件数 + 最新1件ぶん */
 const RECENT_FETCH_COUNT = 4;
 
-/** 会見カードに出す話題の上限（設計書 5.4 節） */
-const MAX_TOPICS = 4;
-
 export type TopHeroData = {
   currentSession: CouncilSession | null;
   nextSession: CouncilSession | null;
@@ -74,7 +71,7 @@ export async function loadTopHeroData(): Promise<TopHeroData> {
       getCurrentCouncilSession(getJapanTime()),
       findCouncilSessionsByYear(year),
       findCouncilSessionsByYear(year + 1),
-      findLatestPressConferenceSummary(MAX_TOPICS),
+      findLatestPressConferenceSummary(),
       findRecentPressConferenceRefs(RECENT_FETCH_COUNT),
     ]);
 

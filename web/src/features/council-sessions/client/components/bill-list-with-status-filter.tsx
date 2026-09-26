@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import type { BillWithContent } from "@/features/bills/shared/types";
 import { CompactBillCard } from "@/features/bills/client/components/bill-list/compact-bill-card";
+import { hasBillDetailPage } from "@/features/bills/shared/utils/has-bill-detail-page";
 
 type FilterType = "all" | "approved" | "rejected" | "other";
 
@@ -77,11 +78,17 @@ export function BillListWithStatusFilter({ bills }: Props) {
         </p>
       ) : (
         <div className="flex flex-col gap-3">
-          {filteredBills.map((bill) => (
-            <Link key={bill.id} href={`/bills/${bill.id}`}>
-              <CompactBillCard bill={bill} />
-            </Link>
-          ))}
+          {filteredBills.map((bill) =>
+            // 本文が未掲載（coming_soon）の議案は詳細ページが 404 になる。
+            // 一覧には議案名と審議状況を出すが、リンクは張らない
+            hasBillDetailPage(bill.publish_status) ? (
+              <Link key={bill.id} href={`/bills/${bill.id}`}>
+                <CompactBillCard bill={bill} />
+              </Link>
+            ) : (
+              <CompactBillCard key={bill.id} bill={bill} />
+            )
+          )}
         </div>
       )}
     </div>

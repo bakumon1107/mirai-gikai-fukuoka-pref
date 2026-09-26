@@ -4,8 +4,10 @@ import type { CouncilSession } from "../../shared/types";
 import { findAllPastCouncilSessions } from "../repositories/council-session-repository";
 
 /**
- * 過去の定例会を全件取得（新しい順）
- * is_active = false のものを start_date DESC で返す
+ * 議案が公開済みの会期を全件取得（新しい順）。
+ *
+ * is_active では絞らない。手動更新のフラグで実際の会期とずれるため、
+ * 絞ると議案が公開済みの会期が一覧から消える
  */
 export async function getAllPastSessions(): Promise<CouncilSession[]> {
   return _getCachedAllPastSessions();

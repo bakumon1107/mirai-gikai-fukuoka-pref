@@ -202,7 +202,15 @@ export async function findTagsByBillIds(
 // ============================================================
 
 /**
- * 定例会IDに紐づく公開済み議案を取得
+ * 定例会IDに紐づく議案を取得（掲載待ちを含む）。
+ *
+ * **`coming_soon` も返す。** 議案本文は紙で配布されPDFから起こすため、
+ * 会期の序盤は「議案名は分かるが本文が無い」状態が続く。トップの件数は
+ * `coming_soon` を含めて数える（設計書 5.9.1 節）のに、一覧が
+ * `published` だけだと「56件を審議中」→ 一覧は0件、という食い違いになる。
+ *
+ * そのため `bill_contents` は `!inner` にしない。本文が無い議案も行として
+ * 返し、呼び出し側が「準備中」として並べる。
  */
 export async function findPublishedBillsByDietSession(
   councilSessionId: string,
@@ -214,7 +222,7 @@ export async function findPublishedBillsByDietSession(
     .select(
       `
       *,
-      bill_contents!inner (
+      bill_contents (
         id,
         bill_id,
         title,
@@ -227,7 +235,7 @@ export async function findPublishedBillsByDietSession(
     `
     )
     .eq("council_session_id", councilSessionId)
-    .eq("publish_status", "published")
+    .in("publish_status", ["published", "coming_soon"])
     .eq("bill_contents.difficulty_level", difficultyLevel)
     .order("status_order", { ascending: true })
     .order("published_at", { ascending: false });

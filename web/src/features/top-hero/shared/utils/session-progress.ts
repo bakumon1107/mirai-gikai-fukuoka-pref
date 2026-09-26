@@ -204,16 +204,16 @@ export function buildSessionSteps(
 }
 
 /**
- * 会期中ヒーローの見出し。
+ * 会期中ヒーローの説明文の2文目。どの会期かを示す。
  *
- * "令和8年 9月定例会" → "9月定例会、いま何を決めてる？"
- * 会期名から種別が取れなければ汎用の文言にする。月から組み立てると
+ * "令和8年 9月定例会" → "いまは9月定例会。"
+ * 会期名から種別が取れなければ文ごと出さない。月から組み立てると
  * 臨時会のときに「8月定例会」という誤った文言になるため
  * {@link extractSessionLabel} を通す（設計書 5.3.2 節）。
  */
-export function buildInSessionHeadline(sessionName: string): string {
+export function buildInSessionLead(sessionName: string): string | null {
   const label = extractSessionLabel(sessionName);
-  return label ? `${label}、いま何を決めてる？` : "いま何を決めてる？";
+  return label ? `いまは${label}。` : null;
 }
 
 /**

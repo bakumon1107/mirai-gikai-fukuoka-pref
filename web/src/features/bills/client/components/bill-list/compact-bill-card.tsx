@@ -27,11 +27,17 @@ export function CompactBillCard({ bill, className }: CompactBillCardProps) {
           <h3 className="font-bold text-[15px] leading-[1.6] line-clamp-2">
             {displayTitle}
           </h3>
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
             <BillStatusBadge status={bill.status} className="w-fit" />
             {bill.published_at && (
               <span className="text-xs text-muted-foreground">
                 {formatDateJST(bill.published_at)} {statusLabel}
+              </span>
+            )}
+            {/* 本文が未掲載。詳細ページへは飛べないので、その旨を示す */}
+            {bill.publish_status === "coming_soon" && (
+              <span className="text-xs text-muted-foreground">
+                内容は準備中
               </span>
             )}
           </div>

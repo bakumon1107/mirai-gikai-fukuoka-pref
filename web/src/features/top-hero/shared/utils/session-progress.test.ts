@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  buildInSessionHeadline,
+  buildInSessionLead,
   buildSessionSteps,
   calcSessionProgress,
   formatSessionRange,
@@ -281,21 +281,17 @@ describe("buildSessionSteps（節目あり）", () => {
   });
 });
 
-describe("buildInSessionHeadline", () => {
-  it("会期名から「◯月定例会」を取って見出しにする", () => {
-    expect(buildInSessionHeadline("令和8年 9月定例会")).toBe(
-      "9月定例会、いま何を決めてる？"
-    );
+describe("buildInSessionLead", () => {
+  it("会期名から「いまは◯月定例会。」を作る", () => {
+    expect(buildInSessionLead("令和8年 9月定例会")).toBe("いまは9月定例会。");
   });
 
   it("臨時会を「定例会」と言い換えない", () => {
-    expect(buildInSessionHeadline("令和8年 8月臨時会")).toBe(
-      "8月臨時会、いま何を決めてる？"
-    );
+    expect(buildInSessionLead("令和8年 8月臨時会")).toBe("いまは8月臨時会。");
   });
 
-  it("種別が取れない会期名でも文言が壊れない", () => {
-    expect(buildInSessionHeadline("会期")).toBe("いま何を決めてる？");
+  it("種別が取れない会期名では文ごと出さない", () => {
+    expect(buildInSessionLead("会期")).toBeNull();
   });
 });
 

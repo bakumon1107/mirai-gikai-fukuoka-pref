@@ -8,36 +8,62 @@ type Props = {
 };
 
 /**
- * 会期中の知事会見（設計書 5.3.2 節 段階2）。
+ * 会期中の知事会見（設計書 5.3.2 節 段階2 / デザイン v5）。
  *
- * 閉会中は会見がヒーロー右カラムの主役だが、会期中は定例会に譲って
- * ヒーロー直下の1行帯に降りる。出すのは日付・先頭の話題・残り件数だけ。
+ * 会期中は定例会が主役になり、会見はヒーロー直下の帯に降りる。
+ * ただし**話題は畳まず全件出す。** 先頭1件＋「ほか3件」にすると、
+ * 何が話されたのかが分からなくなる。
+ *
+ * PC は「見出し｜話題リスト｜会見を見る」の横3列。
+ * モバイルは日付行の下に話題を積む（区切り線つき）。
  */
+/** 帯に出す話題の上限（デザイン v5 は4件） */
+const MAX_TOPICS = 4;
+
 export function PressConferenceStrip({ conference }: Props) {
-  const [firstTopic, ...rest] = conference.topics;
+  const href = `/press-conferences/${conference.slug}`;
+  // 取得は全件なので、表示側で絞る。会見によっては話題が18件あり、
+  // そのまま出すと帯がヒーローより高くなる
+  const topics = conference.topics.slice(0, MAX_TOPICS);
 
   return (
-    <Link
-      href={`/press-conferences/${conference.slug}`}
-      className="mx-4 mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 rounded-[22px] bg-white px-5 py-3.5 hover:bg-pref-surface-tint pc:mx-16"
-    >
-      <span className="rounded-full bg-pref-pill-bg px-2.5 py-0.5 text-[11px] font-medium text-pref-pill-text">
-        知事会見
-      </span>
-      <span className="text-xs text-mirai-text-secondary">
-        {formatShortDate(conference.heldAt)}
-      </span>
-
-      {firstTopic && (
-        <span className="min-w-0 flex-1 truncate text-sm text-mirai-text">
-          {firstTopic.title}
-          {rest.length > 0 && ` ほか${rest.length}件`}
+    <div className="mx-4 mt-3 flex flex-col rounded-[18px] bg-white px-4 pt-3.5 pb-1.5 pc:mx-16 pc:flex-row pc:items-start pc:gap-4 pc:rounded-[22px] pc:px-6 pc:py-4">
+      <div className="mb-0.5 flex shrink-0 items-center gap-2 pc:mb-0 pc:min-h-7">
+        <span className="rounded-full bg-pref-pill-bg px-2.5 py-0.5 text-[11px] font-medium whitespace-nowrap text-pref-pill-text pc:text-xs">
+          知事会見
         </span>
-      )}
+        <span className="font-rounded text-sm font-bold whitespace-nowrap text-mirai-text pc:text-[15px]">
+          {formatShortDate(conference.heldAt)}
+        </span>
 
-      <span className="ml-auto shrink-0 text-xs font-medium text-pref-accent">
-        会見を見る
-      </span>
-    </Link>
+        {/* モバイルは日付の行に置く。PCでは右端へ回す */}
+        <Link
+          href={href}
+          className="ml-auto flex min-h-11 items-center text-xs font-medium text-pref-accent pc:hidden"
+        >
+          会見を見る →
+        </Link>
+      </div>
+
+      <div className="flex min-w-0 flex-1 flex-col pc:gap-1">
+        {topics.map((topic, i) => (
+          <Link
+            key={topic.id}
+            href={href}
+            className="flex min-h-11 items-center gap-2.5 border-t border-pref-divider text-sm text-mirai-text hover:text-pref-accent pc:min-h-0 pc:border-t-0 pc:text-[15px] pc:leading-7"
+          >
+            <span className="shrink-0 font-bold text-pref-accent">{i + 1}</span>
+            <span className="min-w-0 flex-1 truncate">{topic.title}</span>
+          </Link>
+        ))}
+      </div>
+
+      <Link
+        href={href}
+        className="hidden shrink-0 text-[13px] font-medium whitespace-nowrap text-pref-accent pc:block pc:leading-7"
+      >
+        会見を見る →
+      </Link>
+    </div>
   );
 }
