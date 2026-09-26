@@ -55,7 +55,7 @@ export function About() {
           {/* 非公式運営時: 帰属・免責表記 */}
           {!siteConfig.features.showTeamMiraiSection && (
             <div className="flex flex-col gap-4 pt-2 border-t border-gray-200">
-              <div className="flex flex-col gap-2 text-[13px] leading-relaxed text-[#404040]">
+              <div className="flex flex-col gap-2 text-[13px] leading-relaxed text-mirai-text-secondary">
                 <p>
                   このサイトは「チームみらい」開発の「みらい議会」をベースに作成しています。
                 </p>
@@ -87,7 +87,7 @@ export function About() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-1 text-[13px] leading-relaxed text-[#404040]">
+              <div className="flex flex-col gap-1 text-[13px] leading-relaxed text-mirai-text-secondary">
                 <p>
                   このサイトは「チームみらい」の公式ではない、非公式のサイトです。
                   <br />
