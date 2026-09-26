@@ -19,12 +19,9 @@ import {
   findBillContentByDifficulty,
   findTagsByBillIds,
   findPublishedBillsByDietSession,
-  findPreviousSessionBills,
-  countPublishedBillsByDietSession,
   findFeaturedTags,
   findPublishedBillsByTag,
   findFeaturedBillsWithContents,
-  findComingSoonBills,
   findPreviewToken,
 } from "./bill-repository";
 
@@ -329,93 +326,6 @@ describe("bill-repository 統合テスト", () => {
   });
 
   // ============================================================
-  // findPreviousSessionBills
-  // ============================================================
-
-  describe("findPreviousSessionBills", () => {
-    it("前回の定例会の公開済み議案を件数制限ありで取得できる", async () => {
-      const session = await createTestDietSession();
-      councilSessionIds.push(session.id);
-
-      const bill1 = await createTestBill({
-        publish_status: "published",
-        council_session_id: session.id,
-        published_at: new Date(Date.now() - 1000).toISOString(),
-      });
-      const bill2 = await createTestBill({
-        publish_status: "published",
-        council_session_id: session.id,
-        published_at: new Date().toISOString(),
-      });
-      billIds.push(bill1.id, bill2.id);
-      await createTestBillContent(bill1.id, { difficulty_level: "normal" });
-      await createTestBillContent(bill2.id, { difficulty_level: "normal" });
-
-      const result = await findPreviousSessionBills(session.id, "normal", 1);
-
-      expect(result).toHaveLength(1);
-    });
-
-    it("公開済み議案がない場合は空配列を返す", async () => {
-      const session = await createTestDietSession();
-      councilSessionIds.push(session.id);
-
-      const result = await findPreviousSessionBills(session.id, "normal", 10);
-
-      expect(result).toEqual([]);
-    });
-  });
-
-  // ============================================================
-  // countPublishedBillsByDietSession
-  // ============================================================
-
-  describe("countPublishedBillsByDietSession", () => {
-    it("公開済み議案数を正しくカウントできる", async () => {
-      const session = await createTestDietSession();
-      councilSessionIds.push(session.id);
-
-      const bill1 = await createTestBill({
-        publish_status: "published",
-        council_session_id: session.id,
-        published_at: new Date().toISOString(),
-      });
-      const bill2 = await createTestBill({
-        publish_status: "published",
-        council_session_id: session.id,
-        published_at: new Date().toISOString(),
-      });
-      const draftBill = await createTestBill({
-        publish_status: "draft",
-        council_session_id: session.id,
-      });
-      billIds.push(bill1.id, bill2.id, draftBill.id);
-      await createTestBillContent(bill1.id, { difficulty_level: "normal" });
-      await createTestBillContent(bill2.id, { difficulty_level: "normal" });
-      await createTestBillContent(draftBill.id, { difficulty_level: "normal" });
-
-      const count = await countPublishedBillsByDietSession(
-        session.id,
-        "normal"
-      );
-
-      expect(count).toBe(2);
-    });
-
-    it("該当する議案がない場合は0を返す", async () => {
-      const session = await createTestDietSession();
-      councilSessionIds.push(session.id);
-
-      const count = await countPublishedBillsByDietSession(
-        session.id,
-        "normal"
-      );
-
-      expect(count).toBe(0);
-    });
-  });
-
-  // ============================================================
   // findFeaturedTags
   // ============================================================
 
@@ -588,60 +498,6 @@ describe("bill-repository 統合テスト", () => {
 
       const found = result.find((b) => b.id === bill.id);
       expect(found).toBeDefined();
-    });
-  });
-
-  // ============================================================
-  // findComingSoonBills
-  // ============================================================
-
-  describe("findComingSoonBills", () => {
-    it("coming_soon議案を取得できる", async () => {
-      const session = await createTestDietSession();
-      councilSessionIds.push(session.id);
-
-      const bill = await createTestBill({
-        publish_status: "coming_soon",
-        council_session_id: session.id,
-        name: "近日公開テスト議案",
-      });
-      billIds.push(bill.id);
-      await createTestBillContent(bill.id, {
-        difficulty_level: "normal",
-        title: "近日公開タイトル",
-      });
-
-      const result = await findComingSoonBills(session.id);
-
-      const found = result.find((b) => b.id === bill.id);
-      expect(found).toBeDefined();
-      expect(found?.name).toBe("近日公開テスト議案");
-    });
-
-    it("councilSessionIdがnullの場合は全会期から取得できる", async () => {
-      const bill = await createTestBill({
-        publish_status: "coming_soon",
-        name: "全会期近日公開テスト",
-      });
-      billIds.push(bill.id);
-
-      const result = await findComingSoonBills(null);
-
-      const found = result.find((b) => b.id === bill.id);
-      expect(found).toBeDefined();
-    });
-
-    it("publishedの議案は含まれない", async () => {
-      const bill = await createTestBill({
-        publish_status: "published",
-        published_at: new Date().toISOString(),
-      });
-      billIds.push(bill.id);
-
-      const result = await findComingSoonBills(null);
-
-      const found = result.find((b) => b.id === bill.id);
-      expect(found).toBeUndefined();
     });
   });
 

@@ -29,14 +29,6 @@ export type MiraiStance = {
 // 公開ステータス型（議案の公開/非公開を管理）
 export type BillPublishStatus = "draft" | "published" | "coming_soon";
 
-// Coming Soon議案の型（最小限の情報のみ）
-export type ComingSoonBill = {
-  id: string;
-  name: string; // 正式名称
-  title: string | null; // わかりやすいタイトル（bill_contentsから）
-  council_url: string | null;
-};
-
 // Combined types for UI
 export type FactionStance = {
   id: string;
