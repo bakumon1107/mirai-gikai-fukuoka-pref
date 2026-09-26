@@ -2,6 +2,30 @@ import "server-only";
 
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { CouncilSession } from "../../shared/types";
+import { parseSessionMilestones } from "../../shared/utils/parse-session-milestones";
+
+/** DBの行（schedule_milestones は jsonb）を CouncilSession に落とす */
+type CouncilSessionRow = Omit<CouncilSession, "schedule_milestones"> & {
+  schedule_milestones: unknown;
+};
+
+function toCouncilSession(
+  row: CouncilSessionRow | null
+): CouncilSession | null {
+  if (!row) return null;
+
+  return {
+    ...row,
+    schedule_milestones: parseSessionMilestones(row.schedule_milestones),
+  };
+}
+
+function toCouncilSessions(rows: CouncilSessionRow[]): CouncilSession[] {
+  return rows.map((row) => ({
+    ...row,
+    schedule_milestones: parseSessionMilestones(row.schedule_milestones),
+  }));
+}
 
 /**
  * アクティブな定例会を取得
@@ -20,7 +44,7 @@ export async function findActiveCouncilSession(): Promise<CouncilSession | null>
     return null;
   }
 
-  return data;
+  return toCouncilSession(data);
 }
 
 /**
@@ -45,7 +69,7 @@ export async function findCurrentCouncilSession(
     return null;
   }
 
-  return data;
+  return toCouncilSession(data);
 }
 
 /**
@@ -92,7 +116,7 @@ export async function findAllPastCouncilSessions(): Promise<CouncilSession[]> {
     return [];
   }
 
-  return (data ?? []) as CouncilSession[];
+  return toCouncilSessions(data ?? []);
 }
 
 /**
@@ -116,7 +140,7 @@ export async function findPreviousCouncilSession(
     return null;
   }
 
-  return data;
+  return toCouncilSession(data);
 }
 
 /**
@@ -146,7 +170,7 @@ export async function findCouncilSessionsByYear(
     return [];
   }
 
-  return data ?? [];
+  return toCouncilSessions(data ?? []);
 }
 
 /**
@@ -168,5 +192,5 @@ export async function findCouncilSessionById(
     return null;
   }
 
-  return data;
+  return toCouncilSession(data);
 }

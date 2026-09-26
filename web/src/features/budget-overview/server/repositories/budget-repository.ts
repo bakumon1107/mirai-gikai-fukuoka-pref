@@ -1,6 +1,7 @@
 import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
+import { parseSessionMilestones } from "@/features/council-sessions/shared/utils/parse-session-milestones";
 import type {
   BudgetOverview,
   BudgetOverviewWithThemes,
@@ -27,11 +28,18 @@ export async function findAllSessionsWithBudget(): Promise<CouncilSession[]> {
   const seen = new Set<string>();
   const sessions: CouncilSession[] = [];
   for (const row of data ?? []) {
-    const session = row.council_sessions as CouncilSession;
-    if (session && !seen.has(session.id)) {
-      seen.add(session.id);
-      sessions.push(session);
-    }
+    // schedule_milestones は jsonb なので、型を信じずここで解釈する
+    const raw = row.council_sessions as Omit<
+      CouncilSession,
+      "schedule_milestones"
+    > & { schedule_milestones: unknown };
+    if (!raw || seen.has(raw.id)) continue;
+
+    seen.add(raw.id);
+    sessions.push({
+      ...raw,
+      schedule_milestones: parseSessionMilestones(raw.schedule_milestones),
+    });
   }
 
   return sessions.sort(

@@ -89,3 +89,109 @@ describe("parseSessionSchedule", () => {
     expect(result.endDate).toBe("2026-01-15");
   });
 });
+
+describe("parseSessionSchedule の節目抽出", () => {
+  it("令和8年9月定例会の節目を実日程どおりに取る", () => {
+    const { milestones } = parseSessionSchedule(
+      fixture("gikainittei-0809.html")
+    );
+
+    expect(milestones.representativeQuestions).toEqual({
+      from: "2026-09-15",
+      to: "2026-09-17",
+    });
+    expect(milestones.generalQuestions).toEqual({
+      from: "2026-09-18",
+      to: "2026-09-25",
+    });
+    expect(milestones.standingCommittees).toEqual({
+      from: "2026-09-28",
+      to: "2026-09-30",
+    });
+    expect(milestones.billVote).toBe("2026-10-01");
+  });
+
+  it("採決日と閉会日が別の日である会期を取り違えない", () => {
+    // 令和8年9月定例会は採決 10/1 のあと決算特別委員会が続き 10/16 に閉会する。
+    // 「閉会日＝採決日」と決め打ちすると、議案がいつ決まったかを誤って伝える
+    const result = parseSessionSchedule(fixture("gikainittei-0809.html"));
+
+    expect(result.milestones.billVote).toBe("2026-10-01");
+    expect(result.endDate).toBe("2026-10-16");
+    expect(result.milestones.billVote).not.toBe(result.endDate);
+  });
+
+  it("採決日と閉会日が同じ日の会期も扱える", () => {
+    // 令和7年12月定例会は 12/19 に採決と閉会を同日で行う
+    const result = parseSessionSchedule(fixture("gikainittei-0712.html"));
+
+    expect(result.milestones.billVote).toBe("2025-12-19");
+    expect(result.endDate).toBe("2025-12-19");
+  });
+
+  it("令和7年12月定例会の質問日程を取る", () => {
+    const { milestones } = parseSessionSchedule(
+      fixture("gikainittei-0712.html")
+    );
+
+    expect(milestones.representativeQuestions).toEqual({
+      from: "2025-12-05",
+      to: "2025-12-08",
+    });
+    expect(milestones.generalQuestions).toEqual({
+      from: "2025-12-10",
+      to: "2025-12-12",
+    });
+  });
+
+  it("質問を行わない臨時会では質問の節目が null になる", () => {
+    const { milestones } = parseSessionSchedule(
+      fixture("gikainittei-0705.html")
+    );
+
+    expect(milestones.representativeQuestions).toBeNull();
+    expect(milestones.generalQuestions).toBeNull();
+    expect(milestones.billVote).toBe("2025-05-16");
+  });
+
+  it("ページ下部のナビにある「代表質問」リンクを日程として数えない", () => {
+    // 表の下に「日程｜提出議案｜…｜代表質問｜一般質問」というナビが並ぶ。
+    // 打ち切らないと最終日（閉会日）の議事日程として数えられ、
+    // 質問の範囲が閉会日まで伸びる
+    const { milestones, endDate } = parseSessionSchedule(
+      fixture("gikainittei-0809.html")
+    );
+
+    expect(endDate).toBe("2026-10-16");
+    expect(milestones.representativeQuestions?.to).not.toBe(endDate);
+    expect(milestones.generalQuestions?.to).not.toBe(endDate);
+  });
+
+  it("「決算関係議案報告上程」を議案採決と取り違えない", () => {
+    // 部分一致で判定すると 9/17 の「決算関係議案報告上程」が
+    // 議案採決に、「決算特別委員長報告・採決」が採決に引っかかる
+    const { milestones } = parseSessionSchedule(
+      fixture("gikainittei-0809.html")
+    );
+
+    expect(milestones.billVote).not.toBe("2026-09-17");
+  });
+
+  it("年が取れないページでは節目が空になる", () => {
+    const result = parseSessionSchedule("<div id=\"main\"><p>不明</p></div>");
+
+    expect(result.milestones.representativeQuestions).toBeNull();
+    expect(result.milestones.billVote).toBeNull();
+  });
+
+  it("議案採決が無ければ warning を出す", () => {
+    const html = `<div id="main">
+      <p>令和8年9月第18回定例会会期日程</p>
+      <p>9月9日(水曜日)</p><p>開会</p>
+    </div>`;
+
+    const result = parseSessionSchedule(html);
+
+    expect(result.warnings).toContain("日程表に「議案採決」の記載がありません");
+  });
+});

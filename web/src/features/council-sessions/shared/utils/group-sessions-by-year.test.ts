@@ -14,6 +14,7 @@ const makeSession = (
   council_url: null,
   end_date: null,
   is_active: false,
+  schedule_milestones: null,
   created_at: "2025-01-01T00:00:00Z",
   updated_at: "2025-01-01T00:00:00Z",
   ...overrides,
