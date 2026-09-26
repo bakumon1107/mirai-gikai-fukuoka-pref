@@ -89,11 +89,22 @@ async function main() {
     process.exit(1);
   }
 
-  // 既存の議案番号を引いて、重複投入を避ける
-  const { data: existing } = await supabase
+  // 既存の議案番号を引いて、重複投入を避ける。
+  // **取得に失敗したら投入せず止める。** 失敗を無視すると known が空になり、
+  // JSONの全議案が「新規」と判定されて丸ごと再投入しにいく。
+  // bills には (council_session_id, bill_number, bill_type) の一意制約が
+  // あるため実際の重複行は作られないが、エラーが並んだうえに
+  // 「何件入ったのか」が分からない状態になる。
+  const { data: existing, error: bErr } = await supabase
     .from("bills")
     .select("bill_number")
     .eq("council_session_id", session.id);
+
+  if (bErr) {
+    console.error(`❌ 既存議案の取得に失敗: ${bErr.message}`);
+    process.exit(1);
+  }
+
   const known = new Set((existing ?? []).map((b) => b.bill_number));
 
   // 想定外の status はスキップする。enum に無い値を入れると投入ごと失敗する
@@ -128,21 +139,32 @@ async function main() {
   }
   for (const [s, n] of byStatus) console.log(`    ${s}: ${n} 件`);
 
+  // 新規0件は「全件が既に入っている」状態。再実行しても何もしない（冪等）
   if (isDryRun || toInsert.length === 0) {
-    console.log("\n（DRY RUN のため投入しません）");
+    console.log(
+      isDryRun
+        ? "\n（DRY RUN のため投入しません）"
+        : "\n（新規の議案はありません）"
+    );
     return;
   }
 
   let ok = 0;
   for (let i = 0; i < toInsert.length; i += 50) {
-    const { error } = await supabase
-      .from("bills")
-      .insert(toInsert.slice(i, i + 50));
+    const chunk = toInsert.slice(i, i + 50);
+    const { error } = await supabase.from("bills").insert(chunk);
     if (error) {
       console.error(`❌ 投入エラー: ${error.message}`);
     } else {
-      ok += Math.min(50, toInsert.length - i);
+      ok += chunk.length;
     }
+  }
+
+  // 一部でも落ちたら異常終了する。ログに出すだけだと、
+  // 呼び出し側（CIや手順書）が部分失敗に気づけない
+  if (ok < toInsert.length) {
+    console.error(`\n❌ 投入: ${ok}/${toInsert.length} 件（失敗あり）`);
+    process.exit(1);
   }
 
   console.log(`\n✅ 投入: ${ok}/${toInsert.length} 件`);
