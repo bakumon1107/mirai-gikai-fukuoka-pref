@@ -49,7 +49,8 @@ const _getCachedBillsByCouncilSession = unstable_cache(
 
     return billsWithContent;
   },
-  ["bills-by-council-session"],
+  // coming_soon を含めるようになり中身が変わったため -v2（CLAUDE.md 規約）
+  ["bills-by-council-session-v2"],
   {
     revalidate: 600, // 10分
     tags: [CACHE_TAGS.BILLS],

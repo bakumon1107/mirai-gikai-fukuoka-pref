@@ -3,6 +3,7 @@ import Link from "next/link";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import {
   buildInSessionHeadline,
+  buildInSessionLead,
   buildSessionSteps,
   calcSessionProgress,
   formatSessionRange,
@@ -42,6 +43,7 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
     today
   );
   const steps = buildSessionSteps(session.start_date, session.end_date, today);
+  const lead = buildInSessionLead(session.name) ?? "";
   const billsHref = session.slug ? `/sessions/${session.slug}/bills` : null;
   const questionsHref = session.slug
     ? `/sessions/${session.slug}/questions`
@@ -61,13 +63,18 @@ export function InSessionHero({ session, today, counts, statusLabel }: Props) {
           </div>
 
           <h1 className="font-rounded text-[26px] font-bold leading-[1.45] text-mirai-text pc:text-[42px] pc:leading-[1.4]">
-            {buildInSessionHeadline(session.name)}
+            {buildInSessionHeadline()}
           </h1>
 
+          {/*
+            1文目はサイトの説明。会期中はヒーローが定例会に、知事会見が
+            1行帯に降りるため、ここが無いと初見の人に何のサイトか伝わらない
+            （デザイン v4）
+          */}
           <p className="text-sm leading-relaxed text-mirai-text-secondary pc:text-base">
-            年4回の議会の本番。
+            県議会で話されていることを、やさしく読めるサイトです。
             <br className="hidden pc:inline" />
-            補正予算や条例は、この期間に採決されます。
+            {lead}補正予算や条例は、この期間に採決されます。
           </p>
 
           {/* 閉会日が取れないと全日数が出ないのでバーごと出さない（設計書 7章） */}

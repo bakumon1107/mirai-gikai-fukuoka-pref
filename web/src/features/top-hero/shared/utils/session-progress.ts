@@ -128,14 +128,28 @@ export function buildSessionSteps(
 /**
  * 会期中ヒーローの見出し。
  *
- * "令和8年 9月定例会" → "9月定例会、いま何を決めてる？"
- * 会期名から種別が取れなければ汎用の文言にする。月から組み立てると
+ * **主語はサイトの対象（県議会）にする。** 「9月定例会、いま何を
+ * 決めてる？」にすると、初めて来た人が前置きなしに定例会の中の話から
+ * 始まることになる。会期は年4回×各1〜2か月あり、年間の3〜4割は
+ * この表示になるため、少数派の画面として扱えない（デザイン v4）。
+ *
+ * どの会期かは、ピルの日付と説明文の2文目で示す。
+ */
+export function buildInSessionHeadline(): string {
+  return "福岡県議会、いま何を決めてる？";
+}
+
+/**
+ * 会期中ヒーローの説明文の2文目。どの会期かを示す。
+ *
+ * "令和8年 9月定例会" → "いまは9月定例会。"
+ * 会期名から種別が取れなければ文ごと出さない。月から組み立てると
  * 臨時会のときに「8月定例会」という誤った文言になるため
  * {@link extractSessionLabel} を通す（設計書 5.3.2 節）。
  */
-export function buildInSessionHeadline(sessionName: string): string {
+export function buildInSessionLead(sessionName: string): string | null {
   const label = extractSessionLabel(sessionName);
-  return label ? `${label}、いま何を決めてる？` : "いま何を決めてる？";
+  return label ? `いまは${label}。` : null;
 }
 
 /**
