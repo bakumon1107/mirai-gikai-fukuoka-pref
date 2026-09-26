@@ -2,6 +2,32 @@ import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { GeneralQuestion } from "../../shared/types";
 
+/**
+ * 会期内で質問した議員の人数を返す（設計書 5.3.2 節 段階2）。
+ *
+ * 会期中ヒーローの「一般質問 N人が質問」に使う。**質問の件数ではなく
+ * 人数**なので、同じ議員が複数回登壇したぶんは重ねない。
+ *
+ * 質問本体は要らないので `questioner_name` だけ引く。
+ */
+export async function countQuestionersBySession(
+  sessionId: string
+): Promise<number> {
+  const supabase = createAdminClient();
+  const { data, error } = await supabase
+    .from("general_questions")
+    .select("questioner_name")
+    .eq("council_session_id", sessionId)
+    .eq("publish_status", "published");
+
+  if (error) {
+    console.error("Failed to count questioners by session:", error);
+    return 0;
+  }
+
+  return new Set((data ?? []).map((row) => row.questioner_name)).size;
+}
+
 export async function findPublishedGeneralQuestionsBySession(
   sessionId: string
 ): Promise<GeneralQuestion[]> {

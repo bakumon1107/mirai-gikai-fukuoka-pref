@@ -5,11 +5,11 @@ import type {
   PressConferenceRef,
   PressConferenceSummary,
 } from "@/features/press-conferences/shared/types";
-import {
-  formatCurrentSessionPill,
-  formatNextSessionPill,
-} from "../../shared/utils/format-hero-date";
+import { formatNextSessionPill } from "../../shared/utils/format-hero-date";
+import type { InSessionCounts } from "../loaders/load-top-hero-data";
+import { InSessionHero } from "./in-session-hero";
 import { PressConferenceCard } from "./press-conference-card";
+import { PressConferenceStrip } from "./press-conference-strip";
 
 type Props = {
   /** 開催中の会期。null なら閉会中 */
@@ -18,6 +18,10 @@ type Props = {
   nextSession: CouncilSession | null;
   latestConference: PressConferenceSummary | null;
   recentConferences: PressConferenceRef[];
+  /** 会期中の入口タイル用の件数。閉会中は null */
+  inSessionCounts: InSessionCounts | null;
+  /** 基準日（"YYYY-MM-DD"） */
+  today: string;
 };
 
 /**
@@ -26,17 +30,17 @@ type Props = {
  * 旧トップの Hero（背景画像 + Scroll）と「本日は 開会中/閉会中」の表示を
  * 置き換えたもの。旧コンポーネントは PR7 で削除済み。
  *
- * 会期中モードは段階1（文言差し替え）まで。レイアウトは閉会中と共通で、
- * ヒーローを定例会に差し替える段階2は後続PRで対応する（設計書 5.3.2 節）。
+ * 会期中は定例会を主役にしたレイアウトへ丸ごと差し替える
+ * （設計書 5.3.2 節 段階2）。閉会中は会見が主役のまま。
  */
 export function TopHero({
   currentSession,
   nextSession,
   latestConference,
   recentConferences,
+  inSessionCounts,
+  today,
 }: Props) {
-  const isInSession = currentSession !== null;
-
   // 臨時会のときに「いま定例会中」と出さない。
   // getCurrentCouncilSession は会期名で絞らないため臨時会も返ってくる
   const statusLabel = !currentSession
@@ -45,11 +49,24 @@ export function TopHero({
       ? "いま定例会中"
       : "いま臨時会中";
 
-  // 会期中は「◯月定例会 ◯月◯日まで」、閉会中は「次の定例会 ◯月◯日から」。
-  // どちらも日付が取れなければピルごと出さない（設計書 7章）
-  const currentPill = currentSession
-    ? formatCurrentSessionPill(currentSession.name, currentSession.end_date)
-    : null;
+  // 会期中は定例会が主役になり、会見はヒーロー直下の1行帯に降りる
+  if (currentSession) {
+    return (
+      <>
+        <InSessionHero
+          session={currentSession}
+          today={today}
+          counts={inSessionCounts}
+          statusLabel={statusLabel}
+        />
+        {latestConference && (
+          <PressConferenceStrip conference={latestConference} />
+        )}
+      </>
+    );
+  }
+
+  // ここから下は必ず閉会中（会期中は上で return 済み）
   const nextSessionLabel = formatNextSessionPill(
     nextSession?.start_date ?? null
   );
@@ -59,31 +76,16 @@ export function TopHero({
       <div className="grid gap-8 pc:grid-cols-2 pc:items-center pc:gap-10">
         <div className="flex flex-col gap-4">
           <div className="flex flex-wrap gap-2">
-            {isInSession ? (
-              // 会期中は塗りピルで強調する（設計書 5.3.2節 段階1）
-              <span className="rounded-full bg-pref-pill-bg px-3.5 py-1.5 text-xs font-bold text-pref-pill-text">
-                {statusLabel}
-              </span>
-            ) : (
-              <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
-                {statusLabel}
-              </span>
-            )}
+            <span className="rounded-full bg-white px-3.5 py-1.5 text-xs font-medium text-pref-accent-hover">
+              {statusLabel}
+            </span>
 
             {/* 日程が取れないときはピルごと出さない（設計書 7章） */}
-            {isInSession
-              ? currentPill && (
-                  <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
-                    {/* スマホは幅が足りないので日付だけにする */}
-                    <span className="pc:hidden">{currentPill.short}</span>
-                    <span className="hidden pc:inline">{currentPill.full}</span>
-                  </span>
-                )
-              : nextSessionLabel && (
-                  <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
-                    {nextSessionLabel}
-                  </span>
-                )}
+            {nextSessionLabel && (
+              <span className="rounded-full bg-mirai-surface-warm px-3.5 py-1.5 text-xs font-medium text-pref-beige-text">
+                {nextSessionLabel}
+              </span>
+            )}
           </div>
 
           <h1 className="font-rounded text-[26px] font-bold leading-[1.45] text-mirai-text pc:text-[42px] pc:leading-[1.4]">

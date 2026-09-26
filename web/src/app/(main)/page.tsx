@@ -48,6 +48,8 @@ export default async function Home() {
         nextSession={heroData.nextSession}
         latestConference={heroData.latestConference}
         recentConferences={heroData.recentConferences}
+        inSessionCounts={heroData.inSessionCounts}
+        today={heroData.today}
       />
 
       {/* 定例会の帯（設計書 5.5節） */}

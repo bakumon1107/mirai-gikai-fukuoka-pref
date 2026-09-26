@@ -1,8 +1,11 @@
 import "server-only";
+import { findBillStatusesBySession } from "@/features/bills/server/repositories/bill-repository";
+import { summarizeBillStatuses } from "@/features/bills/shared/utils/summarize-bill-statuses";
 import { findCouncilSessionsByYear } from "@/features/council-sessions/server/repositories/council-session-repository";
 import { getCurrentCouncilSession } from "@/features/council-sessions/server/loaders/get-current-council-session";
 import type { CouncilSession } from "@/features/council-sessions/shared/types";
 import { findNextRegularSession } from "@/features/council-sessions/shared/utils/find-next-session";
+import { countQuestionersBySession } from "@/features/general-questions/server/repositories/general-questions-repository";
 import {
   findLatestPressConferenceSummary,
   findRecentPressConferenceRefs,
@@ -24,6 +27,26 @@ export type TopHeroData = {
   nextSession: CouncilSession | null;
   latestConference: PressConferenceSummary | null;
   recentConferences: PressConferenceRef[];
+  /**
+   * 開催中の会期の入口タイル用の件数（設計書 5.3.2 節 段階2）。
+   * 閉会中は null。0件のタイルは出さないので、呼び出し側で判定する
+   */
+  inSessionCounts: InSessionCounts | null;
+  /**
+   * このローダーが基準にした日本時間の日付（"YYYY-MM-DD"）。
+   *
+   * 会期の進み具合を出すのに要る。呼び出し側で取り直すと、
+   * 日付が変わる瞬間に会期判定と進み具合がズレうるため渡す
+   */
+  today: string;
+};
+
+/** 会期中ヒーローの入口タイルに出す件数 */
+export type InSessionCounts = {
+  /** 審議中の議案数。可決済みなどは含まない */
+  deliberatingBills: number;
+  /** 質問した議員の人数（件数ではない） */
+  questioners: number;
 };
 
 /** 日本時間の "YYYY-MM-DD" */
@@ -67,5 +90,28 @@ export async function loadTopHeroData(): Promise<TopHeroData> {
     nextSession,
     latestConference,
     recentConferences,
+    inSessionCounts: await loadInSessionCounts(currentSession),
+    today,
+  };
+}
+
+/**
+ * 会期中ヒーローの入口タイル用の件数を取る。
+ *
+ * 閉会中は引かない。会期中ヒーロー自体が出ないため
+ */
+async function loadInSessionCounts(
+  currentSession: CouncilSession | null
+): Promise<InSessionCounts | null> {
+  if (!currentSession) return null;
+
+  const [billStatuses, questioners] = await Promise.all([
+    findBillStatusesBySession(currentSession.id),
+    countQuestionersBySession(currentSession.id),
+  ]);
+
+  return {
+    deliberatingBills: summarizeBillStatuses(billStatuses).deliberatingCount,
+    questioners,
   };
 }
