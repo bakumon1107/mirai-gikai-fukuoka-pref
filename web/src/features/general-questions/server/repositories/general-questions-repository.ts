@@ -2,6 +2,59 @@ import "server-only";
 import { createAdminClient } from "@mirai-gikai/supabase";
 import type { GeneralQuestion } from "../../shared/types";
 
+/** 1回の取得件数。PostgREST の `max_rows`（1000）以下にすること */
+const QUESTIONER_PAGE_SIZE = 500;
+
+/** ページングの安全弁。500 × 20 = 10,000件で打ち切る */
+const QUESTIONER_MAX_PAGES = 20;
+
+/**
+ * 会期内で質問した議員の人数を返す（設計書 5.3.2 節 段階2）。
+ *
+ * 会期中ヒーローの「一般質問 N人が質問」に使う。**質問の件数ではなく
+ * 人数**なので、同じ議員が複数回登壇したぶんは重ねない。
+ *
+ * 質問本体は要らないので `questioner_name` だけ引く。
+ *
+ * **ページングして全件を見る。** 一度に引くと PostgREST の `max_rows`
+ * （このリポジトリでは1000）で黙って打ち切られ、人数が実際より少なくなる。
+ * 1会期の質問は議員定数に縛られるため現実には1000件に届かないが、
+ * 件数の上限に依存した書き方はしない。
+ */
+export async function countQuestionersBySession(
+  sessionId: string
+): Promise<number> {
+  const supabase = createAdminClient();
+  const questioners = new Set<string>();
+
+  for (let page = 0; page < QUESTIONER_MAX_PAGES; page++) {
+    const from = page * QUESTIONER_PAGE_SIZE;
+    const { data, error } = await supabase
+      .from("general_questions")
+      .select("questioner_name")
+      .eq("council_session_id", sessionId)
+      .eq("publish_status", "published")
+      // range だけでは順序が保証されず、ページ間で行が重複・欠落しうる
+      .order("id", { ascending: true })
+      .range(from, from + QUESTIONER_PAGE_SIZE - 1);
+
+    if (error) {
+      console.error("Failed to count questioners by session:", error);
+      return 0;
+    }
+
+    for (const row of data ?? []) questioners.add(row.questioner_name);
+
+    // 満たなければ最終ページ
+    if (!data || data.length < QUESTIONER_PAGE_SIZE) return questioners.size;
+  }
+
+  console.warn(
+    `countQuestionersBySession: ページ上限に達した (session=${sessionId})`
+  );
+  return questioners.size;
+}
+
 export async function findPublishedGeneralQuestionsBySession(
   sessionId: string
 ): Promise<GeneralQuestion[]> {
