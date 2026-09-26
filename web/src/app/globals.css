@@ -82,11 +82,16 @@
   --color-mirai-border-muted: #bebcbc;
 
   /* Stance semantic colors */
+  /* 賛成の文字色。stance-for-bg 上で 5.04:1（反対の 5.02:1 と揃えてある）。
+     以前は本家のアクセント #0f8472 が直接書かれていたが、
+     fork ガイドライン違反なうえ同背景で 4.33:1 と AA を割っていた */
+  --color-stance-for: #0e7a52;
   --color-stance-for-bg: #ecfcf1;
   --color-stance-against: #c9272a;
   --color-stance-against-light: #d23c3f;
   --color-stance-against-bg: #fff1f1;
   --color-stance-neutral: #805f34;
+  --color-stance-neutral-bg: #e5e5ea;
 
   /* Reaction */
   --color-mirai-reaction-active: #dd425f;
