@@ -22,6 +22,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { createAdminClient } from "@mirai-gikai/supabase";
+import { mergeSessionMilestones } from "./merge-session-milestones";
 import type { SessionMilestones } from "./parse-session-schedule";
 
 /** docs/data/bills/*.json の必要部分 */
@@ -162,12 +163,16 @@ async function main() {
     // そのまま書くと一度入った正しい閉会日を消してしまう
     const nextEndDate = session.endDate ?? existing.end_date ?? null;
 
-    // 節目も閉会日と同じ扱い。取れていなければ既存値を消さない
-    const nextMilestones = session.scheduleMilestones ?? null;
+    // 節目も閉会日と同じ扱い。**項目ごとに**既存値を残す。
+    // 全項目 null の結果で上書きすると、一度入った節目を全部失う
+    const existingMilestones =
+      (existing.schedule_milestones as SessionMilestones | null) ?? null;
+    const nextMilestones = mergeSessionMilestones(
+      existingMilestones,
+      session.scheduleMilestones ?? null
+    );
     const milestonesChanged =
-      nextMilestones !== null &&
-      JSON.stringify(existing.schedule_milestones ?? null) !==
-        JSON.stringify(nextMilestones);
+      JSON.stringify(existingMilestones) !== JSON.stringify(nextMilestones);
 
     const startSame = existing.start_date === session.startDate;
     const endSame = (existing.end_date ?? null) === nextEndDate;
