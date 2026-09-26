@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { hasBillDetailPage } from "../../shared/utils/has-bill-detail-page";
 import type { BillWithContent } from "../../shared/types";
 import { BillCard } from "../../client/components/bill-list/bill-card";
 
@@ -25,11 +26,16 @@ export function FeaturedBillSection({ bills }: FeaturedBillSectionProps) {
 
       {/* 注目の議案カード */}
       <div className="flex flex-col gap-4">
-        {bills.map((bill) => (
-          <Link key={bill.id} href={`/bills/${bill.id}`}>
-            <BillCard bill={bill} />
-          </Link>
-        ))}
+        {/* 本文が未掲載の議案は詳細ページが404になるのでリンクを張らない */}
+        {bills.map((bill) =>
+          hasBillDetailPage(bill.publish_status) ? (
+            <Link key={bill.id} href={`/bills/${bill.id}`}>
+              <BillCard bill={bill} />
+            </Link>
+          ) : (
+            <BillCard key={bill.id} bill={bill} />
+          )
+        )}
       </div>
     </section>
   );

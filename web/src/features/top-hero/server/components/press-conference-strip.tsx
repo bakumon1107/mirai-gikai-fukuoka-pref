@@ -17,8 +17,14 @@ type Props = {
  * PC は「見出し｜話題リスト｜会見を見る」の横3列。
  * モバイルは日付行の下に話題を積む（区切り線つき）。
  */
+/** 帯に出す話題の上限（デザイン v5 は4件） */
+const MAX_TOPICS = 4;
+
 export function PressConferenceStrip({ conference }: Props) {
   const href = `/press-conferences/${conference.slug}`;
+  // 取得は全件なので、表示側で絞る。会見によっては話題が18件あり、
+  // そのまま出すと帯がヒーローより高くなる
+  const topics = conference.topics.slice(0, MAX_TOPICS);
 
   return (
     <div className="mx-4 mt-3 flex flex-col rounded-[18px] bg-white px-4 pt-3.5 pb-1.5 pc:mx-16 pc:flex-row pc:items-start pc:gap-4 pc:rounded-[22px] pc:px-6 pc:py-4">
@@ -40,7 +46,7 @@ export function PressConferenceStrip({ conference }: Props) {
       </div>
 
       <div className="flex min-w-0 flex-1 flex-col pc:gap-1">
-        {conference.topics.map((topic, i) => (
+        {topics.map((topic, i) => (
           <Link
             key={topic.id}
             href={href}

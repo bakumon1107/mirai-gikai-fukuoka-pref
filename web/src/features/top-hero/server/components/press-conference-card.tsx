@@ -24,8 +24,14 @@ type Props = {
  * 話題の文言は AI生成の headline_short を想定しているが未整備のため、
  * 当面は press_conference_items.title をそのまま出す（設計書 7章）。
  */
+/** カードに出す話題の上限（設計書 5.4 節） */
+const MAX_TOPICS = 4;
+
 export function PressConferenceCard({ conference, recent }: Props) {
   const detailHref = `/press-conferences/${conference.slug}`;
+  // 取得は全件。閉会中のカードはここで絞る。
+  // 取得側で絞ると、全件出す会期中の帯まで4件に制限されてしまう
+  const topics = conference.topics.slice(0, MAX_TOPICS);
 
   return (
     <div className="flex flex-col gap-1 rounded-[28px] bg-white p-6">
@@ -41,9 +47,9 @@ export function PressConferenceCard({ conference, recent }: Props) {
         </span>
       </div>
 
-      {conference.topics.length > 0 && (
+      {topics.length > 0 && (
         <ol className="flex flex-col">
-          {conference.topics.map((topic, index) => (
+          {topics.map((topic, index) => (
             // 区切り線は li に付ける。a は li の唯一の子なので常に :last-child になり、
             // a 側に last: を付けると全件で線が消える
             <li

@@ -151,9 +151,7 @@ export async function findLatestPublishedPressConference(): Promise<PressConfere
  * （全発言本文）までネストで引くが、カードに出すのは話題のタイトルだけ。
  * トップの初期表示に全発言を載せる必要はないため、こちらを使う。
  */
-export async function findLatestPressConferenceSummary(
-  maxTopics: number
-): Promise<PressConferenceSummary | null> {
+export async function findLatestPressConferenceSummary(): Promise<PressConferenceSummary | null> {
   const supabase = createAdminClient();
   const { data, error } = await supabase
     .from("press_conferences")
@@ -189,7 +187,6 @@ export async function findLatestPressConferenceSummary(
     heldAt: row.held_at,
     topics: [...(row.press_conference_items ?? [])]
       .sort((a, b) => a.order_index - b.order_index)
-      .slice(0, maxTopics)
       .map((item) => ({ id: item.id, title: item.title })),
   };
 }
