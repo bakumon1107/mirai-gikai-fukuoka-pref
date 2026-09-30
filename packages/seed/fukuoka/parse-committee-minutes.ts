@@ -490,6 +490,49 @@ export const NEW_SITE_COMMITTEES: {
     slug: "keisatsu",
     type: "standing",
   },
+  // 調査特別委員会
+  {
+    code: "ai",
+    dbsrName: "空港・交通インフラ調査特別委員会",
+    currentName: "空港・交通インフラ調査特別委員会",
+    slug: "kuko-kotsu-infra",
+    type: "special",
+  },
+  {
+    code: "kz",
+    dbsrName: "子育て支援・人財育成調査特別委員会",
+    currentName: "子育て支援・人財育成調査特別委員会",
+    slug: "kosodate-jinzai",
+    type: "special",
+  },
+  {
+    code: "se",
+    dbsrName: "再生可能エネルギー等調査特別委員会",
+    currentName: "再生可能エネルギー等調査特別委員会",
+    slug: "saisei-energy",
+    type: "special",
+  },
+  {
+    code: "im",
+    dbsrName: "国際化・多文化共生社会調査特別委員会",
+    currentName: "国際化・多文化共生社会調査特別委員会",
+    slug: "kokusaika-tabunka",
+    type: "special",
+  },
+  {
+    code: "wh",
+    dbsrName: "ワンヘルス・地方分権等調査特別委員会",
+    currentName: "ワンヘルス・地方分権等調査特別委員会",
+    slug: "one-health-chihobunken",
+    type: "special",
+  },
+  {
+    code: "si",
+    dbsrName: "スポーツ立県調査特別委員会",
+    currentName: "スポーツ立県調査特別委員会",
+    slug: "sports-rikken",
+    type: "special",
+  },
 ];
 
 /** 検索フォーム(search-top)からCSRFトークン(_token)を取り出す */

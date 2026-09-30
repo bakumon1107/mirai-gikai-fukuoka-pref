@@ -4,6 +4,7 @@ import {
   buildRawText,
   buildSourceUrl,
   classifySpeaker,
+  CURRENT_COMMITTEES,
   committeeFromTitle,
   decodeEntities,
   extractCsrfToken,
@@ -468,6 +469,15 @@ describe("NEW_SITE_COMMITTEES / NEW_SITE_ID_OFFSET", () => {
     const nr = NEW_SITE_COMMITTEES.find((c) => c.code === "nr");
     expect(sc?.slug).toBe("somu-kikaku-chiiki");
     expect(nr?.slug).toBe("norin-suisan");
+  });
+  it("調査特別委員会のコードは既存COMMITTEESのslugと一致する", () => {
+    const ai = NEW_SITE_COMMITTEES.find((c) => c.code === "ai");
+    expect(ai?.slug).toBe("kuko-kotsu-infra");
+    expect(ai?.type).toBe("special");
+    for (const c of NEW_SITE_COMMITTEES) {
+      const meta = CURRENT_COMMITTEES.find((m) => m.slug === c.slug);
+      expect(meta?.currentName).toBe(c.currentName);
+    }
   });
   it("オフセットで実Idとsource_document_idが分離される", () => {
     expect(4580 + NEW_SITE_ID_OFFSET).toBe(1004580);
