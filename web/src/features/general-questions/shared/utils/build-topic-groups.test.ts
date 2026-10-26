@@ -1,6 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { assignCategory, buildTopicGroups } from "./build-topic-groups";
-import type { GeneralQuestion } from "../types";
+import {
+  assignCategory,
+  buildTopicGroups,
+  CATEGORY_LABELS,
+  resolveTopicCategory,
+} from "./build-topic-groups";
+import { QUESTION_CATEGORIES } from "@/features/top-themes/shared/utils/theme-mapping";
+import type { GeneralQuestion, GeneralQuestionTopic } from "../types";
 
 describe("assignCategory", () => {
   it("保育所 → 子育て・教育", () => {
@@ -13,6 +19,68 @@ describe("assignCategory", () => {
   });
   it("マッチしない → その他", () => {
     expect(assignCategory("特になし").label).toBe("その他");
+  });
+});
+
+describe("CATEGORY_LABELS", () => {
+  it("トップページのテーマ定義（QUESTION_CATEGORIES）と一致する", () => {
+    expect(CATEGORY_LABELS).toEqual([...QUESTION_CATEGORIES]);
+  });
+});
+
+describe("resolveTopicCategory", () => {
+  const topic = (
+    over: Partial<GeneralQuestionTopic>
+  ): GeneralQuestionTopic => ({
+    title: "特になし",
+    question_summary: "",
+    answer_summary: "",
+    answerer_role: "知事",
+    answerer_name: "服部誠太郎",
+    ...over,
+  });
+
+  it("categoryがあればキーワード判定より優先する", () => {
+    const t = topic({ title: "保育所の待機児童対策", category: "行政・県政" });
+    expect(resolveTopicCategory(t)).toEqual({
+      label: "行政・県政",
+      iconName: "Landmark",
+    });
+  });
+
+  it("キーワードで当たらないタイトルでもcategoryで分類できる", () => {
+    const t = topic({ title: "次期総合計画の理念", category: "行政・県政" });
+    expect(resolveTopicCategory(t).label).toBe("行政・県政");
+    // category が無ければ従来どおり その他 に落ちる
+    expect(assignCategory("次期総合計画の理念").label).toBe("その他");
+  });
+
+  it("categoryが無ければキーワード判定にフォールバックする", () => {
+    expect(
+      resolveTopicCategory(topic({ title: "保育所の待機児童対策" })).label
+    ).toBe("子育て・教育");
+  });
+
+  it("未知のラベル・空文字はキーワード判定にフォールバックする", () => {
+    expect(
+      resolveTopicCategory(
+        topic({ title: "保育所の待機児童対策", category: "存在しない分類" })
+      ).label
+    ).toBe("子育て・教育");
+    expect(
+      resolveTopicCategory(topic({ title: "特になし", category: "" })).label
+    ).toBe("その他");
+    expect(
+      resolveTopicCategory(topic({ title: "特になし", category: null })).label
+    ).toBe("その他");
+  });
+
+  it("11分類すべてが正しいアイコン付きで解決できる", () => {
+    for (const label of CATEGORY_LABELS) {
+      const r = resolveTopicCategory(topic({ category: label }));
+      expect(r.label).toBe(label);
+      expect(r.iconName).not.toBe("Circle");
+    }
   });
 });
 

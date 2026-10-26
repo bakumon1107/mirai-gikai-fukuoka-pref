@@ -5,6 +5,11 @@ export type GeneralQuestionTopic = {
   answerer_role: string;
   answerer_name: string;
   block_summary?: string | null;
+  /**
+   * AI生成時に付与する分類。`build-topic-groups.ts` の `CATEGORY_MAP` のラベル。
+   * 未設定・未知のラベルのときはタイトルのキーワード判定にフォールバックする。
+   */
+  category?: string | null;
 };
 
 /** 代表質問（会派を代表して行う質問）と一般質問の別 */

@@ -1,0 +1,102 @@
+{
+  "_note": "令和7年12月定例会のトピックに表示分類(category)を後付けするための対応表。AIパッチのファイルが残っていない分をDBへ直接当てる用途。backfill-topic-categories.ts が session_day:question_order をキーに、トピックのtitleが一致することを確認した上でcategoryだけを書き込む。",
+  "session": "r7-12",
+  "assignments": [
+    { "day": 11, "order": 1, "topics": [
+      { "title": "欧州誘客の現状と取組", "category": "観光・地域振興" },
+      { "title": "パリ訪問後の欧州誘客促進策", "category": "観光・地域振興" }
+    ]},
+    { "day": 11, "order": 2, "topics": [
+      { "title": "民泊検査員の体制と指導", "category": "交通・まちづくり" },
+      { "title": "違法民泊への対応", "category": "交通・まちづくり" },
+      { "title": "相談窓口のワンストップ化", "category": "交通・まちづくり" }
+    ]},
+    { "day": 11, "order": 3, "topics": [
+      { "title": "余裕期間制度のメリット", "category": "交通・まちづくり" },
+      { "title": "利用実績と今後の取組", "category": "交通・まちづくり" }
+    ]},
+    { "day": 11, "order": 4, "topics": [
+      { "title": "薬物再乱用防止の取組と実績", "category": "警察・人権" },
+      { "title": "薬物依存家族への支援", "category": "警察・人権" }
+    ]},
+    { "day": 11, "order": 5, "topics": [
+      { "title": "農業従事者の減少と対応", "category": "産業・農林水産" },
+      { "title": "農業大学校と農業振興への効果", "category": "産業・農林水産" },
+      { "title": "募集人員の設定根拠と課題", "category": "産業・農林水産" },
+      { "title": "農業大学校の今後の発展策", "category": "産業・農林水産" }
+    ]},
+    { "day": 11, "order": 6, "topics": [
+      { "title": "臍帯血バンクの必要性と現状", "category": "健康・医療" },
+      { "title": "周知強化と提供体制の拡大", "category": "健康・医療" }
+    ]},
+    { "day": 11, "order": 7, "topics": [
+      { "title": "抹茶価格高騰の情勢認識", "category": "産業・農林水産" },
+      { "title": "八女茶振興の具体的取組", "category": "産業・農林水産" }
+    ]},
+    { "day": 11, "order": 8, "topics": [
+      { "title": "不妊治療助成の実績と職場理解", "category": "子育て・教育" },
+      { "title": "遠距離通院の交通費支援", "category": "子育て・教育" }
+    ]},
+    { "day": 11, "order": 9, "topics": [
+      { "title": "ストーカー相談の現状と警告・禁止命令", "category": "警察・人権" },
+      { "title": "広報啓発と改正法の周知", "category": "警察・人権" },
+      { "title": "被害者支援の強化と行政連携", "category": "警察・人権" },
+      { "title": "加害者への治療アプローチ", "category": "警察・人権" }
+    ]},
+    { "day": 11, "order": 10, "topics": [
+      { "title": "拉致問題解決に向けた県の取組", "category": "警察・人権" },
+      { "title": "学校での拉致問題・人権教育", "category": "警察・人権" }
+    ]},
+    { "day": 11, "order": 11, "topics": [
+      { "title": "車中泊避難への認識と国の手引き", "category": "防災・安全" },
+      { "title": "マニュアルへの車中泊支援の拡充", "category": "防災・安全" },
+      { "title": "車中泊スペース確保への市町村支援", "category": "防災・安全" }
+    ]},
+    { "day": 12, "order": 1, "topics": [
+      { "title": "防災庁設置の意義", "category": "防災・安全" },
+      { "title": "南海トラフ地震への対策", "category": "防災・安全" },
+      { "title": "県の災害対応力強化策", "category": "防災・安全" }
+    ]},
+    { "day": 12, "order": 2, "topics": [
+      { "title": "チャイルドシート利用促進", "category": "子育て・教育" },
+      { "title": "貸出し制度の周知強化", "category": "子育て・教育" }
+    ]},
+    { "day": 12, "order": 3, "topics": [
+      { "title": "受刑者による河川除草活用", "category": "警察・人権" },
+      { "title": "ストーカー加害者更生プログラム", "category": "警察・人権" },
+      { "title": "現場警察官の暑熱対策", "category": "警察・人権" }
+    ]},
+    { "day": 12, "order": 4, "topics": [
+      { "title": "点字ブロックの整備方針", "category": "高齢者・福祉" },
+      { "title": "現状把握と当事者意見の反映", "category": "高齢者・福祉" }
+    ]},
+    { "day": 12, "order": 6, "topics": [
+      { "title": "副首都構想と福岡県の適性", "category": "行政・県政" },
+      { "title": "地震被害想定調査の経緯と今後", "category": "防災・安全" },
+      { "title": "調査結果を踏まえた防災対策", "category": "防災・安全" }
+    ]},
+    { "day": 12, "order": 7, "topics": [
+      { "title": "病児保育施設の定員と拡充目標", "category": "子育て・教育" },
+      { "title": "豊築地域の病児保育体制強化", "category": "子育て・教育" }
+    ]},
+    { "day": 12, "order": 8, "topics": [
+      { "title": "農産物被害軽減の取組", "category": "産業・農林水産" },
+      { "title": "侵入防止柵の更新課題と対応", "category": "産業・農林水産" }
+    ]},
+    { "day": 12, "order": 9, "topics": [
+      { "title": "筑肥線の振興効果とバリアフリー化", "category": "交通・まちづくり" },
+      { "title": "MaaS実証実験の成果", "category": "交通・まちづくり" },
+      { "title": "地方創生支援と今後の振興方針", "category": "観光・地域振興" }
+    ]},
+    { "day": 12, "order": 10, "topics": [
+      { "title": "地域移行後の担いクラブの想定", "category": "子育て・教育" },
+      { "title": "資質ある指導者の確保策", "category": "子育て・教育" },
+      { "title": "人材バンクの機能と周知方針", "category": "子育て・教育" }
+    ]},
+    { "day": 12, "order": 11, "topics": [
+      { "title": "能楽堂の伝統芸能振興", "category": "スポーツ・文化" },
+      { "title": "伝統文化の継承・発展策", "category": "スポーツ・文化" },
+      { "title": "学校での伝統文化教育", "category": "スポーツ・文化" }
+    ]}
+  ]
+}
