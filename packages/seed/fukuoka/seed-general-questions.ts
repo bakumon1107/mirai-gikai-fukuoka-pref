@@ -141,6 +141,14 @@ async function main(): Promise<void> {
     .sort();
   console.log(`対象ファイル: ${files.length}件 / publish_status=${publishStatus}`);
 
+  // 全ファイルを先に読み込んで検証する。ファイルごとに検証しながら書き込むと、
+  // 後ろのファイルで弾かれたときに前のファイル分だけがDBに入り、
+  // --publish では定例会が部分公開された状態で止まってしまう。
+  const patchesByFile = new Map<string, Map<number, AiPatch>>();
+  for (const file of files) {
+    patchesByFile.set(file, loadAiPatches(dataDir, file));
+  }
+
   let insertedCount = 0;
   let updatedCount = 0;
 
@@ -150,7 +158,7 @@ async function main(): Promise<void> {
     const records: ParsedQuestion[] = JSON.parse(
       readFileSync(join(dataDir, file), "utf-8")
     );
-    const patches = loadAiPatches(dataDir, file);
+    const patches = patchesByFile.get(file) ?? new Map();
 
     for (const rec of records) {
       const patch = patches.get(rec.question_order);
