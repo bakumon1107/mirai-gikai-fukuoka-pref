@@ -247,6 +247,13 @@ const CATEGORY_MAP: Array<{
   },
 ];
 
+/**
+ * タイトルのキーワードから分類を推測する（フォールバック用）。
+ *
+ * キーワードは過去の定例会のタイトルに合わせて積み上げてきたものなので、
+ * 新しい定例会では当たらずに「その他」へ落ちる。本来は
+ * {@link resolveTopicCategory} 経由でAI生成時の `category` を使う。
+ */
 export function assignCategory(topicTitle: string): {
   label: string;
   iconName: string;
@@ -257,6 +264,33 @@ export function assignCategory(topicTitle: string): {
     }
   }
   return { label: "その他", iconName: "Circle" };
+}
+
+const CATEGORY_BY_LABEL = new Map(CATEGORY_MAP.map((c) => [c.label, c]));
+
+/**
+ * CATEGORY_MAP の11分類ラベル。
+ * `top-themes/shared/utils/theme-mapping.ts` の `QUESTION_CATEGORIES` と対応する。
+ */
+export const CATEGORY_LABELS: readonly string[] = CATEGORY_MAP.map(
+  (c) => c.label
+);
+
+/**
+ * トピックの分類を決める。AI生成時に付与された `category` を正とし、
+ * 未設定・未知のラベルのときだけタイトルのキーワード判定にフォールバックする。
+ */
+export function resolveTopicCategory(topic: GeneralQuestionTopic): {
+  label: string;
+  iconName: string;
+} {
+  const explicit = topic.category
+    ? CATEGORY_BY_LABEL.get(topic.category)
+    : undefined;
+  if (explicit) {
+    return { label: explicit.label, iconName: explicit.iconName };
+  }
+  return assignCategory(topic.title);
 }
 
 function buildEntry(
@@ -298,7 +332,7 @@ export function buildTopicGroups(questions: GeneralQuestion[]): TopicGroup[] {
     let currentBlock: (typeof blocks)[0] | null = null;
 
     for (const t of q.topics) {
-      const { label, iconName } = assignCategory(t.title);
+      const { label, iconName } = resolveTopicCategory(t);
 
       if (currentBlock && currentBlock.categoryLabel === label) {
         currentBlock.topics.push(t);

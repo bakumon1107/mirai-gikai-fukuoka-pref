@@ -32,7 +32,27 @@ type Topic = {
   answerer_role: string;
   answerer_name: string;
   questioner_follow_up?: string | null;
+  /**
+   * 表示上の分類。web側 `build-topic-groups.ts` の `CATEGORY_MAP` のラベルを入れる。
+   * 未設定だとタイトルのキーワード判定にフォールバックし「その他」に落ちやすい。
+   */
+  category?: string | null;
 };
+
+/** webの CATEGORY_MAP と対応する11分類。これ以外の値は投入時に弾く */
+const CATEGORY_LABELS = [
+  "子育て・教育",
+  "健康・医療",
+  "防災・安全",
+  "高齢者・福祉",
+  "交通・まちづくり",
+  "環境・脱炭素",
+  "スポーツ・文化",
+  "観光・地域振興",
+  "産業・農林水産",
+  "警察・人権",
+  "行政・県政",
+] as const;
 
 /** パーサーが出力する原文JSONのシェイプ（1議員の1登壇＝1レコード） */
 type ParsedQuestion = {
@@ -59,6 +79,30 @@ function loadAiPatches(dataDir: string, file: string): Map<number, AiPatch> {
   const path = join(dataDir, "ai", file);
   if (!existsSync(path)) return new Map();
   const patches: AiPatch[] = JSON.parse(readFileSync(path, "utf-8"));
+
+  // 表記ゆれや打ち間違いのcategoryは「その他」に落ちて気づけないため投入前に弾く
+  const unknown: string[] = [];
+  let missing = 0;
+  for (const p of patches) {
+    for (const t of p.topics) {
+      if (!t.category) {
+        missing++;
+      } else if (!(CATEGORY_LABELS as readonly string[]).includes(t.category)) {
+        unknown.push(`${file} ${p.question_order}番目「${t.title}」: ${t.category}`);
+      }
+    }
+  }
+  if (unknown.length > 0) {
+    throw new Error(
+      `未知のcategoryがあります（11分類のいずれかを指定してください）:\n  ${unknown.join("\n  ")}`
+    );
+  }
+  if (missing > 0) {
+    console.warn(
+      `${file}: categoryが無いトピックが${missing}件あります（タイトルのキーワード判定にフォールバックします）`
+    );
+  }
+
   return new Map(patches.map((p) => [p.question_order, p]));
 }
 

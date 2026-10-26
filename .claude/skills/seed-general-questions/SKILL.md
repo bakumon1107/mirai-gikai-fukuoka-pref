@@ -69,11 +69,28 @@ python3 packages/seed/fukuoka/parse-general-questions.py \
       "answer_summary": "答弁の要旨（60字以内、「〜を明らかにした」「〜を示した」調）",
       "answerer_role": "〔役職〕",
       "answerer_name": "〔氏名〕",
+      "category": "〔11分類のいずれか〕",
       "questioner_follow_up": null  // 要望発言があれば40字以内で入れる
     }
   ]
 }
 ```
+
+**`category` は必須。** 一覧ページ（`/sessions/<slug>/questions`）のカテゴリ別表示に使う。
+次の11分類から必ず1つ選ぶ（表記は完全一致。違う値だとseed時にエラーで止まる）:
+
+```
+子育て・教育 / 健康・医療 / 防災・安全 / 高齢者・福祉 / 交通・まちづくり /
+環境・脱炭素 / スポーツ・文化 / 観光・地域振興 / 産業・農林水産 / 警察・人権 / 行政・県政
+```
+
+- 定義元は `web/src/features/general-questions/shared/utils/build-topic-groups.ts` の
+  `CATEGORY_MAP`（トップページのテーマ定義 `theme-mapping.ts` とも対応）
+- **省略するとタイトルのキーワード判定にフォールバックし、ほぼ「その他」に落ちる。**
+  令和8年6月定例会では付与前、233件中168件（72%）が「その他」になっていた
+- 同一議員の**連続する**同カテゴリのトピックは1枚のカードにまとまる。関連する質疑は
+  同じカテゴリに揃えるとカードが整理される（途中に1件だけ別カテゴリを挟むと3枚に割れる）
+- AIパッチのファイルが残っていない過去分は `backfill-topic-categories.ts` で後付けする
 
 **トピック分割の基準（質問文）:**
 - 「そこで知事にお尋ねします」
